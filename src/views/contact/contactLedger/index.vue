@@ -68,6 +68,7 @@
     <el-table
       highlight-current-row
       :data="tableData"
+      border
       @row-click="clickRowOpen"
       style="width: 100%">
       <el-table-column
@@ -87,23 +88,27 @@
       </el-table-column>
       <el-table-column
         prop="nameContract"
-        label="合同名称"
+        label="项目名称"
         width="180">
       </el-table-column>
       <el-table-column
         prop="supplierUnit"
-        label="供方单位"
+        label="合同名称"
         width="280">
       </el-table-column>
       <el-table-column
         prop="contractMoneyPlus"
-        label="有效签约金额(含税)"
+        label="有效签约金额(A)"
         width="180">
       </el-table-column>
       <el-table-column
         prop="contractMoneyAfter"
-        label="有效签约金额(不含税)"
+        label="累计变更金额(B)"
         width="120">
+      </el-table-column>
+      <el-table-column
+        prop="contractMoneyAfter"
+        label="预估变更金额(C)">
       </el-table-column>
       <el-table-column
         prop="appliedAmount"
@@ -111,19 +116,59 @@
         width="120">
       </el-table-column>
       <el-table-column
+        prop="appliedAmount"
+        label="已付款金额（D）"
+        width="120">
+      </el-table-column>
+      <el-table-column
         prop="radioPayment"
-        label="付款比例"
-        width="80">
+        label="付款比例（E=D/（A+B））"
+        width="220">
       </el-table-column>
       <el-table-column
         prop="contractDate"
-        label="签约日期"
-        width="100">
+        label="合同总额（F=A+B+C）"
+        width="220">
       </el-table-column>
       <el-table-column
         prop="settlementAmount"
-        label="结算金额"
-        width="120">
+        label="预留余额">
+      </el-table-column>
+      <el-table-column
+        prop=""
+        label="经办人">
+      </el-table-column>
+      <el-table-column
+        prop=""
+        label="合同类别">
+      </el-table-column>
+      <el-table-column
+        prop=""
+        label="形成方式">
+      </el-table-column>
+      <el-table-column
+        prop=""
+        label="合同编号">
+      </el-table-column>
+      <el-table-column
+        prop=""
+        label="计价模式">
+      </el-table-column>
+      <el-table-column
+        prop=""
+        label="签约日期">
+      </el-table-column>
+      <el-table-column
+        prop=""
+        label="结算日期">
+      </el-table-column>
+      <el-table-column
+        prop=""
+        label="结算金额">
+      </el-table-column>
+      <el-table-column
+        prop=""
+        label="供方单位">
       </el-table-column>
     </el-table>
   </div>

@@ -1,67 +1,68 @@
 <template>
   <div>
-    <div>
-      <el-button>暂存</el-button>
-      <el-button>关闭</el-button>
-    </div>
     <el-row :gutter="20">
-      <el-col :span="24">
-        <el-col :span="1"></el-col>
-        <el-col :span="8">基本信息</el-col>
-      </el-col>
-      <el-col :span="6">
-        <el-col :span="8">合同金额</el-col>
-        <el-col :span="15">
-          <el-input v-model="contactPayForm.amount" placeholder="请输入内容"></el-input>
+        <el-col :span="24">
+          <el-col :span="1"></el-col>
+          <el-col :span="8">付款情况</el-col>
+        </el-col>
+      <el-col :span="12">
+        <el-col :span="12">
+          <el-col :span="8">合同金额（A）</el-col>
+          <el-col :span="15">
+            <el-input v-model="contactPayForm.amount" placeholder="请输入内容"></el-input>
+          </el-col>
+        </el-col>
+        <el-col :span="12">
+          <el-col :span="8">累计申请金额（B）</el-col>
+          <el-col :span="15">
+            <el-input v-model="contactPayForm.planedAmount" placeholder="请输入内容"></el-input>
+          </el-col>
+        </el-col>
+        <el-col :span="12">
+          <el-col :span="8">未做申请金额（C=A-B）</el-col>
+          <el-col :span="15">
+            <el-input v-model="contactPayForm.noPlanedAmount" placeholder="请输入内容"></el-input>
+          </el-col>
+        </el-col>
+        <el-col :span="12">
+          <el-col :span="8">累计未代扣回金额</el-col>
+          <el-col :span="15">
+            <el-input v-model="contactPayForm.invoiceAmount" placeholder="请输入内容"></el-input>
+          </el-col>
+        </el-col>
+        <el-col :span="12">
+          <el-col :span="8">累计扣款金额</el-col>
+          <el-col :span="15">
+            <el-input v-model="contactPayForm.totalPayment" placeholder="请输入内容"></el-input>
+          </el-col>
+        </el-col>
+        <el-col :span="12">
+          <el-col :span="8">发票金额</el-col>
+          <el-col :span="15">
+            <el-input v-model="contactPayForm.cumulativePayment" placeholder="请输入内容"></el-input>
+          </el-col>
+        </el-col>
+        <el-col :span="12">
+          <el-col :span="8">累计实付金额（D）</el-col>
+          <el-col :span="15">
+            <el-input v-model="contactPayForm.unpaidAmount" placeholder="请输入内容"></el-input>
+          </el-col>
+        </el-col>
+        <el-col :span="12">
+          <el-col :span="8">累计实付比例（%）（E=D/A）</el-col>
+          <el-col :span="15">
+            <el-input v-model="contactPayForm.deductionAmount" placeholder="请输入内容"></el-input>
+          </el-col>
+        </el-col>
+        <el-col :span="24">
+          <el-col :span="4">累计实付比例（%）（E=D/A）</el-col>
+          <el-col :span="19">
+            <el-progress :text-inside="true" :stroke-width="18" :percentage="70"></el-progress>
+          </el-col>
         </el-col>
       </el-col>
-      <el-col :span="6">
-        <el-col :span="8">已做计划金额</el-col>
-        <el-col :span="15">
-          <el-input v-model="contactPayForm.planedAmount" placeholder="请输入内容"></el-input>
-        </el-col>
-      </el-col>
-      <el-col :span="6">
-        <el-col :span="8">未做计划金额</el-col>
-        <el-col :span="15">
-          <el-input v-model="contactPayForm.noPlanedAmount" placeholder="请输入内容"></el-input>
-        </el-col>
-      </el-col>
-      <el-col :span="6">
-        <el-col :span="8">发票金额</el-col>
-        <el-col :span="15">
-          <el-input v-model="contactPayForm.invoiceAmount" placeholder="请输入内容"></el-input>
-        </el-col>
-      </el-col>
-      <el-col :span="6">
-        <el-col :span="8">累计实付</el-col>
-        <el-col :span="15">
-          <el-input v-model="contactPayForm.totalPayment" placeholder="请输入内容"></el-input>
-        </el-col>
-      </el-col>
-      <el-col :span="6">
-        <el-col :span="8">累计付款</el-col>
-        <el-col :span="15">
-          <el-input v-model="contactPayForm.cumulativePayment" placeholder="请输入内容"></el-input>
-        </el-col>
-      </el-col>
-      <el-col :span="6">
-        <el-col :span="8">累计实付比例（%）</el-col>
-        <el-col :span="15">
-          <el-input v-model="contactPayForm.cumulativePercentage" placeholder="请输入内容"></el-input>
-        </el-col>
-      </el-col>
-      <el-col :span="6">
-        <el-col :span="8">累计未代扣回金额</el-col>
-        <el-col :span="15">
-          <el-input v-model="contactPayForm.unpaidAmount" placeholder="请输入内容"></el-input>
-        </el-col>
-      </el-col>
-      <el-col :span="6">
-        <el-col :span="8">累计扣款金额</el-col>
-        <el-col :span="15">
-          <el-input v-model="contactPayForm.deductionAmount" placeholder="请输入内容"></el-input>
-        </el-col>
+      <el-col :span="12">
+        <el-progress type="circle" :percentage="25"></el-progress>
       </el-col>
       <el-col :span="24">
         <el-col :span="2"><p style="color: red">说明:</p></el-col>
@@ -69,23 +70,14 @@
           <p style="padding-top: 8px">{{contactPayForm.instructions}}</p>
         </el-col>
       </el-col>
-
-    </el-row>
+      </el-row>
     <div>
       <el-row :gutter="20">
         <el-col :span="24">
           <el-col :span="1"></el-col>
           <el-col :span="15">
-            实付款列表
+            实付申请表
           </el-col>
-          <el-col :span="8">
-            <el-col :span="4">新增</el-col>
-            <el-col :span="4">删除</el-col>
-            <el-col :span="4">付款申请</el-col>
-            <el-col :span="8">发票关联变更</el-col>
-            <el-col :span="4">导出</el-col>
-          </el-col>
-
         </el-col>
       </el-row>
       <el-table
@@ -95,7 +87,7 @@
         <el-table-column
           prop="sort"
           label="序号"
-          width="180">
+          width="">
         </el-table-column>
         <el-table-column
           prop="status"
@@ -104,27 +96,31 @@
         </el-table-column>
         <el-table-column
           prop="type"
-          label="款号类型">
+          label="付款主题">
         </el-table-column>
         <el-table-column
           prop="planDate"
-          label="计划日期">
+          label="付款编号">
         </el-table-column>
         <el-table-column
           prop="planAmount"
-          label="计划金额">
+          label="产值">
         </el-table-column>
         <el-table-column
           prop="applyAmount"
-          label="实际申请金额">
+          label="申请金额">
         </el-table-column>
         <el-table-column
           prop="payedAmount"
+          label="资金计划确认金额">
+        </el-table-column>
+        <el-table-column
+          prop="PaymentInstructions"
           label="实付金额">
         </el-table-column>
         <el-table-column
           prop="PaymentInstructions"
-          label="付款说明">
+          label="操作">
         </el-table-column>
       </el-table>
     </div>

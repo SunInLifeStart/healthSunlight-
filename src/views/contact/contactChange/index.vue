@@ -38,10 +38,17 @@
     <el-table
       :data="contactChangeTable"
       stripe
+      border
+      size="small"
       style="width: 100%">
       <el-table-column
         type="index"
         label="序号"
+      >
+      </el-table-column>
+      <el-table-column
+        prop="status"
+        label="合同变更"
       >
       </el-table-column>
       <el-table-column
@@ -56,11 +63,9 @@
       <el-table-column
         prop="changeType"
         label="变更类型">
+
       </el-table-column>
-      <el-table-column
-        prop="classification"
-        label="分类">
-      </el-table-column>
+
       <el-table-column
         prop="documentNumber"
         label="文档编号">
@@ -74,22 +79,18 @@
         label="专业">
       </el-table-column>
       <el-table-column
-        prop="changeAmount"
-        label="预估变更金额"
-        width="180">
-      </el-table-column>
-      <el-table-column
         prop="balanceAmount"
         label="结转金额">
       </el-table-column>
       <el-table-column
-        prop="ChangeVisa"
-        label="对应的变更签证" width="180"
-      >
-      </el-table-column>
-      <el-table-column
-        prop="orderNumber"
+        prop="balanceAmount"
         label="下单编号">
+      </el-table-column>
+
+      <el-table-column
+        prop="ChangeVisa"
+        label="对应的结转申请" width="180"
+      >
       </el-table-column>
       <el-table-column
         prop="contractChanges"
@@ -97,16 +98,8 @@
         width="180">
       </el-table-column>
       <el-table-column
-        prop="terminator"
-        label="终止人">
-      </el-table-column>
-      <el-table-column
-        prop="endDate"
-        label="终止日期">
-      </el-table-column>
-      <el-table-column
         prop="terminationReason"
-        label="终止原因">
+        label="操作">
       </el-table-column>
     </el-table>
   </div>
