@@ -94,57 +94,48 @@ export const asyncRouterMap = [
     ]
   },
   {
-    path: '/budget',
+    path: '/payment',
     component: Layout,
     redirect: 'noredirect',
-    name: '资金管理',
+    name: '付款管理',
     icon: 'zujian',
     children: [
       {
-        path: 'budget',
-        name: '资金计划',
+        path: 'billManage',
+        name: '票据管理',
         icon: 'zonghe',
-        component: _import('budget/index')
-      }, {
-        path: 'budgetSearch',
-        name: '资金计划查看',
+        component: _import('payment/billManage/index')
+      },
+      {
+        path: 'billModify',
+        name: '票据修改页面',
         icon: 'zonghe',
-        component: _import('budget/budgetSearch/index')
-      }, {
-        path: 'budgetReport',
-        name: '资金计划上报',
-        icon: 'zonghe',
-        component: _import('budget/budgetReport/index')
-      }, {
-        path: 'budgetConfirm',
-        name: '资金计划确认',
-        icon: 'zonghe',
-        component: _import('budget/budgetConfirm/index')
-      }, {
+        component: _import('payment/billModify/index')
+      }
+    ]
+  },
+  {
+    path: '/process',
+    component: Layout,
+    redirect: 'noredirect',
+    name: '过程管理',
+    icon: 'zujian',
+    children: [
+      {
         path: 'visaChange',
         name: '变更签证',
         icon: 'zonghe',
-        component: _import('budget/visaChange/index')
+        component: _import('process/visaChange/index')
       }, {
         path: 'visaApproval',
         name: '签证发起审批',
         icon: 'zonghe',
-        component: _import('budget/visaApproval/index')
+        component: _import('process/visaApproval/index')
       }, {
         path: 'visaBillingSearch',
         name: '签证下发单查看',
         icon: 'zonghe',
-        component: _import('budget/visaBillingSearch/index')
-      }, {
-        path: 'billManage',
-        name: '票据管理',
-        icon: 'zonghe',
-        component: _import('budget/billManage/index')
-      }, {
-        path: 'billModify',
-        name: '票据修改页面',
-        icon: 'zonghe',
-        component: _import('budget/billModify/index')
+        component: _import('process/visaBillingSearch/index')
       }
     ]
   },
