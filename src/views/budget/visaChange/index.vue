@@ -22,6 +22,38 @@
           </el-form-item>
         </el-col>
       </el-row>
+      <el-row :gutter="20">
+        <el-col :span="6">
+          <el-form-item label="状态">
+            <el-input  type="text"  v-model="form.state"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="6">
+          <el-form-item label="部门">
+            <el-input  type="text"  v-model="form.unit"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="10">
+          <el-form-item label="列名">
+            <el-input type="text"  v-model="form.antistop" playsholder="主题/文档编号/施工单位/合同编号/合同名称"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="6">
+          <el-form-item label="条件">
+            <el-input  type="text"  v-model="form.state"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="6">
+          <el-form-item label="内容">
+            <el-input  type="text"  v-model="form.unit"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="10">
+          <el-button>高级</el-button>
+        </el-col>
+      </el-row>
     </el-form>
     <el-table
       :data="tableData3"
@@ -30,11 +62,6 @@
         type="index"
         label="序号"
         width="80">
-      </el-table-column>
-      <el-table-column
-        prop="state"
-        label="合同变更"
-        width="100">
       </el-table-column>
       <el-table-column
         prop="state"
@@ -139,6 +166,7 @@ export default {
       form: {
         institutionalFramework: '',
         projectTarget: '',
+        unit: '',
         antistop: ''
       },
       tableData3: [
