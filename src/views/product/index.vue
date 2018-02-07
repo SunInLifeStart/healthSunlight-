@@ -3,32 +3,32 @@
     <el-input v-model="keyword" @keyup.native.enter="fetchData"></el-input>
     <el-table :data="list" v-loading.body="listLoading" element-loading-text="拼命加载中" border fit highlight-current-row>
       <el-table-column align="center" label='ID' width="95">
-        <template scope="scope">
+        <template slot-scope="scope">
           {{scope.row.id}}
         </template>
       </el-table-column>
       <el-table-column label="Title">
-        <template scope="scope">
+        <template slot-scope="scope">
           {{scope.row.name}}
         </template>
       </el-table-column>
       <el-table-column label="Author" width="110" align="center">
-        <template scope="scope">
+        <template slot-scope="scope">
           <span>{{scope.row.author}}</span>
         </template>
       </el-table-column>
       <el-table-column label="Pageviews" width="110" align="center">
-        <template scope="scope">
+        <template slot-scope="scope">
           {{scope.row.pageviews}}
         </template>
       </el-table-column>
       <el-table-column class-name="status-col" label="Status" width="110" align="center">
-        <template scope="scope">
+        <template slot-scope="scope">
           <el-button @click.native="update(scope.row.id)">update</el-button>
         </template>
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="Display_time" width="200">
-        <template scope="scope">
+        <template slot-scope="scope">
           <i class="el-icon-time"></i>
           <span>{{scope.row.display_time}}</span>
         </template>
@@ -86,19 +86,15 @@ export default {
         this.total = result.total
         this.listLoading = false
       }, err => {
+        console.log(err)
         this.listLoading = false
-
-      })
+      }).catch(() => {})
     },
     add() {
       createProduct(this.name).then(result => {
         this.fetchData()
         console.log('success')
-      }).catch(() => {
-
-      })
-
-
+      }).catch(() => {})
     },
 
     update(id) {

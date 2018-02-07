@@ -8,7 +8,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
 function resolveApp(relativePath) {
-  return path.resolve(relativePath);
+  return path.resolve(relativePath)
 }
 
 // add hot-reload related code to entry chunks

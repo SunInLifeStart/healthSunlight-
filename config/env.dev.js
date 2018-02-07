@@ -4,7 +4,5 @@ var envProd = require('./env.prod')
 module.exports = merge(envProd,{
     NODE_ENV: '"development"',
     ENV_CONFIG: '"dev"',
-    BASE_API: '"https://api-dev"',
-    BACK_END: 'http://localhost:19000',
-
+    BACK_END: 'http://localhost:19000'
 })

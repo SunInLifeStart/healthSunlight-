@@ -16,6 +16,9 @@ export function login(username, password) {
   })
 }
 
+export function logout() {
+  return true
+}
 
 /**
  * 获取用户信息

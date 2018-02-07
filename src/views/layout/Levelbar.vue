@@ -38,6 +38,7 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
 .app-levelbar.el-breadcrumb {
   display: inline-block;
+  outline: none;
   font-size: 14px;
   line-height: 50px;
   margin-left: 10px;

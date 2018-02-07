@@ -1,5 +1,5 @@
 import {
-    getTodos,test
+    getTodos, test
 } from 'api/todos'
 
 const todos = {
@@ -8,7 +8,6 @@ const todos = {
   },
 
   mutations: {
-    
   },
 
   actions: {
@@ -26,7 +25,7 @@ const todos = {
       commit
     }, ids) {
       return test(ids).then(result => {
-        console.log(result,'actions test')
+        console.log(result, 'actions test')
         // console.log(test())
         // commit()
         return result

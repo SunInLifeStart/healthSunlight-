@@ -24,17 +24,15 @@
           id: ''
         },
         list: [{
-            title: 'qqqqq'
-          },
-          {
-            title: '2222'
-          },
-          {
-            title: '3333'
-          }
-        ],
+          title: 'qqqqq'
+        },
+        {
+          title: '2222'
+        },
+        {
+          title: '3333'
+        }],
         checkAllStatus: false
-
       }
     },
 
@@ -42,23 +40,23 @@
       // this.fetchData()
     },
     methods: {
-      //全选
+      // 全选
       selectAll() {
         for (let i = 0; i < this.list.length; i++) {
-          this.list[i].checked = this.checkAllStatus;
+          this.list[i].checked = this.checkAllStatus
         }
       },
-      //单选
+      // 单选
       selectOne(item) {
         this.checkAllStatus = this.list.every((data) => {
           return data.checked
         })
       },
-      //查询列表
+      // 查询列表
       searchList(data) {
-        this.$store.dispatch('Test',data).then(data=>{
+        this.$store.dispatch('Test', data).then(data => {
           console.log(data)
-          this.list = data;
+          this.list = data
         })
         // this.$store.dispatch('GetTodos', data).then((data) => {
         //   console.log(data, 'success')
@@ -68,7 +66,6 @@
 
         // })
       }
-
     }
   }
 

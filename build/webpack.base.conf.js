@@ -1,12 +1,23 @@
 var path = require('path')
 var utils = require('./utils')
 var config = require('../config')
-const webpack = require('webpack');
+const webpack = require('webpack')
 var vueLoaderConfig = require('./vue-loader.conf')
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
+
+const createLintingRule = () => ({
+  test: /\.(js|vue)$/,
+  loader: 'eslint-loader',
+  enforce: 'pre',
+  include: [resolve('src'), resolve('test')],
+  options: {
+    formatter: require('eslint-friendly-formatter'),
+    emitWarning: !config.dev.showEslintErrorsInOverlay
+  }
+})
 
 module.exports = {
   entry: {
@@ -25,15 +36,12 @@ module.exports = {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
       api: path.join(__dirname, '/../api'),
+      utils: path.join(__dirname, '/../utils'),
     }
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env': config.dev.env
-    })
-  ],
   module: {
     rules: [
+      ...(config.dev.useEslint ? [createLintingRule()] : []),
       {
         test: /\.vue$/,
         loader: 'vue-loader',

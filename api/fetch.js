@@ -1,8 +1,6 @@
 import axios from 'axios'
 const config = require('../config/env.' + process.env.ENV_CONFIG)
 
-import urls from './url'
-
 // 创建axios实例
 const service = axios.create({baseURL: config.BACK_END, timeout: 15000})
 
@@ -28,16 +26,8 @@ service
     /**
      * code为非200是错误的请求
      */
-    // const data = response.data
     if (response.status !== 200) {
-      console.log('90909090909090909090909000909009')
-      //错误请求的广播
-      document.dispatchEvent(new Event(config.EVENT_LOGOUT,{
-        message: response.data.msg,
-        type: 'error',
-        duration: 5 * 1000
-      }));
-
+      
       if (response.status === 201) {
         //发出被登出广播
         document.dispatchEvent(new Event(config.EVENT_LOGOUT));

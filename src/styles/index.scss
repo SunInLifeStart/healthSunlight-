@@ -42,13 +42,13 @@ a:hover {
 }
 
 //vue router transition css
-.fade-enter-active,
-.fade-leave-active {
-  transition: all .2s ease
+.router-fade-enter-active,
+.router-fade-leave-active {
+  transition: opacity .2s ease
 }
 
-.fade-enter,
-.fade-leave-active {
+.router-fade-enter,
+.router-fade-leave-active {
   opacity: 0;
 }
 
