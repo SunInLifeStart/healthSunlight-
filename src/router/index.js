@@ -101,6 +101,19 @@ export const asyncRouterMap = [
     icon: 'zujian',
     children: [
       {
+        path: 'payments',
+        name: '付款申请',
+        icon: 'zonghe',
+        component: _import('payment/payments/index')
+      },
+      {
+        path: 'payment',
+        name: '付款申请详情',
+        hidden: true,
+        icon: 'zonghe',
+        component: _import('payment/payment/index')
+      },
+      {
         path: 'billManage',
         name: '票据管理',
         icon: 'zonghe',
