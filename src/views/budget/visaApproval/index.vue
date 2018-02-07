@@ -71,64 +71,13 @@
               </el-form-item>
             </el-col>
             <el-col :span="6">
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="经办人">
-                <el-input v-model="form.responsiblePerson"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row :gutter="20">
-            <el-col :span="6">
-              <el-form-item label="经办部门">
-                <el-input v-model="form.transactionDepartment"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="诉求部门">
-                <el-input v-model="form.claimsDepartment"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-                <el-form-item label="是否交叉扣款">
-                  <el-radio-group v-model="form.crossDeductionsFlag">
-                    <el-radio label="是"></el-radio>
-                    <el-radio label="否"></el-radio>
-                  </el-radio-group>
-                </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="与报规、验收及销售合同核对">
-                <el-radio-group v-model="form.checkContract">
-                  <el-radio label="吻合"></el-radio>
-                  <el-radio label="不吻合"></el-radio>
-                </el-radio-group>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row :gutter="20">
-            <el-col :span="6">
-              <el-form-item label="结转金额">
-                <el-input v-model="form.transactionDepartment"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="预估金额(A=B+C)">
-                <el-input v-model="form.claimsDepartment"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="有效预估金额(含返工金额)">
-                <el-input v-model="form.crossDeductionsFlag"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="与报规、验收及销售合同核对">
-                <el-input v-model="form.checkContract"></el-input>
+              <el-form-item label="申请金额">
+                <el-input v-model="form.profession"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
         </el-form>
+        变更事项
         <el-table
           highlight-current-row
           :data="tableData"
@@ -147,6 +96,92 @@
             prop="changeAnswer"
             label="变更原因"
             width="400">
+          </el-table-column>
+        </el-table>
+        对应合同
+        <el-table
+          highlight-current-row
+          :data="tableData"
+          style="width: 100%">
+          <el-table-column
+            prop="index"
+            label="下发单编号"
+            width="150">
+          </el-table-column>
+          <el-table-column
+            prop="changeContent"
+            label="合同名称"
+            width="200">
+          </el-table-column>
+          <el-table-column
+            prop="changeAnswer"
+            label="施工单位"
+            width="200">
+          </el-table-column>
+          <el-table-column
+            prop="index"
+            label="费用承担单位"
+            width="150">
+          </el-table-column>
+          <el-table-column
+            prop="changeContent"
+            label="合同金额"
+            width="200">
+          </el-table-column>
+          <el-table-column
+            prop="changeAnswer"
+            label="预计实施时间"
+            width="200">
+          </el-table-column>
+          <el-table-column
+            prop="changeContent"
+            label="预约完成日期"
+            width="200">
+          </el-table-column>
+          <el-table-column
+            prop="changeAnswer"
+            label="变更事项"
+            width="200">
+          </el-table-column>
+        </el-table>
+        附件
+        <el-table
+          highlight-current-row
+          :data="tableData2"
+          style="width: 100%">
+          <el-table-column
+            prop="textType"
+            label="附件类型"
+            width="150">
+          </el-table-column>
+          <el-table-column
+            prop="accessory"
+            label="附件"
+            width="200">
+          </el-table-column>
+          <el-table-column
+            prop="changeAnswer"
+            label="备注"
+            width="200">
+          </el-table-column>
+          <el-table-column
+            prop="index"
+            label="上传人"
+            width="150">
+          </el-table-column>
+          <el-table-column
+            prop="changeContent"
+            label="上传时间"
+            width="200">
+          </el-table-column>
+          <el-table-column
+            fixed="right"
+            label="操作"
+            width="200">
+            <template slot-scope="scope">
+              <el-button type="text" size="small">下载</el-button>
+              <el-button type="text" size="small">一键下载</el-button>
+            </template>
           </el-table-column>
         </el-table>
       </el-tab-pane>
@@ -233,6 +268,12 @@ export default {
         {
           changeContent: '明确7-5C地块各楼栋正负零以上建筑细部做法',
           changeAnswer: ''
+        }
+      ],
+      tableData2: [
+        {
+          accessory: '票据信息.pdf',
+          textType: '文档'
         }
       ]
     }

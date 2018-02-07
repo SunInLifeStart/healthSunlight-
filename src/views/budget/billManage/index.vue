@@ -2,9 +2,6 @@
   <div class="app-container">
     <div>
       <el-button>修改</el-button>
-      <el-button>删除</el-button>
-      <el-button>验证通过</el-button>
-      <el-button>查看关联的业务单据</el-button>
       <el-button>导出</el-button>
     </div>
     <el-form ref="form" :model="form" label-width="120px">
@@ -88,62 +85,7 @@
         label="税额"
         width="120">
       </el-table-column>
-      <el-table-column
-        prop="taxPaid"
-        label="不含税金额"
-        width="120">
-      </el-table-column>
-      <el-table-column
-        prop="taxPaid"
-        label="累计付款金额（含税）"
-        width="120">
-      </el-table-column>
-      <el-table-column
-        prop="taxPaid"
-        label="未付款金额(含税)"
-        width="120">
-      </el-table-column>
-      <el-table-column
-        prop="taxPaid"
-        label="我方单位"
-        width="120">
-      </el-table-column>
-      <el-table-column
-        prop="taxPaid"
-        label="我方单位税号"
-        width="120">
-      </el-table-column>
-      <el-table-column
-        prop="taxPaid"
-        label="对方单位"
-        width="120">
-      </el-table-column>
-      <el-table-column
-        prop="taxPaid"
-        label="创建人"
-        width="120">
-      </el-table-column>
-      <el-table-column
-        prop="taxPaid"
-        label="来源系统"
-        width="120">
-      </el-table-column>
-      <el-table-column
-        prop="taxPaid"
-        label="抵扣失败原因"
-        width="120">
-      </el-table-column>
     </el-table>
-    <div class="block">
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page.sync="currentPage3"
-        :page-size="100"
-        layout="prev, pager, next, jumper"
-        :total="1000">
-      </el-pagination>
-    </div>
   </div>
 </template>
 

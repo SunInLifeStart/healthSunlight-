@@ -16,7 +16,7 @@
       <el-row :gutter="20">
         <el-col :span="5">
           <el-col :span="8">
-            <div class="div-font">项目/分期</div>
+            <div class="div-font">项目</div>
           </el-col>
           <el-col :span="16">
             <div>
@@ -56,28 +56,17 @@
       border
       style="width: 100%">
       <el-table-column
-        prop="manipulate"
-        label="操作">
-      </el-table-column>
-
-      <el-table-column
         width="180"
         type="index"
-        label="序号"
-      >
+        label="序号">
       </el-table-column>
       <el-table-column
         prop="project"
-        label="项目名称"
-      >
+        label="项目名称">
       </el-table-column>
       <el-table-column
         prop="department"
         label="部门">
-      </el-table-column>
-      <el-table-column
-        prop="functionCost"
-        label="职能费项">
       </el-table-column>
       <el-table-column
         prop="contractNo"
@@ -131,7 +120,7 @@
       </el-table-column>
       <el-table-column
         prop="monthlyPayment"
-        label="付款阶段"
+        label="付款属性"
         width="180">
       </el-table-column>
       <el-table-column

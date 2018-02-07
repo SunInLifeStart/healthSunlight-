@@ -2,7 +2,6 @@
   <div>
     <div>
       <el-button>导出下发单</el-button>
-      <el-button>下发</el-button>
     </div>
     <el-form ref="form" :model="form" label-width="120px">
           <el-row :gutter="20">
@@ -167,6 +166,46 @@
         width="200">
       </el-table-column>
     </el-table>
+    附件
+    <el-table
+      highlight-current-row
+      :data="tableData2"
+      style="width: 100%">
+      <el-table-column
+        prop="textType"
+        label="附件类型"
+        width="150">
+      </el-table-column>
+      <el-table-column
+        prop="accessory"
+        label="附件"
+        width="200">
+      </el-table-column>
+      <el-table-column
+        prop="changeAnswer"
+        label="备注"
+        width="200">
+      </el-table-column>
+      <el-table-column
+        prop="index"
+        label="上传人"
+        width="150">
+      </el-table-column>
+      <el-table-column
+        prop="changeContent"
+        label="上传时间"
+        width="200">
+      </el-table-column>
+      <el-table-column
+        fixed="right"
+        label="操作"
+        width="200">
+        <template slot-scope="scope">
+          <el-button type="text" size="small">下载</el-button>
+          <el-button type="text" size="small">一键下载</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
   </div>
 </template>
 
@@ -211,6 +250,12 @@ export default {
           successTime: '2017-12-23',
           changesAs: '1',
           completionConfirmation: '马陆'
+        }
+      ],
+      tableData2: [
+        {
+          accessory: '票据信息.pdf',
+          textType: '文档'
         }
       ]
     }
