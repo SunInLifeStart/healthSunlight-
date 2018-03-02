@@ -10,7 +10,6 @@
   </div>
 </template>
 
-
 <script>
 import { Navbar, Sidebar, AppMain } from '@/views/layout'
 
@@ -33,7 +32,6 @@ export default {
 @import "src/styles/mixin.scss";
 .app-wrapper {
   @include clearfix;
-  position: relative;
   height: 100%;
   width: 100%;
   position: absolute;

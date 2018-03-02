@@ -1,18 +1,50 @@
-  module.exports = {
-    data: {
-      code: 200,
-      data: {
-        name: 'martin',
-        age: 26,
-        roles: ['admin'],
-        items: [
-            {id:'001',name:'venus',percentage:90,status:'success'},
-            {id:'002',name:'jupiter',percentage:50,status:'exception'},
-            {id:'003',name:'rome',percentage:60,status:'success'},
-            {id:'004',name:'cola',percentage:70,status:'success'},
-            {id:'005',name:'vue',percentage:10,status:'success'},
-          ]
+module.exports = {
+  headlines: {
+    code: 200,
+    list: [
+      {
+        title: '龙湖造采系统试运行'
+      },
+      {
+        title: '龙湖2018年最新项目'
+      },
+      {
+        title: '龙湖重大项目推荐'
       }
-    }
+    ]
+  },
+  news: {
+    code: 200,
+    list: [
+      {
+        newstitle: "龙湖造采系统试运行",
+        belongscategory: 0,
+        createDate: "2018-02-25 00:00:00"
+      },
+      {
+        newstitle: "龙湖2018年最新项目",
+        belongscategory: 1,
+        createDate: "2018-02-25 00:00:00"
+      },
+      {
+        newstitle: "龙湖重大项目推荐",
+        belongscategory: 2,
+        createDate: "2018-02-25 00:00:00"
+      }
+    ]
+  },
+  events: {
+    code: 200,
+    list: [
+      {
+        date: '2018/2/15',
+        title: '准备合同',
+        desc: '需要在张总3月1日出国前准备好'
+      },
+      {
+        date: '2018/2/12',
+        title: '找郑总确认金额'
+      }
+    ]
   }
-  
+}

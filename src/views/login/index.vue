@@ -64,8 +64,7 @@ export default {
           this.loading = true
           this.$store.dispatch('Login', this.loginForm).then(() => {
             this.loading = false
-            console.log('login success')
-            this.$router.push({ name: 'Dashboard' })
+            this.$router.push({ name: '首页' })
           }).catch(() => {
             this.loading = false
           })

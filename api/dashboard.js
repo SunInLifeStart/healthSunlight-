@@ -1,16 +1,27 @@
 /**
  * 工作台api
- * @param {*} data 
+ * @param {*} data
  */
 import fetch from './fetch'
-import url from './url';
+import url from './url'
 
-export function getItems(data) {
-  console.log('getItems')
+export function getHeadlines() {
   return fetch({
-    // url: 'http://192.168.1.12:19000/api/user/info',
-    url: url.getItems,
-    method: 'post',
-    data: data
+    url: url.headlines,
+    method: 'post'
+  })
+}
+
+export function getNews() {
+  return fetch({
+    url: url.news,
+    method: 'post'
+  })
+}
+
+export function getEvents() {
+  return fetch({
+    url: url.events,
+    method: 'post'
   })
 }

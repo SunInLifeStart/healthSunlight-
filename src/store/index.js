@@ -2,12 +2,12 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import app from './modules/app'
 import user from './modules/user'
-import product from './modules/product'
-import todos from './modules/todos'
 import dashboard from './modules/dashboard'
+import $contract from './modules/contract'
+import $payment from './modules/payment'
+import cost from './modules/cost'
 import permission from './modules/permission'
-import projects from './modules/projects'
-import demo from './modules/demo'
+import $demo from './modules/demo'
 import getters from './getters'
 
 Vue.use(Vuex)
@@ -15,12 +15,12 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   modules: {
     app,
-    user,
-    product,
-    todos,
     dashboard,
-    projects,
-    demo,
+    $contract,
+    $payment,
+    cost,
+    $demo,
+    user,
     permission
   },
   getters

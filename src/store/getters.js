@@ -1,13 +1,12 @@
 const getters = {
-  sidebar: state => state.app.sidebar,
-  token: state => state.user.token,
-  avatar: state => state.user.avatar,
-  name: state => state.user.name,
-  roles: state => state.user.roles,
+  app: state => state.app,
+  user: state => state.user,
   permission_routers: state => state.permission.routers,
   addRouters: state => state.permission.addRouters,
-  // dashboard
-  items: state => state.dashboard.items,
-  count: state => state.demo.count
+  dashboard: state => state.dashboard,
+  $contract: state => state.$contract,
+  $payment: state => state.$payment,
+  cost: state => state.cost,
+  $demo: state => state.$demo
 }
 export default getters

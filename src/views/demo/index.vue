@@ -1,8 +1,28 @@
 <template>
   <div class="dashboard-container">
 
-    <div>{{count}}</div>
-    <button @click="increment()">add</button>
+    <h2>input 千分位</h2>model:{{price}}
+    <format-input currency="$" separator="," :precision="2" v-model="price" :max="10000000" :min="-10000000" class="w300"></format-input>
+    <p>precision-小数点位数</p>
+    <p>currency-自定义符号</p>
+    <p>separator-分隔符</p>
+    <p>read-only="true"-只显示文本</p>
+    <p>max-最大值</p>
+    <p>min-最小值</p>
+
+    <el-upload class="upload-demo" action="https://jsonplaceholder.typicode.com/posts/" :on-preview="handlePreview" :on-remove="handleRemove" :file-list="fileList2" list-type="picture">
+      <el-button size="small" type="primary">点击上传</el-button>
+      <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+    </el-upload>
+
+    <h2>过滤器</h2>
+    <p>默认 {{2000|currency}}</p>
+    <p>小数点后保留3位小数 {{2000|currency(3)}}</p>
+    <p> 自定义千位分隔符{{2000|currency(3,'-')}}</p>
+
+    <h1>{{count}}</h1>
+    <button @click="decreaseCount()">-</button>
+    <button @click="increaseCount()">+</button>
 
     <div>
       <h1>多关键字搜索框</h1>
@@ -30,6 +50,7 @@ import InputTag from 'vue-input-tag' // 多关键字搜索框
 import 'vue-event-calendar/dist/style.css' // 1.1.10之后的版本，css被放在了单独的文件中，方便替换
 import vueEventCalendar from 'vue-event-calendar' // 日历
 import Vue from 'vue'
+import formatInput from '@/components/formatInput/index'
 
 // 日历
 Vue.use(vueEventCalendar, {
@@ -40,12 +61,25 @@ Vue.use(vueEventCalendar, {
 }) // 可以设置语言，支持中文和英文
 
 export default {
-  components: { InputTag },
+  components: { InputTag, formatInput },
   computed: {
     ...mapGetters(['name', 'roles', 'count'])
   },
   data() {
     return {
+      price: '',
+      fileList2: [
+        {
+          name: 'food.jpeg',
+          url:
+            'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+        },
+        {
+          name: 'food2.jpeg',
+          url:
+            'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+        }
+      ],
       // 多关键字搜索框
       tagsArray: [],
       // 日历数据
@@ -63,8 +97,17 @@ export default {
     }
   },
   methods: {
-    increment() {
-      this.$store.dispatch('add', '2')
+    handleRemove(file, fileList) {
+      console.log(file, fileList)
+    },
+    handlePreview(file) {
+      console.log(file)
+    },
+    increaseCount() {
+      this.$store.dispatch('IncreaseCount')
+    },
+    decreaseCount() {
+      this.$store.dispatch('DecreaseCount')
     },
     // 月回调--日历
     handleMonthChanged(month) {
@@ -79,6 +122,9 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+.w300 {
+  width: 300px;
+}
 .dashboard {
   &-container {
     margin: 30px;

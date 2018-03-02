@@ -5,7 +5,7 @@ module.exports = {
   build: {
     env: require('./env.prod'),
     index: path.resolve(__dirname, '../dist/index.html'),
-    title: '龙湖合同履约',
+    title: '龙湖造采.成本',
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
     assetsPublicPath: './',
@@ -29,6 +29,8 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {},
+    errorOverlay: true,
+    poll: false,
     // CSS Sourcemaps off by default because relative paths are "buggy" with this
     // option, according to the CSS-Loader README
     // (https://github.com/webpack/css-loader#sourcemaps) In our experience, they

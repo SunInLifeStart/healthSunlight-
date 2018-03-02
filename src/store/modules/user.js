@@ -1,25 +1,23 @@
 import {
   login,
-  logout,
-  getInfo
+  getUser
 } from 'api/user'
-import {
-  // getToken, setToken,
-  removeToken
-} from 'utils/auth'
 
-const user = {
+const localToken = localStorage.getItem('longisland.token') || ''
+
+export default {
   state: {
-    token: localStorage.getItem('token'),
     name: '',
     avatar: '',
-    roles: []
+    organizations: [],
+    roles: [],
+    token: localToken
   },
 
   mutations: {
     SET_TOKEN: (state, token) => {
-      localStorage.setItem('token', token)
       state.token = token
+      localStorage.setItem('longisland.token', token)
     },
     SET_NAME: (state, name) => {
       state.name = name
@@ -27,8 +25,11 @@ const user = {
     SET_AVATAR: (state, avatar) => {
       state.avatar = avatar
     },
+    SET_ORGANIZATIONS: (state, organizations) => {
+      state.organizations = organizations
+    },
     SET_ROLES: (state, roles) => {
-      state.roles = roles
+      state.roles = [...state.roles, roles]
     }
   },
 
@@ -41,52 +42,36 @@ const user = {
       password
     }) {
       return login(username, password).then(res => {
-        commit('SET_TOKEN', res.token)
-        return res
+        commit('SET_TOKEN', res.data.token)
       })
     },
 
     // 获取用户信息
-    GetInfo({
+    GetUser({
       commit,
       state
     }) {
-      return getInfo(state.token).then(data => {
-        commit('SET_ROLES', data.roles)
-        commit('SET_NAME', data.name)
-        return data.roles
-        // commit('SET_AVATAR', data.avatar)
+      return getUser(state.token).then(res => {
+        const user = res.data
+        commit('SET_NAME', user.name)
+        commit('SET_AVATAR', user.avatar)
+        commit('SET_ORGANIZATIONS', user.organizations)
+        commit('SET_ROLES', user.roles)
+        return user
       })
     },
 
     // 登出
     LogOut({
-      commit,
-      state
-    }) {
-      return new Promise((resolve, reject) => {
-        logout(state.token).then(() => {
-          commit('SET_TOKEN', '')
-          commit('SET_ROLES', [])
-          removeToken()
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
-      })
-    },
-
-    // 前端 登出
-    FedLogOut({
       commit
     }) {
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         commit('SET_TOKEN', '')
-        localStorage.clear('token')
+        commit('SET_NAME', '')
+        commit('SET_ROLES', [])
+        commit('SET_ORGANIZATIONS', [])
         resolve()
       })
     }
   }
 }
-
-export default user

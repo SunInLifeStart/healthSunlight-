@@ -1,26 +1,27 @@
-import Cookies from 'js-cookie'
+import {
+  TOGGLE_SIDEBAR
+} from '../../constants/app'
 
-const app = {
+const localState = localStorage.getItem('longisland.app') ? JSON.parse(localStorage.getItem('longisland.app')) : {
+  sidebar: {
+    opened: true
+  }
+}
+
+export default {
   state: {
-    sidebar: {
-      opened: !+Cookies.get('sidebarStatus')
-    }
+    ...localState,
+    isFetching: false
   },
   mutations: {
-    TOGGLE_SIDEBAR: state => {
-      if (state.sidebar.opened) {
-        Cookies.set('sidebarStatus', 1)
-      } else {
-        Cookies.set('sidebarStatus', 0)
-      }
+    [TOGGLE_SIDEBAR](state) {
       state.sidebar.opened = !state.sidebar.opened
+      localStorage.setItem('longisland.app', JSON.stringify({ sidebar: { opened: state.sidebar.opened }}))
     }
   },
   actions: {
     ToggleSideBar: ({ commit }) => {
-      commit('TOGGLE_SIDEBAR')
+      commit(TOGGLE_SIDEBAR)
     }
   }
 }
-
-export default app

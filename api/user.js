@@ -1,23 +1,15 @@
 import fetch from './fetch'
-import url from './url';
+import url from './url'
 
 /**
  * 登录接口
- *
  * @export
  * @param {*} username 用户名
  * @param {*} password 密码
  * @returns
  */
 export function login(username, password) {
-  return fetch.post(url.login, {
-    username,
-    password
-  })
-}
-
-export function logout() {
-  return true
+  return fetch.post(url.login, { username, password })
 }
 
 /**
@@ -26,6 +18,6 @@ export function logout() {
  * @export
  * @returns
  */
-export function getInfo() {
-  return fetch.get(url.userInfo)
+export function getUser() {
+  return fetch.post(url.user)
 }
