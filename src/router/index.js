@@ -211,6 +211,7 @@ export const asyncRouterMap = [
     component: Layout,
     redirect: 'noredirect',
     name: '投模成本测算与调整',
+    hidden: true,
     icon: 'zujian',
     children: [
       {
@@ -268,6 +269,7 @@ export const asyncRouterMap = [
     component: Layout,
     redirect: 'noredirect',
     name: '目标成本测算与调整',
+    hidden: true,
     icon: 'zujian',
     children: [
       {
@@ -370,6 +372,7 @@ export const asyncRouterMap = [
     component: Layout,
     redirect: 'noredirect',
     name: '基准成本管理',
+    hidden: true,
     icon: 'zujian',
     children: [
       {
@@ -463,6 +466,7 @@ export const asyncRouterMap = [
     component: Layout,
     redirect: 'noredirect',
     name: 'Example',
+    hidden: true,
     icon: 'zujian',
     children: [
       {
@@ -534,6 +538,7 @@ export const asyncRouterMap = [
     path: '/ui',
     component: Layout,
     name: 'ui页面',
+    hidden: true,
     redirect: '/ui',
     icon: 'zujian',
     meta: { role: ['contract'] },
