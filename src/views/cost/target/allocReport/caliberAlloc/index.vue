@@ -1,218 +1,115 @@
 <template>
-  <div>
-    <el-button>计算</el-button>
-    <el-button>保存</el-button>
-    <!--<el-button>发起审批</el-button>-->
-    <el-table :data="caliberAlloc.table" :span-method="objectSpanMethod" size="small" border
-              style="width: 100%;text-align: center">
-      <el-table-column fixed prop="shareContent" label="分摊内容"></el-table-column>
-      <el-table-column fixed width="180" prop="itemizedContent" label="细项分摊内容"></el-table-column>
-      <el-table-column prop="" label="各业态指标">
-        <el-table-column prop="highRise" label="高层（18层以上，但<100M)"></el-table-column>
-        <el-table-column prop="townhouse" label="联排别墅"></el-table-column>
-        <el-table-column prop="salesBusiness" label="销售商业"></el-table-column>
-        <el-table-column prop="total" label="合计(m2，万元)"></el-table-column>
-        <!--<el-table-column prop="gardenHouse" width="180" label="花园洋房（9层以下）"></el-table-column>-->
-        <!--<el-table-column prop="stackedTownhouses" label="叠拼别墅"></el-table-column>-->
-        <!--<el-table-column prop="superTall" label="高层(18层以上，但<100m)"></el-table-column>-->
-        <!--<el-table-column prop="praetorium" label="独栋别墅"></el-table-column>-->
-        <!--<el-table-column prop="affordableHouses" width="180" label="廉（公）租房/经济适用房"></el-table-column>-->
-        <!--<el-table-column prop="condo" width="180" label="限价房/自住型商品房">z</el-table-column>-->
-        <!--<el-table-column prop="commercial" width="180" label="持有商业"></el-table-column>-->
-        <!--<el-table-column prop="sohoLeveling" width="180" label="SOHO（平层100米以内）"></el-table-column>-->
-        <!--<el-table-column prop="sohoPycnocline" width="180" label="SOHO（跃层100米以内）"></el-table-column>-->
-        <!--<el-table-column prop="sohoLevelingHigh" width="180" label="SOHO（平层超高层）"></el-table-column>-->
-        <!--<el-table-column prop="sohoPycnoclineHigh" width="180" label="SOHO（跃层超高层）"></el-table-column>-->
-        <!--<el-table-column prop="budgetHotel" width="180" label="快捷酒店"></el-table-column>-->
-        <!--<el-table-column prop="starredHotel" width="180" label="星级酒店"></el-table-column>-->
-        <!--<el-table-column prop="officeBuilding" width="180" label="写字楼（100米以内）"></el-table-column>-->
-        <!--<el-table-column prop="officeBuildingHigh" width="180" label="写字楼（超高层）"></el-table-column>-->
-        <!--<el-table-column prop="carport" width="180" label="非人防车库"></el-table-column>-->
-        <!--<el-table-column prop="storeroom" width="180" label="储藏室"></el-table-column>-->
-      </el-table-column>
-    </el-table>
+  <div class="piecerow_main">
+    <el-row class="piecerow">
+      <el-col :span="24">
+        <div style="padding: 5px;">
+          <el-button class="saveBtn" size="mini"  plain>保存</el-button>
+        </div>
+      </el-col>
+    </el-row>
+    <el-row class="piecerow piecerow_bottom piecerow_text">
+      <div style="margin-bottom: 46px;">
+        <el-col :span="16" class="card_section">
+          <div style="width: 60%;">
+            <div class="hierarchy">层级选项：</div>
+            <div class="paging">
+              <el-pagination
+                background
+                small
+                layout="pager"
+                :current-page.sync="level"
+                @current-change="changeLevel(level)"
+                :total="30">
+              </el-pagination>
+            </div>
+          </div>
+        </el-col>
+      </div>
+      <div style="padding: 10px;">
+        <tree-table :data="targetCost.financeApportion.items" :columns="targetCost.financeApportion.columns" :type="'col'"  :evalFunc="func" :evalArgs="args"
+                    :stripe="true" :showLevel='level' border>
+        </tree-table>
+      </div>
+    </el-row>
   </div>
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        caliberAlloc: {
-          table: [
-            {
-              shareContent: '规划指标（m2)',
-              itemizedContent: '用地面积',
-              superTall: '混凝土框架',
-              highRise: '39,073',
-              gardenHouse: '0%',
-              stackedTownhouses: '0%',
-              townhouse: '0%',
-              praetorium: '0%',
-              affordableHouses: '2',
-              condo: '3',
-              commercial: '3',
-              sohoLeveling: '3',
-              sohoPycnocline: '3',
-              sohoLevelingHigh: '3',
-              sohoPycnoclineHigh: '3',
-              salesBusiness: '3',
-              budgetHotel: '3',
-              starredHotel: '3',
-              officeBuilding: '3',
-              officeBuildingHigh: '3',
-              carport: '3',
-              storeroom: '3',
-              total: '39,073'
-            },
-            {
-              shareContent: '',
-              itemizedContent: '可租售面积',
-              superTall: '0',
-              highRise: '91,800',
-              gardenHouse: '10.71%',
-              stackedTownhouses: '10.71%',
-              townhouse: '10.71%',
-              praetorium: '10.71%',
-              affordableHouses: '10.71%',
-              condo: '10.71%',
-              commercial: '10.71%',
-              sohoLeveling: '10.71%',
-              sohoPycnocline: '10.71%',
-              sohoLevelingHigh: '10.71%',
-              sohoPycnoclineHigh: '10.71%',
-              salesBusiness: '10.71%',
-              budgetHotel: '10.71%',
-              starredHotel: '10.71%',
-              officeBuilding: '10.71%',
-              officeBuildingHigh: '10.71%',
-              carport: '10.71%',
-              storeroom: '10.71%',
-              total: '180,151'
-            },
-            {
-              shareContent: '',
-              itemizedContent: '其中：地上可租售',
-              superTall: '',
-              highRise: '91,800',
-              gardenHouse: '-',
-              stackedTownhouses: '-',
-              townhouse: '-',
-              praetorium: '-',
-              affordableHouses: '-',
-              condo: '-',
-              commercial: '-',
-              sohoLeveling: '-',
-              sohoPycnocline: '-',
-              sohoLevelingHigh: '-',
-              sohoPycnoclineHigh: '-',
-              salesBusiness: '-',
-              budgetHotel: '-',
-              starredHotel: '-',
-              officeBuilding: '-',
-              officeBuildingHigh: '-',
-              carport: '-',
-              storeroom: '-',
-              total: '-'
-            },
-            {
-              shareContent: '开发成本（元/平米）',
-              itemizedContent: '用地面积',
-              superTall: '混凝土框架',
-              highRise: '39,073',
-              gardenHouse: '0%',
-              stackedTownhouses: '0%',
-              townhouse: '0%',
-              praetorium: '0%',
-              affordableHouses: '2',
-              condo: '3',
-              commercial: '3',
-              sohoLeveling: '3',
-              sohoPycnocline: '3',
-              sohoLevelingHigh: '3',
-              sohoPycnoclineHigh: '3',
-              salesBusiness: '3',
-              budgetHotel: '3',
-              starredHotel: '3',
-              officeBuilding: '3',
-              officeBuildingHigh: '3',
-              carport: '3',
-              storeroom: '3',
-              total: '39,073'
-            },
-            {
-              shareContent: '',
-              itemizedContent: '可租售面积',
-              superTall: '0',
-              highRise: '91,800',
-              gardenHouse: '10.71%',
-              stackedTownhouses: '10.71%',
-              townhouse: '10.71%',
-              praetorium: '10.71%',
-              affordableHouses: '10.71%',
-              condo: '10.71%',
-              commercial: '10.71%',
-              sohoLeveling: '10.71%',
-              sohoPycnocline: '10.71%',
-              sohoLevelingHigh: '10.71%',
-              sohoPycnoclineHigh: '10.71%',
-              salesBusiness: '10.71%',
-              budgetHotel: '10.71%',
-              starredHotel: '10.71%',
-              officeBuilding: '10.71%',
-              officeBuildingHigh: '10.71%',
-              carport: '10.71%',
-              storeroom: '10.71%',
-              total: '180,151'
-            },
-            {
-              shareContent: '',
-              itemizedContent: '其中：地上可租售',
-              superTall: '',
-              highRise: '91,800',
-              gardenHouse: '-',
-              stackedTownhouses: '-',
-              townhouse: '-',
-              praetorium: '-',
-              affordableHouses: '-',
-              condo: '-',
-              commercial: '-',
-              sohoLeveling: '-',
-              sohoPycnocline: '-',
-              sohoLevelingHigh: '-',
-              sohoPycnoclineHigh: '-',
-              salesBusiness: '-',
-              budgetHotel: '-',
-              starredHotel: '-',
-              officeBuilding: '-',
-              officeBuildingHigh: '-',
-              carport: '-',
-              storeroom: '-',
-              total: '-'
-            }
-          ]
-        }
-      }
-    },
-    methods: {
-      objectSpanMethod({ row, column, rowIndex, columnIndex }) {
-        if (columnIndex === 0) {
-          if (rowIndex % 3 === 0) {
-            return {
-              rowspan: 3,
-              colspan: 1
-            }
-          } else {
-            return {
-              rowspan: 0,
-              colspan: 0
-            }
-          }
-        }
-      }
-    }
-  }
+ import { mapGetters } from 'vuex'
+ import treeTable from '@/components/TreeTable'
+ import treeToArray from '@/components/treeTable/customEval'
+ export default {
+   components: {
+     treeTable
+   },
+   data() {
+     return {
+       level: 2,
+       func: treeToArray,
+       args: [null, null, true, 'timeLine']
+     }
+   },
+   computed: {
+     ...mapGetters(['targetCost'])
+   },
+   methods: {
+     // 改变层级
+     changeLevel(_level) {
+       this.level = _level
+     }
+   },
+   created: function() {
+     // 获取目标成本的财务口径分摊
+     this.$store.dispatch('GetCaliberApportion', { investmentcostid: this.$route.params.id, sharetype: '3' })
+   }
+ }
 </script>
 
 <style scoped>
+  /**
+      项目地块图下边距
+     */
+  .piecerow_bottom {
+    padding-bottom: 15px;
+  }
+  /**
+    项目地块图和版本摘要
+   */
+  .piecerow {
+    background-color: #feffff;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    color: #333;
+    font-size: 14px;
+  }
+  .piecerow_main {
+    background-color: #edf2f7;
+    padding: 10px 10px;
+  }
+  /**
+    层级选项分页样式
+   */
+  .paging{
+    float: left;
+    margin-top: 13px;
+  }
+  /**
+    层级选项
+   */
+  .hierarchy{
+    float: left;
+    margin-top: 20px;
+    margin-left: 10px;
+    font-size: 14px;
+  }
+  /**
+      保存按钮样式
+     */
+  .saveBtn{
+    float: right;
+    margin-right: 15px;
+    margin-bottom: 5px;
+    background-color: #7986a9;
+    color: white;
+  }
 </style>

@@ -2,13 +2,15 @@
   <div class="dashboard-container">
 
     <h2>input 千分位</h2>model:{{price}}
-    <format-input currency="$" separator="," :precision="2" v-model="price" :max="10000000" :min="-10000000" class="w300"></format-input>
+    <format-input currency="¥" separator="," :precision="2" v-model="price" :max="10000000" :min="-10000000" class="w300" emptyValue="-" :minus="true"></format-input>
     <p>precision-小数点位数</p>
     <p>currency-自定义符号</p>
     <p>separator-分隔符</p>
+    <p>emptyValue-值为空或0时自定义显示内容</p>
     <p>read-only="true"-只显示文本</p>
     <p>max-最大值</p>
     <p>min-最小值</p>
+    <p>minus-boolean-是否启动负数和最小值</p>
 
     <el-upload class="upload-demo" action="https://jsonplaceholder.typicode.com/posts/" :on-preview="handlePreview" :on-remove="handleRemove" :file-list="fileList2" list-type="picture">
       <el-button size="small" type="primary">点击上传</el-button>
@@ -20,7 +22,7 @@
     <p>小数点后保留3位小数 {{2000|currency(3)}}</p>
     <p> 自定义千位分隔符{{2000|currency(3,'-')}}</p>
 
-    <h1>{{count}}</h1>
+    <h1>{{$demo.count}}</h1>
     <button @click="decreaseCount()">-</button>
     <button @click="increaseCount()">+</button>
 
@@ -63,7 +65,7 @@ Vue.use(vueEventCalendar, {
 export default {
   components: { InputTag, formatInput },
   computed: {
-    ...mapGetters(['name', 'roles', 'count'])
+    ...mapGetters(['name', 'roles', '$demo'])
   },
   data() {
     return {

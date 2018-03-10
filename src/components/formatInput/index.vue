@@ -107,7 +107,7 @@ export default {
      */
     value: {
       type: [Number, String],
-      default: 0,
+      default: '',
       required: true
     },
     /**
@@ -137,7 +137,8 @@ export default {
     }
   },
   data: () => ({
-    amount: ''
+    amount: '',
+    isFocus: false
   }),
   computed: {
     /**
@@ -193,7 +194,13 @@ export default {
      */
     valueNumber(newValue) {
       if (this.$refs.numeric !== document.activeElement) {
-        this.amount = this.format(newValue)
+        if (typeof parseInt(newValue) === 'number' && newValue !== 0) {
+          this.amount = this.format(newValue)
+        } else {
+          this.isFocus
+            ? (this.amount = this.format(newValue))
+            : (this.amount = this.emptyValue)
+        }
       }
     },
     /**
@@ -250,14 +257,20 @@ export default {
      * @param {Object} e
      */
     onBlurHandler(e) {
+      this.isFocus = false
       this.$emit('blur', e)
-      this.amount = this.format(this.valueNumber)
+      if (this.valueNumber && this.valueNumber !== null) {
+        this.amount = this.format(this.valueNumber)
+      } else {
+        this.amount = this.emptyValue
+      }
     },
     /**
      * Handle focus event.
-     * @param {Object} e
+     * @param {Object}
      */
     onFocusHandler(e) {
+      this.isFocus = true
       this.$emit('focus', e)
       if (this.valueNumber === 0) {
         this.amount = null
@@ -278,7 +291,7 @@ export default {
       this.process(this.amountNumber)
     },
     /**
-     * Validate value before update the component.
+     * Validate value before update the component. ok
      * @param {Number} value
      */
     process(value) {
@@ -294,12 +307,19 @@ export default {
      * @param {Number} value
      */
     update(value) {
-      const fixedValue = accounting.toFixed(value, this.precision)
-      const output =
-        this.outputType.toLowerCase() === 'string'
-          ? fixedValue
-          : Number(fixedValue)
-      this.$emit('input', output)
+      if (
+        (typeof parseInt(value) === 'number' && value !== 0) ||
+        value === ''
+      ) {
+        const fixedValue = accounting.toFixed(value, this.precision)
+        const output =
+          this.outputType.toLowerCase() === 'string'
+            ? fixedValue
+            : Number(fixedValue)
+        this.$emit('input', output)
+      } else {
+        this.$emit('input', value)
+      }
     },
     /**
      * Format value using symbol and separator.
@@ -307,13 +327,17 @@ export default {
      * @return {String}
      */
     format(value) {
-      return accounting.formatMoney(value, {
-        symbol: this.currency,
-        format: this.symbolPosition,
-        precision: Number(this.precision),
-        decimal: this.decimalSeparatorSymbol,
-        thousand: this.thousandSeparatorSymbol
-      })
+      if (value !== 0) {
+        return accounting.formatMoney(value, {
+          symbol: this.currency,
+          format: this.symbolPosition,
+          precision: Number(this.precision),
+          decimal: this.decimalSeparatorSymbol,
+          thousand: this.thousandSeparatorSymbol
+        })
+      } else if (!this.isFocus) {
+        return this.emptyValue
+      }
     },
     /**
      * Remove symbol and separator.

@@ -2,19 +2,25 @@
  * 合同store
  */
 import {
-  findContracts
+  findContracts,
+  jumpContract,
+  obtainPayment
 } from 'api/contract'
 
 import {
   SET_CONTRACTS,
-  SET_FETCHING_CONTRACTS
+  JUMP_CONTRACT,
+  SET_CONTRACTS_PAYMENT
 } from '../../constants/contract'
 
 export default {
   state: {
     contracts: [],
     pagination: { pageIndex: 0, pageSize: 10, total: 0 },
-    isFetchingContracts: false
+    jumpContract: [],
+    obtainPayment: {
+      paymentConditions: {}
+    }
   },
 
   mutations: {
@@ -22,8 +28,12 @@ export default {
       state.contracts = data.data
       state.pagination = { ...state.pagination, total: data.total }
     },
-    [SET_FETCHING_CONTRACTS](state, isFetching) {
-      state.isFetchingContracts = isFetching
+    [JUMP_CONTRACT](state, data) {
+      console.log(data)
+      state.jumpContract = data
+    },
+    [SET_CONTRACTS_PAYMENT](state, data) {
+      state.obtainPayment = data.data
     }
   },
 
@@ -31,11 +41,24 @@ export default {
     FindContracts({
       commit
     }, data) {
-      console.log(data)
-      commit(SET_FETCHING_CONTRACTS, true)
-      return findContracts().then(data => {
+      return findContracts(data).then(data => {
         commit(SET_CONTRACTS, data)
-        commit(SET_FETCHING_CONTRACTS, false)
+        return data
+      })
+    },
+    JumpContract({
+      commit
+    }, keywords) {
+      return jumpContract(keywords).then(data => {
+        commit(JUMP_CONTRACT, data)
+        return data
+      })
+    },
+    ObtainPayment({
+      commit
+    }) {
+      return obtainPayment().then(data => {
+        commit(SET_CONTRACTS_PAYMENT, data)
         return data
       })
     }

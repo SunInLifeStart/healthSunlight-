@@ -1,174 +1,101 @@
 <template>
-  <div style="margin: 8px">
-    <el-tabs type="border-card">
+  <div style="background-color: #EEF2F6;padding: 8px">
+    <el-tabs style="background-color: #ffffff;">
       <el-tab-pane label="目标成本">
-        <div style="margin: 0px -16px 0 -16px; border-bottom: solid 1px #ebeef5;border-radius:0 0 4px 4px;">
-          <el-row :gutter="20" >
-                <el-col :span="7" :push="1">
-                  <el-col :span="8">
-                    <div class="div-font">组织机构：</div>
-                  </el-col>
-                  <el-col :span="16">
-                    <div>
-                      <el-cascader
-                        size="small"
-                        :options="budgetAdj.options1"
-                        :props="budgetAdj.budgetAdjprops"
-                      ></el-cascader>
-                    </div>
-                  </el-col>
-                </el-col>
-                <el-col :span="7" :push="1">
-                  <el-col :span="8">
-                    <div class="div-font">项目名称：</div>
-                  </el-col>
-                  <el-col :span="16">
-                    <div>
-                      <el-cascader
-                        size="small"
-                        :options="budgetAdj.projectOptions"
-                        :props="budgetAdj.projectProps"
-                      ></el-cascader>
-                    </div>
-                  </el-col>
-                </el-col>
-                <el-col :span="7" :push="1">
-                  <el-col :span="6">
-                    <div class="div-font">分期：</div>
-                  </el-col>
-                  <el-col :span="16">
-                    <el-cascader
-                      size="small"
-                      :options="budgetAdj.agingOptions"
-                      :props="budgetAdj.agingProps"
-                    ></el-cascader>
-                  </el-col>
-                </el-col>
-                <el-col :span="2">
-                  <el-button size="small" icon="el-icon-search"></el-button>
-                </el-col>
-              </el-row>
-          <el-dialog :visible.sync="showFlag" style="width:130%;left:-145px">
-              <el-collapse v-model="activeNames">
-                <el-collapse-item title="基本信息" name="1">
-                  <div class="border-top">
-                    <el-row :gutter="20">
-                      <el-col :span="8">
-                        <el-col :span="6">
-                          <p>目标版本</p>
-                        </el-col>
-                        <el-col :span="18">
-                          <el-input></el-input>
-                        </el-col>
-                      </el-col>
-                      <el-col :span="8">
-                        <el-col :span="6"><p>预算版本</p></el-col>
-                        <el-col :span="18">
-                          <el-select v-model="value" placeholder="请选择">
-                            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                            </el-option>
-                          </el-select>
-                        </el-col>
-                      </el-col>
-                      <el-col :span="8">
-                        <el-col :span="6"><p>预算金额(含土地费)</p></el-col>
-                        <el-col :span="18">
-                          <el-select v-model="value" placeholder="请选择">
-                            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                            </el-option>
-                          </el-select>
-                        </el-col>
-                      </el-col>
-                      <el-col :span="8">
-                        <el-col :span="6">
-                          <p>测算人</p>
-                        </el-col>
-                        <el-col :span="18">
-                          <el-input></el-input>
-                        </el-col>
-                      </el-col>
-                      <el-col :span="8">
-                        <el-col :span="6">
-                          <p>测算日期</p>
-                        </el-col>
-                        <el-col :span="18">
-                          <el-input></el-input>
-                        </el-col>
-                      </el-col>
-                      <el-col :span="8">
-                        <el-col :span="6">
-                          <p>预算金额(不含土地费)</p>
-                        </el-col>
-                        <el-col :span="18">
-                          <el-input></el-input>
-                        </el-col>
-                      </el-col>
-                      <el-col :span="8">
-                        <el-col :span="6">
-                          <p>其中的商业金额</p>
-                        </el-col>
-                        <el-col :span="18">
-                          <el-input></el-input>
-                        </el-col>
-                      </el-col>
-                      <el-col :span="24">
-                        <el-col :span="2"><p>版本说明</p></el-col>
-                        <el-col :span="22">
-                          <el-input
-                            type="textarea"
-                            :autosize="{ minRows: 2, maxRows: 4}"
-                            placeholder="请输入内容">
-                          </el-input>
-                        </el-col>
-                      </el-col>
-                    </el-row>
-                  </div>
-                  <div style="padding-top:20px;text-align: center">
-                    <el-button type="primary" size="small" @click="radioEvent()">确定</el-button>
-                  </div>
-                </el-collapse-item>
-              </el-collapse>
-            </el-dialog>
+        <div style="border-bottom: solid 1px #ebeef5">
+          <!--表单校验-->
+          <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+            <el-row :gutter="20">
+              <el-col :span="5">
+                <el-form-item label="大业态" prop="format">
+                  <el-select v-model="ruleForm.format" size="small" clearable placeholder="请选择大业态">
+                    <el-option
+                      v-for="item in budgetAdj.options1"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="5">
+                <el-form-item label="组织机构" prop="organize">
+                  <el-select v-model="ruleForm.organize" size="small" clearable placeholder="请选择组织机构">
+                    <el-option
+                      v-for="item in budgetAdj.options1"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="5">
+                <el-form-item label="项目名称" prop="name">
+                  <el-select v-model="ruleForm.name" size="small" clearable placeholder="请选择组织机构">
+                    <el-option
+                      v-for="item in budgetAdj.projectOptions"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="5">
+                <el-form-item label="分期" prop="periodization">
+                  <el-select v-model="ruleForm.periodization" size="small" clearable placeholder="请选择组织机构">
+                    <el-option
+                      v-for="item in budgetAdj.agingOptions"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="4">
+                <!--<el-form-item>-->
+                  <el-button @click="targetSearch('ruleForm','search')" icon="el-icon-search"  size="mini" type="primary">搜索</el-button>
+                <!--</el-form-item>-->
+              </el-col>
+            </el-row>
+          </el-form>
+          <!--按钮-->
+          <el-row :gutter="20">
+            <el-col :span="8" :push="16">
+              <el-button size="mini" icon="el-icon-circle-plus-outline" type="text" @click="targetSearch('ruleForm')">新增</el-button>
+              <el-button size="mini" icon="el-icon-delete" type="text" @click="" :disabled="delBtnFlag">删除</el-button>
+              <el-button size="mini" icon="el-icon-document" type="text" @click="" :disabled="delBtnFlag">发起审批</el-button>
+              <el-button size="mini" icon="el-icon-document" type="text" @click="">审批过程</el-button>
+            </el-col>
+          </el-row>
           <div style="padding: 0 8px 8px 8px">
-              <el-row :gutter="20">
-                <el-col :span="8" :push="16">
-                  <el-col :span="6">
-                    <el-button type="text" @click="showFlag = true"><span style="font-size: 22px">+</span>&nbsp新增</el-button>
-                  </el-col>
-                  <el-col :span="6">
-                    <el-button type="text" ><span style="font-size: 22px">+</span>&nbsp版本删除</el-button>
-                  </el-col>
-                  <el-col :span="6">
-                    <el-button type="text"><span style="font-size: 22px">+</span>&nbsp发起审批</el-button>
-                  </el-col>
-                  <el-col :span="6">
-                    <el-button type="text"><span style="font-size: 22px">+</span>&nbsp审批过程</el-button>
-                  </el-col>
-                </el-col>
-
-              </el-row>
               <el-table
-                :data="budgetAdj.table"
+                :data="$cost.targetCost.costInformation"
                 border
                 size="small"
-                @row-click="goVersion"
-                style="width: 99%">
+                highlight-current-row
+                @current-change="handleCurrentChange"
+                @row-dblclick="goVersion"
+                :default-sort = "{prop: 'approvedate', order: 'descending'}"
+                :header-cell-style="{background:'#E8F4F9', 'text-align': 'center', color: '#7986a9',fontSize:'13px',padding:'3px 0',fontWeight:'500'}">
                 <el-table-column
                   type="index"
                   label="序号"
                 >
                 </el-table-column>
                 <el-table-column
-                  prop="status"
+                  prop="recordstatus"
                   label="状态"
                 >
                 </el-table-column>
                 <el-table-column
-                  prop="version"
+                  prop="versionname"
                   label="版本">
                 </el-table-column>
                 <el-table-column
-                  prop="targetCost"
+                  prop="budgetamt"
                   label="目标成本金额">
                 </el-table-column>
                 <el-table-column
@@ -188,11 +115,11 @@
                   label="变动比例">
                 </el-table-column>
                 <el-table-column
-                  prop="value"
+                  prop="valueof"
                   label="货值(万元)">
                 </el-table-column>
                 <el-table-column
-                  prop="netProfitRatio"
+                  prop="netinterestrate"
                   label="净利率">
                 </el-table-column>
                 <el-table-column
@@ -200,15 +127,15 @@
                   label="毛利率">
                 </el-table-column>
                 <el-table-column
-                  prop="IRR"
+                  prop="irr"
                   label="IRR">
                 </el-table-column>
                 <el-table-column
-                  prop="handler"
+                  prop="modifyuserid"
                   label="经办人">
                 </el-table-column>
                 <el-table-column
-                  prop="auditingDate"
+                  prop="modifydate"
                   label="审批日期">
                 </el-table-column>
               </el-table>
@@ -220,149 +147,47 @@
           </el-card>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="模板管理" disabled="true">
-        <el-row :gutter="20">
-          <el-col :span="8">
-            <el-col :span="6">
-              <el-button size="mini" ype="info" plain>新增</el-button>
-            </el-col>
-            <el-col :span="6">
-              <el-button size="mini" ype="info" plain>修改</el-button>
-            </el-col>
-            <el-col :span="6">
-              <el-button size="mini" ype="info" plain>删除</el-button>
-            </el-col>
-            <el-col :span="6">
-              <el-button size="mini" ype="info" plain>生效</el-button>
-            </el-col>
-          </el-col>
-          <el-col :span="8">&nbsp</el-col>
-          <el-col :span="8">
-            <el-col :span="6">
-              &nbsp
-            </el-col>
-            <el-col :span="6">
-              <el-button size="mini" ype="info" plain>发起审批</el-button>
-            </el-col>
-            <el-col :span="6">
-              <el-button size="mini" ype="info" plain>审批过程</el-button>
-            </el-col>
-          </el-col>
-        </el-row>
-        <el-table
-          :data="tableData"
-          border
-          size="small"
-          style="width: 100%">
-          <el-table-column
-            prop="date"
-            label="版本编号"
-            width="180">
-          </el-table-column>
-          <el-table-column
-            prop="name"
-            label="版本状态"
-            width="180">
-          </el-table-column>
-          <el-table-column
-            prop="address"
-            label="编制人">
-          </el-table-column>
-          <el-table-column
-            prop="address"
-            label="批准人">
-          </el-table-column>
-          <el-table-column
-            prop="address"
-            label="生效日期">
-          </el-table-column>
-          <el-table-column
-            prop="address"
-            label="失效日期">
-          </el-table-column>
-          <el-table-column
-            prop="address"
-            label="审批状态">
-          </el-table-column>
-          <el-table-column
-            prop="address"
-            label="说明">
-          </el-table-column>
-        </el-table>
-      </el-tab-pane>
+      <el-tab-pane label="模板管理" disabled></el-tab-pane>
     </el-tabs>
   </div>
 </template>
 
 <script>
   import Chart from '@/components/Charts/index'
-
+  import { mapGetters, mapActions } from 'vuex'
   export default {
     components: { Chart },
     data() {
       return {
         value: '',
         budgetAdj: {
-          table: [
-            {
-              status: '已审批',
-              version: 'BJ-LH2018',
-              targetCost: '嘉兴',
-              managementUnit: '秀洲区',
-              financialUnit: 'Jx-sa213',
-              changesAmount: '大大阿瓦撒旦是',
-              changesRatio: 'planA',
-              value: '2000',
-              netProfitRatio: '5000000',
-              grossMargin: '2000',
-              IRR: '1000',
-              handler: 'wln',
-              approvalTime: '20160101',
-              auditingDate: '20180216'
-            }
-          ],
           projectOptions: [
             {
               label: '龙湖',
-              cities: []
+              value: '选项1'
             }, {
               label: '大明湖',
-              cities: []
+              value: '选项2'
             }],
-          projectProps: {
-            value: 'cityLabel',
-            children: ''
-          },
           options1: [
             {
               label: '龙湖',
-              cities: []
-            }, {
+              value: '选项1'
+            },
+            {
               label: '大明湖',
-              cities: []
-            }],
-          props: {
-            value: 'label',
-            children: ''
-          },
+              value: '选项2'
+            }
+          ],
           agingOptions: [
             {
               label: '跨期',
-              cities: []
+              value: '选项1'
             }, {
               label: '不跨期',
-              cities: []
-            }],
-          agingProps: {
-            value: 'label',
-            children: ''
-          }
+              value: '选项2'
+            }]
         },
-        tableData: [{
-          date: 'ASDAS123',
-          name: 'ASDASD',
-          address: 'SAD试试AS'
-        }],
         option: {
           tooltip: {
             trigger: 'axis',
@@ -495,16 +320,74 @@
         showFlag: false,
         radio: '',
         activeNames: ['1'],
-        options: ''
+        options: '',
+        // 检验
+        ruleForm: {
+          format: '',
+          organize: '',
+          name: '',
+          periodization: ''
+        },
+        rules: {
+          format: [
+            { required: true, message: '请选择组织机构', trigger: 'change' }
+          ],
+          organize: [
+            { required: true, message: '请选择组织机构', trigger: 'change' }
+          ],
+          name: [
+            { required: true, message: '请选择项目名称', trigger: 'change' }
+          ],
+          periodization: [
+            { required: true, message: '请选择分期', trigger: 'change' }
+          ]
+        },
+        delBtnFlag: true
       }
     },
+    computed: {
+      ...mapGetters([
+        '$cost',
+        '$targetCost'
+      ])
+    },
     methods: {
+      ...mapActions([
+        'getCostInformation'
+      ]),
       radioEvent() {
         this.showFlag = false
         this.adapterSelected = this.radio
       },
-      goVersion() {
-        this.$router.push({ name: 'version' })
+      goVersion(currentRow) {
+        this.handleCurrentChange(currentRow)
+        window.open(window.origin + '/#/targetCost/version/' + currentRow.budgetcostid + '/' + this.delBtnFlag, '_blank')
+      },
+      handleCurrentChange(currentRow) {
+        if (currentRow.recordstatus === '审批中' || currentRow.recordstatus === '已审批') {
+          this.delBtnFlag = true
+        } else {
+          this.delBtnFlag = false
+        }
+      },
+      // 查询
+      targetSearch(formName, type) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            // 点击查询按钮
+            if (type === 'search') {
+              // 查询调接口
+              this.getCostInformation({ 'searchTarget': this.ruleForm })
+            } else {
+//              点击新增跳转
+//              this.$router.push({ name: 'version' })
+              window.open(window.origin + '/#/targetCost/version/0/false', '_blank')
+            }
+          } else {
+            console.log('error submit!!')
+            return false
+          }
+        })
       }
     }
   }

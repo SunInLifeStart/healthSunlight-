@@ -3,50 +3,52 @@
 </template>
 
 <script>
-import echarts from 'echarts'
+  import echarts from 'echarts'
 
-export default {
-  props: {
-    option: {
-      type: Object
+  export default {
+    props: {
+      option: {
+        type: Object
+      },
+      className: {
+        type: String,
+        default: 'chart'
+      },
+      id: {
+        type: String,
+        default: 'chart'
+      },
+      width: {
+        type: String,
+        default: '200px'
+      },
+      height: {
+        type: String,
+        default: '200px'
+      }
     },
-    className: {
-      type: String,
-      default: 'chart'
+    data() {
+      return {
+        chart: null
+      }
     },
-    id: {
-      type: String,
-      default: 'chart'
+    mounted() {
+      this.$nextTick(function() {
+        this.initChart()
+      })
     },
-    width: {
-      type: String,
-      default: '200px'
+    beforeDestroy() {
+      if (!this.chart) {
+        return
+      }
+      this.chart.dispose()
+      this.chart = null
     },
-    height: {
-      type: String,
-      default: '200px'
-    }
-  },
-  data() {
-    return {
-      chart: null
-    }
-  },
-  mounted() {
-    this.initChart()
-  },
-  beforeDestroy() {
-    if (!this.chart) {
-      return
-    }
-    this.chart.dispose()
-    this.chart = null
-  },
-  methods: {
-    initChart() {
-      this.chart = echarts.init(document.getElementById(this.id))
-      this.chart.setOption(this.option)
+    methods: {
+      initChart() {
+        this.chart = echarts.init(document.getElementById(this.id))
+        this.chart.setOption(this.option)
+      }
     }
   }
-}
 </script>

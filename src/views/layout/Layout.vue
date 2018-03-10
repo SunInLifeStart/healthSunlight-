@@ -12,7 +12,7 @@
 
 <script>
 import { Navbar, Sidebar, AppMain } from '@/views/layout'
-
+import { mapMutations } from 'vuex'
 export default {
   name: 'layout',
   components: {
@@ -24,6 +24,12 @@ export default {
     sidebar() {
       return this.$store.state.app.sidebar
     }
+  },
+  methods: {
+    ...mapMutations(['postUrl'])
+  },
+  mounted() {
+    this.postUrl(this.$route.path)
   }
 }
 </script>

@@ -2,7 +2,7 @@
 
 ## 技术栈
 
-vue + vuex + vue-router + webpack3 + fetch + sass
+vue + vuex + vue-router + webpack3 + axios + sass
 
 ## 部署
 

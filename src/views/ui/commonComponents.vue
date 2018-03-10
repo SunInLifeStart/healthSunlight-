@@ -11,16 +11,18 @@
           </el-carousel-item>
         </el-carousel>
       </el-col>
-      <el-col class="margin-top2">
-        <div>轮播图卡片化</div>
-      </el-col>
-      <el-col :span="24" class="margin-top2">
-        <el-carousel :interval="4000" type="card" height="200px">
-          <el-carousel-item v-for="item in 6" :key="item">
-            <h3>{{ item }}</h3>
-          </el-carousel-item>
-        </el-carousel>
-      </el-col>
+
+      <!--<el-col class="margin-top2">-->
+        <!--<div>轮播图卡片化</div>-->
+      <!--</el-col>-->
+      <!--<el-col :span="24" class="margin-top2">-->
+        <!--<el-carousel :interval="4000" type="card" height="200px">-->
+          <!--<el-carousel-item v-for="item in 6" :key="item">-->
+            <!--<h3>{{ item }}</h3>-->
+          <!--</el-carousel-item>-->
+        <!--</el-carousel>-->
+      <!--</el-col>-->
+
       <el-col class="margin-top2">
         <div>tab切换</div>
       </el-col>
@@ -51,14 +53,16 @@
           <el-breadcrumb-item>活动详情</el-breadcrumb-item>
         </el-breadcrumb>
       </el-col>
-      <el-col :span="12" class="margin-top2">
-        <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-          <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-          <el-breadcrumb-item>活动详情</el-breadcrumb-item>
-        </el-breadcrumb>
-      </el-col>
+
+      <!--<el-col :span="12" class="margin-top2">-->
+        <!--<el-breadcrumb separator-class="el-icon-arrow-right">-->
+          <!--<el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>-->
+          <!--<el-breadcrumb-item>活动管理</el-breadcrumb-item>-->
+          <!--<el-breadcrumb-item>活动列表</el-breadcrumb-item>-->
+          <!--<el-breadcrumb-item>活动详情</el-breadcrumb-item>-->
+        <!--</el-breadcrumb>-->
+      <!--</el-col>-->
+
       <el-col class="margin-top2">
         <div>弹窗</div>
       </el-col>

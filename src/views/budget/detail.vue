@@ -87,6 +87,9 @@
         <el-table-column prop="remarks" label="备注" width="180"></el-table-column>
       </el-table>
     </el-tab-pane>
+    <el-button size="mini" @click="goDeclare">资金计划上报</el-button>
+    <el-button size="mini" @click="goConfirm">资金计划确认</el-button>
+    <el-button size="mini" @click="goSum">合计</el-button>
   </el-tabs>
 </template>
 
@@ -129,6 +132,18 @@
     methods: {
       goBudgetTotal() {
         this.$router.push({ name: 'BudgetTotal' })
+      },
+      goDeclare() {
+        this.$router.push({ name: '资金计划上报' })
+      },
+      goConfirm() {
+        this.$router.push({ name: '资金计划确认' })
+      },
+      goDetail(id) {
+        this.$router.push({ name: '资金计划查看', params: { id }})
+      },
+      goSum() {
+        this.$router.push({ name: '部门资金' })
       }
     }
   }

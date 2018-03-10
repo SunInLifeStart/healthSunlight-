@@ -5,7 +5,7 @@
         <el-col :span="6" :offset="18">
           <el-button>发起审批</el-button>
           <el-button>导出</el-button>
-          <el-button>保存</el-button>
+          <el-button :disabled="isDisabled" @click="SaveStandardCostBase(baseCost)">保存</el-button>
         </el-col>
       </el-row>
       <el-collapse-item title="基本信息" name="1">
@@ -16,14 +16,14 @@
                 <p>城市</p>
               </el-col>
               <el-col :span="18">
-                <el-input></el-input>
+                <el-input v-model="baseCost.cityname" :disabled="isDisabled"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8">
               <el-col :span="6"><p>业态</p></el-col>
               <el-col :span="18">
-                <el-select v-model="value" placeholder="请选择">
-                  <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"
+                <el-select v-model="baseCost.producttypecode" placeholder="请选择" :disabled="isDisabled">
+                  <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
                   </el-option>
                 </el-select>
               </el-col>
@@ -31,8 +31,8 @@
             <el-col :span="8">
               <el-col :span="6"><p>配置</p></el-col>
               <el-col :span="18">
-                <el-select v-model="value" placeholder="请选择">
-                  <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"
+                <el-select v-model="baseCost.constructioncfg" placeholder="请选择" :disabled="isDisabled">
+                  <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
                   </el-option>
                 </el-select>
               </el-col>
@@ -42,7 +42,7 @@
                 <p>版本号</p>
               </el-col>
               <el-col :span="18">
-                <el-input></el-input>
+                <el-input v-model="baseCost.version" :disabled="isDisabled"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8">
@@ -50,7 +50,19 @@
                 <p>测算日期</p>
               </el-col>
               <el-col :span="18">
-                <el-input></el-input>
+                <el-date-picker
+                  v-if="!isDisabled"
+                  v-model="baseCost.calculatedate"
+                  type="date"
+                  placeholder="选择日期">
+                </el-date-picker>
+                <el-date-picker
+                  v-else
+                  disabled
+                  v-model="baseCost.calculatedate"
+                  type="date"
+                  placeholder="选择日期">
+                </el-date-picker>
               </el-col>
             </el-col>
             <el-col :span="8">
@@ -58,7 +70,7 @@
                 <p>测算人</p>
               </el-col>
               <el-col :span="18">
-                <el-input></el-input>
+                <el-input v-model="baseCost.calculateperson" :disabled="isDisabled"></el-input>
               </el-col>
             </el-col>
             <el-col :span="24">
@@ -67,6 +79,8 @@
                 <el-input
                   type="textarea"
                   :autosize="{ minRows: 2, maxRows: 4}"
+                  v-model="baseCost.versionremark"
+                  :disabled="isDisabled"
                   placeholder="请输入内容">
                 </el-input>
               </el-col>
@@ -77,11 +91,11 @@
       </el-collapse-item>
       <el-collapse-item title="项目基本信息" name="2">
         <div class="border-top">
-          <el-table :data="tableData" border width="100%" size="small">
+          <el-table :data="baseCost.cmSandardBaseinfoListVos" border width="100%" size="small">
             <el-table-column type="index" width="80" align="center" label="序号"></el-table-column>
-            <el-table-column prop="date" label="内容" align="center" width="400"></el-table-column>
-            <el-table-column prop="" label="值" align="center" width="360"></el-table-column>
-            <el-table-column prop="name" width="440" align="center" label="备注"></el-table-column>
+            <el-table-column prop="contentinfo" label="内容" align="center" width="400"></el-table-column>
+            <el-table-column prop="provalue" label="值" align="center" width="360"></el-table-column>
+            <el-table-column prop="remark" width="440" align="center" label="备注"></el-table-column>
           </el-table>
         </div>
       </el-collapse-item>
@@ -93,12 +107,12 @@
               <i class="el-icon-upload2">批量下载</i>
             </el-col>
           </el-row>
-          <el-table :data="tableData1" border width="100%" size="small">
+          <el-table :data="baseCost.cmStandardAnnexListVos" border width="100%" size="small">
             <el-table-column type="index" width="80" align="center" label="序号"></el-table-column>
-            <el-table-column type="index" width="220" align="upTime" label="上传时间"></el-table-column>
-            <el-table-column prop="dateType" label="附件类型" align="center" width="220"></el-table-column>
-            <el-table-column prop="data" label="附件名称" align="center" width="260"></el-table-column>
-            <el-table-column prop="remark" width="260" align="center" label="备注"></el-table-column>
+            <el-table-column prop="uploaddate" width="220" align="upTime" label="上传时间"></el-table-column>
+            <el-table-column prop="annextype" label="附件类型" align="center" width="220"></el-table-column>
+            <el-table-column prop="annexname" label="附件名称" align="center" width="260"></el-table-column>
+            <el-table-column prop="annesremark" width="260" align="center" label="备注"></el-table-column>
             <el-table-column prop="operation" width="260" align="center" label="操作">
               <template slot-scope="scope">
                 <el-button type="text" size="small">替换</el-button>
@@ -110,95 +124,46 @@
         </div>
       </el-collapse-item>
     </el-collapse>
+
   </div>
 
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
   export default {
     data() {
       return {
-        weaveExplain: {
-          edition: '调整版',
-          shaft: 'V1',
-          calculateDate: '2017-10-11',
-          calculateMen: 'sadas',
-          direction: '精装修工程各部品部类合约规划拆分，已签合同含量及单价按实调整。',
-          information: [
-            {
-              upTime: '2018-01-01',
-              fileType: '网址',
-              enclosure: 'www.baidu.com',
-              replace: '替换',
-              remove: '删除',
-              download: '下载'
-            }
-          ],
-          buildingInformation: [
-            {
-              group: '1组团',
-              buildingNo: '1',
-              format: '高',
-              coveredArea: '8000'
-            }, {
-              group: '2组团',
-              buildingNo: '2',
-              format: '高',
-              coveredArea: '8000'
-            }, {
-              group: '3组团',
-              buildingNo: '3',
-              format: '高',
-              coveredArea: '8000'
-            }, {
-              group: '4组团',
-              buildingNo: '4',
-              format: '高',
-              coveredArea: '8000'
-            }
-          ]
+        isDisabled: this.$route.params.isDisabled !== 'false',
+        baseCost: {
+          baseInfo: {}
         },
         activeNames: ['1'],
         options: [
           {
-            value: 'w',
+            value: '2',
             label: '北京'
-          }
-        ],
-        value: [],
-        tableData: [
-          {
-            date: '项目景观配置定位',
-            name: 'p3',
-            province: '上海'
           },
           {
-            date: '场地类型',
-            name: 'san',
-            province: '上海'
+            value: '1',
+            label: '别墅'
           },
           {
-            date: '设防烈度',
-            name: 'san',
-            province: '上海'
-          },
-          {
-            date: '基本风压(kN/m²)',
-            name: 'san',
-            province: '上海'
-          }
-        ],
-        tableData1: [
-          {
-            upTime: '20160101',
-            dateType: 'p3',
-            data: '上海',
-            remark: 'wu'
+            value: 'P2',
+            label: '别墅'
           }
         ]
       }
     },
+    created() {
+      if (this.$route.params.standardCostId !== 'standardCostId') {
+        this.FindStandardCostBase({ standardcostid: this.$route.params.standardCostId }).then(data => {
+          this.baseCost = data
+        })
+      }
+    },
     methods: {
+      ...mapActions(['FindStandardCostBase', 'SaveStandardCostBase']),
       handleChange(val) {
       }
     }

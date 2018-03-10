@@ -201,100 +201,110 @@
           </el-collapse-item>
         </el-collapse>
       </el-tab-pane>
-      <el-tab-pane label="业务信息">
-        <i class="el-icon-circle-plus-outline">增加审批人/会签人</i>
-        <p>流程记录</p>
-        <el-table
-          style="width: 100%">
-          <el-table-column
-            prop=""
-            label="文档状态"
-            width="200">
-          </el-table-column>
-          <el-table-column
-            prop="name"
-            label="已审批/会签">
-          </el-table-column>
-          <el-table-column
-            prop=""
-            label="当前审批/会签">
-          </el-table-column>
-        </el-table>
-        <p>审批流</p>
-        <el-table
-          style="width: 100%">
-          <el-table-column
-            prop=""
-            label="序号"
-            width="200">
-          </el-table-column>
-          <el-table-column
-            prop="name"
-            label="步骤名称">
-          </el-table-column>
-          <el-table-column
-            prop=""
-            label="审批人/会签人">
-          </el-table-column>
-          <el-table-column
-            prop=""
-            label="新增审批人/会签人">
-          </el-table-column>
-          <el-table-column
-            prop=""
-            label="步骤类型">
-          </el-table-column>
-        </el-table>
-        <p>审批意见</p>
-        <el-table
-          style="width: 100%">
-          <el-table-column
-            prop=""
-            label="时间"
-            width="200">
-          </el-table-column>
-          <el-table-column
-            prop="name"
-            label="审批人">
-          </el-table-column>
-          <el-table-column
-            prop=""
-            label="动作">
-          </el-table-column>
-          <el-table-column
-            prop=""
-            label="意见">
-          </el-table-column>
-          <el-table-column
-            prop=""
-            label="附件">
-          </el-table-column>
-          <el-table-column
-            prop=""
-            label="协商记录">
-          </el-table-column>
-        </el-table>
-        <p>用印记录</p>
-        <el-table
-          style="width: 100%">
-          <el-table-column
-            prop=""
-            label="用印人"
-            width="200">
-          </el-table-column>
-          <el-table-column
-            prop="name"
-            label="用印时间">
-          </el-table-column>
-          <el-table-column
-            prop=""
-            label="用印类型">
-          </el-table-column>
-          <el-table-column
-            prop=""
-            label="说明">
-          </el-table-column>
-        </el-table>
+      <el-tab-pane label="审批流程">
+         <el-button size="mini" icon="el-icon-circle-plus-outline">增加审批人/会签人</el-button>
+         <p>审批流程</p>
+          <el-steps :active="1">
+            <el-step title="发起" icon="el-icon-edit"></el-step>
+            <el-step title="会签" icon="el-icon-news"></el-step>
+            <el-step title="审批1" icon="el-icon-picture"></el-step>
+            <el-step title="审批2" icon="el-icon-picture"></el-step>
+            <el-step title="审批3" icon="el-icon-picture"></el-step>
+          </el-steps>
+          <el-table
+            :data="tableData6"
+            :span-method="objectSpanMethod"
+            border
+            style="width: 100%; margin-top: 20px">
+            <el-table-column
+              prop="id"
+              label="序号"
+              width="180">
+            </el-table-column>
+            <el-table-column
+              prop="step"
+              label="步骤">
+            </el-table-column>
+            <el-table-column
+              prop="name"
+              label="审批人">
+            </el-table-column>
+            <el-table-column
+              prop="action"
+              label="动作">
+            </el-table-column>
+            <el-table-column
+              prop="opinion"
+              label="意见">
+            </el-table-column>
+             <el-table-column
+              prop="date"
+              label="时间">
+            </el-table-column> <el-table-column
+              prop="enclosure"
+              label="附件">
+            </el-table-column>
+          </el-table>
+          <el-collapse v-model="activeNames">
+            <el-collapse-item title="历史审批记录" name="1">
+              <el-table
+                :data="tableData6"
+                border
+                style="width: 100%; margin-top: 20px">
+                <el-table-column
+                  prop="id"
+                  label="序号"
+                  width="180">
+                </el-table-column>
+                <el-table-column
+                  prop="step"
+                  label="步骤">
+                </el-table-column>
+                <el-table-column
+                  prop="name"
+                  label="审批人">
+                </el-table-column>
+                <el-table-column
+                  prop="action"
+                  label="动作">
+                </el-table-column>
+                <el-table-column
+                  prop="opinion"
+                  label="意见">
+                </el-table-column>
+                <el-table-column
+                  prop="date"
+                  label="时间">
+                </el-table-column> <el-table-column
+                  prop="enclosure"
+                  label="附件">
+                </el-table-column>
+              </el-table>
+            </el-collapse-item>
+          </el-collapse>
+          <p>用印记录</p>
+           <el-table
+            :data="tableData6"
+            border
+            style="width: 100%; margin-top: 20px">
+            <el-table-column
+              prop="id"
+              label="用印人"
+              width="180">
+            </el-table-column>
+            <el-table-column
+              prop="step"
+              label="用印时间">
+            </el-table-column>
+            <el-table-column
+              prop="name"
+              label="用印人">
+            </el-table-column>
+            <el-table-column
+              prop="action"
+              label="说明">
+            </el-table-column>
+          </el-table>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -308,12 +318,78 @@
         tableData: [{
           name: '王小虎'
         }],
-        activeNames: ['1']
+        activeNames: [''],
+        tableData6: [{
+          id: '1',
+          step: '发起',
+          name: '王小虎',
+          action: '发起',
+          opinion: 'OK',
+          date: '2018/1/11 17:30',
+          enclosure: ''
+        }, {
+          id: '2',
+          step: '发起',
+          name: '王小虎',
+          action: '发起',
+          opinion: 'OK',
+          date: '2018/1/11 17:30',
+          enclosure: ''
+        }, {
+          id: '3',
+          step: '发起',
+          name: '王小虎',
+          action: '发起',
+          opinion: 'OK',
+          date: '2018/1/11 17:30',
+          enclosure: ''
+        }, {
+          id: '4',
+          step: '发起',
+          name: '王小虎',
+          action: '发起',
+          opinion: 'OK',
+          date: '2018/1/11 17:30',
+          enclosure: ''
+        }, {
+          id: '5',
+          step: '发起',
+          name: '王小虎',
+          action: '发起',
+          opinion: 'OK',
+          date: '2018/1/11 17:30',
+          enclosure: ''
+        }]
       }
     },
     methods: {
+      arraySpanMethod({ row, column, rowIndex, columnIndex }) {
+        if (rowIndex % 2 === 0) {
+          if (columnIndex === 0) {
+            return [1, 2]
+          } else if (columnIndex === 1) {
+            return [0, 0]
+          }
+        }
+      },
+      objectSpanMethod({ row, column, rowIndex, columnIndex }) {
+        if (columnIndex === 2) {
+          if (rowIndex % 2 === 0) {
+            return {
+              rowspan: 2,
+              colspan: 1
+            }
+          } else {
+            return {
+              rowspan: 0,
+              colspan: 0
+            }
+          }
+        }
+      }
     }
   }
+  
 </script>
 
 <style scoped>

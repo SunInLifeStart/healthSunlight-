@@ -1,72 +1,127 @@
 <template>
-  <div>
-    <span style="float: left; margin-top: 10px;">层级选项:</span>
-    <div class="block" style="width: 500px;float: left; margin-left: 100px;">
-      <el-slider v-model="value8" show-input :max="2" :min="1" show-stops></el-slider>
-    </div>
-    <div style="float: right">
-      <el-button>保存</el-button>
-    </div>
-    <el-table :data="buildStandard.table" border size="small" style="width: 100%">
-      <el-table-column prop="product" label=""></el-table-column>
-      <el-table-column prop="name" label=""></el-table-column>
-      <el-table-column prop="superTall" width="180" label="超高层>100m"></el-table-column>
-      <el-table-column prop="highRise" width="180" label="高层（18层以上，但<100M)"></el-table-column>
-      <el-table-column prop="highRise" width="180" label="小高层（10-18层以上)"></el-table-column>
-      <el-table-column prop="gardenHouse" width="180" label="花园洋房（9层以下"></el-table-column>
-      <el-table-column prop="stackedTownhouses" label="叠拼别墅"></el-table-column>
-      <el-table-column prop="townhouse" width="180" label="联排别墅"></el-table-column>
-      <el-table-column prop="praetorium" label="独栋别墅"></el-table-column>
-      <el-table-column prop="affordableHouses" width="180" label="廉（公）租房/经济适用房"></el-table-column>
-      <el-table-column prop="condo" width="180" label="限价房/自住型商品房"></el-table-column>
-      <el-table-column prop="sohoApartment" width="180" label="SOHO/酒店式公寓（100米以内）"></el-table-column>
-      <el-table-column prop="sohoApartmentHigh" width="180" label="SOHO/酒店式公寓（超高层）"></el-table-column>
-    </el-table>
+  <div class="piecerow_main">
+    <el-row class="piecerow">
+      <el-col :span="24">
+        <div style="padding: 10px;">
+          <el-button class="saveBtn" size="mini"  plain>保存</el-button>
+        </div>
+      </el-col>
+    </el-row>
+    <el-row class="piecerow piecerow_bottom piecerow_text">
+      <el-col :span="16" class="card_section">
+        <div style="width: 60%;">
+          <div class="hierarchy">层级选项：</div>
+          <div class="paging">
+            <el-pagination
+              background
+              layout="pager"
+              :current-page.sync="level"
+              @current-change="changeLevel(level)"
+              :total="20">
+            </el-pagination>
+          </div>
+        </div>
+      </el-col>
+      <tree-table :data="data" :columns="columns" :type="'col'" :evalFunc="func" :evalArgs="args"
+                  :stripe="true" :showLevel='level' border>
+      </tree-table>
+    </el-row>
   </div>
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
+  import treeTable from '@/components/TreeTable'
+  import treeToArray from '@/components/treeTable/customEval'
+
   export default {
+    components: { treeTable },
     data() {
       return {
-        buildStandard: {
-          table: [
-            {
-              product: '结构及粗装修',
-              name: '结构形式',
-              superTall: '混凝土框架',
-              highRise: '混凝土框架剪力墙',
-              gardenHouse: '混凝土框架剪力墙',
-              stackedTownhouses: '混凝土框架（楼电梯间为剪力墙）',
-              townhouse: '混凝土框架（楼电梯间为剪力墙）',
-              praetorium: '混凝土框架（楼电梯间为剪力墙）',
-              affordableHouses: '',
-              condo: '',
-              sohoApartment: '',
-              sohoApartmentHigh: ''
-            },
-            {
-              product: '门窗工程',
-              name: '单元门',
-              superTall: '无',
-              highRise: '无',
-              gardenHouse: '无',
-              stackedTownhouses: '不锈钢+中空玻璃单元门禁门（幕墙做法',
-              townhouse: '不锈钢+中空玻璃单元门禁门（幕墙做法',
-              praetorium: '不锈钢+中空玻璃单元门禁门（幕墙做法',
-              affordableHouses: '',
-              condo: '',
-              sohoApartment: '',
-              sohoApartmentHigh: ''
-            }
-          ]
-        },
-        value8: 0
+        data: [{}],
+        level: 2,
+        columns: [{}],
+        func: treeToArray,
+        args: [null, null, true, 'timeLine']
+      }
+    },
+    created: function() {
+      this.getConstructionStandardTable().then((data) => {
+        this.data = data.items
+        this.columns = data.columns
+      })
+    },
+    methods: {
+      ...mapActions(['getConstructionStandardTable']),
+      // 层级选项控制
+      changeLevel(level) {
+        this.level = level
       }
     }
   }
 </script>
 
 <style scoped>
-
+  /**
+    项目地块图下边距
+   */
+  .piecerow_bottom {
+    padding-bottom: 15px;
+  }
+  /**
+    项目地块图和版本摘要
+   */
+  .piecerow {
+    background-color: #feffff;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    color: #333;
+    font-size: 14px;
+  }
+  .piecerow_main {
+    background-color: #edf2f7;
+    padding: 10px 10px;
+  }
+  .box-card {
+    width: 100%;
+  }
+  /**
+    层级选项分页样式
+   */
+  .paging{
+    float: left;
+    margin-top: 13px;
+  }
+  /**
+    层级选项
+   */
+  .hierarchy{
+    float: left;
+    margin-top: 20px;
+    margin-left: 10px;
+    font-size: 14px;
+  }
+  /**
+    删除
+   */
+  .delBtn{
+    float: right;
+    margin-right: 20px;
+    margin-top: 10px;
+    margin-left: 10px;
+  }
+  /**
+    增加
+   */
+  .addBtn{
+    float: right;
+    margin-top: 10px;
+  }
+  /**
+    保存按钮样式
+   */
+  .saveBtn{
+    float: right;
+    margin-bottom: 10px;
+  }
 </style>

@@ -8,9 +8,7 @@ import {
 
 import {
   SET_PAYMENT,
-  SET_PAYMENTS,
-  SET_FETCHING_PAYMENTS,
-  SET_FETCHING_PAYMENT
+  SET_PAYMENTS
 } from '../../constants/payment'
 
 export default {
@@ -36,15 +34,9 @@ export default {
   },
 
   mutations: {
-    [SET_FETCHING_PAYMENTS](state, isFetching) {
-      state.isFetchingPayments = isFetching
-    },
     [SET_PAYMENTS](state, data) {
       state.payments = data.list
       state.pagination = { ...state.pagination, total: data.total }
-    },
-    [SET_FETCHING_PAYMENT](state, isFetching) {
-      state.isFetchingPayments = isFetching
     },
     [SET_PAYMENT](state, data) {
       state.contract = data.data.contract
@@ -69,20 +61,16 @@ export default {
     FindPayments({
       commit
     }) {
-      commit(SET_FETCHING_PAYMENTS, true)
       return findPayments().then(data => {
         commit(SET_PAYMENTS, data)
-        commit(SET_FETCHING_PAYMENTS, false)
         return data
       })
     },
     FindPayment({
       commit
     }) {
-      commit(SET_FETCHING_PAYMENT, true)
       return findPayment().then(data => {
         commit(SET_PAYMENT, data)
-        commit(SET_FETCHING_PAYMENT, false)
         return data
       })
     }

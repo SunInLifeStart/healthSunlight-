@@ -1,10 +1,21 @@
 <template>
   <el-tabs v-model="activeName" type="card" @tab-click="">
     <el-tab-pane label="总览" name="first">
-      <el-col :span="2">
-        <el-button>确认</el-button>
-      </el-col>
+      <el-row>
+        <el-col :span="24">
+          <el-col :span="17"></el-col>
+           <el-col :span="1"> <el-button size="mini">锁定</el-button></el-col>
+          <el-col :span="1"> <el-button size="mini">解锁</el-button></el-col>
+          <el-col :span="1"> <el-button size="mini">暂存</el-button></el-col>
+          <el-col :span="1"> <el-button size="mini">确认</el-button></el-col>
+        </el-col>
+      </el-row>
       <el-table :data="confirmSummary" height="250" size="small" border style="width: 100%">
+         <el-table-column type="selection" width="50">
+              <template slot-scope="scope">
+                 <el-checkbox label=""></el-checkbox>
+              </template>
+        </el-table-column>
         <el-table-column type="index" label="序号"></el-table-column>
         <el-table-column prop="project" label="项目"></el-table-column>
         <el-table-column label="本月职能资金计划" align="center">
@@ -18,45 +29,42 @@
             <a @click="goBudgetTotal">213213</a>
           </template>
         </el-table-column>
-        <el-table-column prop="taxCalculation" label="确认合计"></el-table-column>
-        <el-table-column prop="taxCalculation" label="计税方式"></el-table-column>
-        <el-table-column prop="taxCalculation" label="付款申请金额"></el-table-column>
-        <el-table-column prop="taxCalculation" label="实际金额"></el-table-column>
+         <el-table-column prop="taxCalculation" label="确认合计"></el-table-column>
+         <el-table-column prop="constructionCost" label="差额"></el-table-column>
+         <el-table-column prop="taxCalculation" label="计税方式"></el-table-column>
       </el-table>
     </el-tab-pane>
     <el-tab-pane label="明细" name="second">
-      <el-row :gutter="20">
-        <el-col :span="5">
-          <el-col :span="8">
-            <div class="div-font">项目/分期</div>
-          </el-col>
-          <el-col :span="16">
-            <div>
-              <el-input v-model="particulars.project" placeholder="请输入内容"></el-input>
-            </div>
-          </el-col>
-        </el-col>
-        <el-col :span="5">
-          <el-col :span="8">
-            <div class="div-font">部门</div>
-          </el-col>
-          <el-col :span="16">
-            <div class="block">
-              <el-input v-model="particulars.department" placeholder="请输入内容"></el-input>
-            </div>
-          </el-col>
-        </el-col>
-        <el-col :span="5">
-          <el-col :span="8">
-            <div class="div-font">关键字</div>
-          </el-col>
-          <el-col :span="16">
-            <div class="block">
-              <el-input v-model="particulars.opposite" placeholder="请输入内容"></el-input>
-            </div>
-          </el-col>
-        </el-col>
-      </el-row>
+         <el-form  :model="keyword" label-width="120px">
+            <el-row :gutter="5">
+              <el-col :span="6">
+                <el-form-item label="项目/分期">
+                  <el-select v-model="keyword.project">
+                    <el-option label="项目/分期1" value="001"></el-option>
+                    <el-option label="项目/分期2" value="002"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="部门">
+                  <el-select v-model="keyword.functional">
+                    <el-option label="部门1" value="001"></el-option>
+                    <el-option label="部门2" value="002"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="关键字">
+                  <el-input v-model="keyword.word" placeholder="请输入内容"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-button-group>
+                  <el-button icon="el-icon-search" ></el-button>
+                </el-button-group>
+              </el-col>
+            </el-row>
+        </el-form>
       <el-table :data="particulars.list" height="250" size="small" border style="width: 100%">
         <el-table-column type="index" label="序号"></el-table-column>
         <el-table-column prop="project" label="项目名称"></el-table-column>
@@ -69,7 +77,7 @@
         <el-table-column prop="responsible" label="责任人"></el-table-column>
         <el-table-column prop="monthlyPayment" label="本月计划付款金额" width="180"></el-table-column>
         <el-table-column prop="monthlyPayment" label="本月确认付款金额" width="180"></el-table-column>
-        <el-table-column prop="monthlyPayment" label="截止上期累计付款金额" width="180"></el-table-column>
+        <!-- <el-table-column prop="monthlyPayment" label="截止上期累计付款金额" width="180"></el-table-column> -->
         <el-table-column prop="monthlyPayment" label="截止本期累计付款金额" width="180"></el-table-column>
         <el-table-column prop="monthlyPayment" label="合同/预算/结算金额" width="180"></el-table-column>
         <el-table-column prop="monthlyPayment" label="付款比例" width="180"></el-table-column>
@@ -86,6 +94,11 @@
   export default {
     data() {
       return {
+        keyword: {
+          word: '',
+          functional: '',
+          project: ''
+        },
         activeName: 'first',
 
         confirmSummary: [{

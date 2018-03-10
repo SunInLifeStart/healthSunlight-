@@ -1,56 +1,44 @@
 <template>
   <div>
-    <span style="float: left">层级选项</span>
-    <div class="block" style="width: 500px;float: left; margin-left: 100px;">
-      <el-slider
-        v-model="value8"
-        show-input
-        :max="5"
-        :min="1"
-        show-stops>
-      </el-slider>
+    <div style="float:none">
+      <el-row class="piecerow">
+        <el-col :span="8">
+          <div style="width: 60%;">
+            <div class="hierarchy">层级选项：</div>
+            <div class="paging">
+              <el-pagination
+                background
+                small
+                layout="pager"
+                :current-page.sync="level"
+                @current-change="changeLevel(level)"
+                :total="50">
+              </el-pagination>
+            </div>
+          </div>
+        </el-col>
+        <el-col :span="2" > <div style="padding-top: 20px">合约规划分解</div></el-col>
+        <el-col :span="3" :push="11">
+          <div style="padding-top: 15px">
+            <el-button size="mini"plain>导出</el-button>
+            <el-button size="mini"plain>保存</el-button>
+          </div>
+        </el-col>
+      </el-row>
     </div>
-    <div style="float: right">
-      <el-button>保存并计算</el-button>
-    </div><br /><br /><br />
     <el-container>
       <el-aside width="600px">
-        <el-table
-          :data="data"
-          border
-          size="small"
-          style="width: 100%">
-          <el-table-column
-            prop="charge"
-            label="费项/合约规划"
-            width="180">
-          </el-table-column>
-          <el-table-column
-            prop="sum"
-            label="目标金额"
-            width="180">
-          </el-table-column>
-          <el-table-column
-            prop="address"
-            label="分摊方式">
-            <template slot-scope="scope">
-              <el-select v-model="scope.row.address" clearable placeholder="请选择">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
-            </template>
-          </el-table-column>
-        </el-table>
+        <div style="margin-top: 20px">
+          <tree-table :data="items" :columns="columns" :type="'col'"  :evalFunc="func" :evalArgs="args"
+                      :stripe="true" :showLevel='level' border>
+          </tree-table>
+        </div>
       </el-aside>
       <el-main>
         <el-table
           size="small"
           border
-          :data="groupAlloc.table"
+          :data="table"
           style="width: 100%">
           <el-table-column
             prop=""
@@ -75,8 +63,6 @@
               prop="groupTowerFive"
               label="5#楼">
             </el-table-column>
-
-
           </el-table-column>
           <el-table-column
             prop=""
@@ -115,125 +101,99 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
+  import treeTable from '@/components/TreeTable'
+  import treeToArray from '@/components/treeTable/customEval'
   export default {
+    components: { treeTable },
     data() {
       return {
-        value8: 0,
-        groupAlloc: {
-          table: [
-            {
-              groupTowerOne: '1000',
-              groupTowerTwo: '1000',
-              groupTowerThree: '1000',
-              groupTowerFour: '1000',
-              groupTowerFive: '1000',
-              groupTowerSix: '1000',
-              groupTowerSeven: '1000',
-              groupTowerEight: '1000',
-              groupTowerNine: '1000',
-              groupTowerTen: '1000'
-            }, {
-              groupTowerOne: '1000',
-              groupTowerTwo: '1000',
-              groupTowerThree: '1000',
-              groupTowerFour: '1000',
-              groupTowerFive: '1000',
-              groupTowerSix: '1000',
-              groupTowerSeven: '1000',
-              groupTowerEight: '1000',
-              groupTowerNine: '1000',
-              groupTowerTen: '1000'
-            }, {
-              groupTowerOne: '1000',
-              groupTowerTwo: '1000',
-              groupTowerThree: '1000',
-              groupTowerFour: '1000',
-              groupTowerFive: '1000',
-              groupTowerSix: '1000',
-              groupTowerSeven: '1000',
-              groupTowerEight: '1000',
-              groupTowerNine: '1000',
-              groupTowerTen: '1000'
-            }, {
-              groupTowerOne: '1000',
-              groupTowerTwo: '1000',
-              groupTowerThree: '1000',
-              groupTowerFour: '1000',
-              groupTowerFive: '1000',
-              groupTowerSix: '1000',
-              groupTowerSeven: '1000',
-              groupTowerEight: '1000',
-              groupTowerNine: '1000',
-              groupTowerTen: '1000'
-            }, {
-              groupTowerOne: '1111',
-              groupTowerTwo: '111',
-              groupTowerThree: '111',
-              groupTowerFour: '111',
-              groupTowerFive: '111',
-              groupTowerSix: '1111',
-              groupTowerSeven: '1111',
-              groupTowerEight: '111',
-              groupTowerNine: '111',
-              groupTowerTen: '11'
-            }, {
-              groupTowerOne: '2222',
-              groupTowerTwo: '2222',
-              groupTowerThree: '333',
-              groupTowerFour: '3333',
-              groupTowerFive: '222',
-              groupTowerSix: '333',
-              groupTowerSeven: '333',
-              groupTowerEight: '333',
-              groupTowerNine: '333',
-              groupTowerTen: '333'
-            }
-          ]
-        },
-        data: [
+        level: 2, // 层级选项
+        func: treeToArray,
+        columns: [
           {
-            charge: '开发成本（A.01）',
-            sum: '3.083.357.651.60',
-            children: [
+            title: '费项/合约规划',
+            value: 'planingname',
+            type: 'text',
+            width: 200,
+            fixed: 'left'
+          },
+          {
+            title: '目标金额',
+            value: 'previousplaningamt',
+            type: 'text',
+            width: 200
+          },
+          {
+            title: '分摊方式',
+            value: '',
+            type: 'select',
+            width: 200,
+            options: [
               {
-                charge: '土地费（A.01.01）',
-                sum: '2.083.357.651.60'
+                value: '1',
+                label: '建筑面积分摊'
               },
               {
-                charge: '前期工程费（A.01.02）',
-                sum: '51.357.651.60',
-                children: [{
-                  charge: '勘测，设计费(A.01.02.01)',
-                  sum: '17.357.651.60'
-                }, {
-                  charge: '三通-平工程费(A.01.02.02)',
-                  sum: '53.357.651.60'
-                }]
+                value: '2',
+                label: '可售面积分摊'
+              },
+              {
+                value: '3',
+                label: '实建面积分摊'
               }
             ]
           }
         ],
-        options: [
-          {
-            value: '1',
-            label: '建筑面积分摊'
-          },
-          {
-            value: '2',
-            label: '可售面积分摊'
-          },
-          {
-            value: '3',
-            label: '实建面积分摊'
-          }
+        items: [],
+        args: [null, null, true, 'timeLine'],
+        table: [
+
         ]
       }
     },
+    created: function() {
+      // 获取合约规划表
+      this.getGroupBuildingApportion().then((data) => {
+        this.items = data
+      })
+      // 楼栋表信息
+      this.getGroupBuildingTable().then((data) => {
+        this.table = data
+      })
+    },
     methods: {
+      ...mapActions([
+        'getGroupBuildingApportion',
+        'getGroupBuildingTable'
+      ]),
+      goContractDetail(id) {
+        this.$router.push({ name: '合同信息', params: { id }})
+      },
+      // 层级选项控制
+      changeLevel(level) {
+        this.level = level
+      }
     }
   }
 </script>
 
 <style scoped>
-
+  .piecerow {
+    background-color: #feffff;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    color: #333;
+    font-size: 14px;
+  }
+  .paging{
+       float: left;
+       margin-top: 13px;
+  }
+  .hierarchy{
+    float: left;
+    margin-top: 20px;
+    margin-left: 10px;
+    font-size: 14px;
+  }
 </style>

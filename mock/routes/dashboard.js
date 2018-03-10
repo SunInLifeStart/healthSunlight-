@@ -15,21 +15,19 @@ module.exports = {
   },
   news: {
     code: 200,
+    total: 2,
     list: [
       {
-        newstitle: "龙湖造采系统试运行",
-        belongscategory: 0,
-        createDate: "2018-02-25 00:00:00"
+        "newsid":1,
+        "newstitle": "新闻主题",
+        "belongscategory": 0,
+        "createdate": "2018-02-25 00:00:00"
       },
       {
-        newstitle: "龙湖2018年最新项目",
-        belongscategory: 1,
-        createDate: "2018-02-25 00:00:00"
-      },
-      {
-        newstitle: "龙湖重大项目推荐",
-        belongscategory: 2,
-        createDate: "2018-02-25 00:00:00"
+        "newsid":2,
+        "newstitle": "新闻主题",
+        "belongscategory": 1,
+        "createdate": "2018-02-25 00:00:00"
       }
     ]
   },

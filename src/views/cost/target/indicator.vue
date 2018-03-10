@@ -44,29 +44,37 @@
         </el-col>
       </el-row>
     </el-dialog>
-    <el-tabs type="border-card" v-model="activeName">
-      <el-tab-pane label="总体指标" name="总体指标">
+    <el-dialog title="" :visible.sync="showCriterion" style="width:83%;left:249px">
+      <div>
         <div>
+          <p>当前项目引入以下基准成本模板，是否确认引入此模板：</p>
+          <span>北京丰台区高层平层</span>
+        </div>
+        <div style="margin-top: 50px">
+           <el-row :gutter="20">
+           <el-col :span="6":push="4" ><el-button  @click="closeCriterion">确认</el-button></el-col>
+           <el-col :span="6" :push="7"><el-button @click="closeCriterion">取消</el-button></el-col>
+         </el-row>
+        </div>
+      </div>
+    </el-dialog>
+    <el-tabs v-model="activeName">
+      <el-tab-pane label="总体指标" name="总体指标">
           <el-container>
             <el-main>
-              <p>总体指标</p>
-              <el-table :data="planIndicator.totalIndex" border size="small" style="width: 100%">
-                <el-table-column type="index" label="序号"></el-table-column>
-                <el-table-column prop="number" label="指标名称"></el-table-column>
-                <el-table-column prop="number" label="数量"></el-table-column>
-                <el-table-column prop="number" label="单位"></el-table-column>
-                <el-table-column prop="units" label="备注"></el-table-column>
-              </el-table>
+             <div style="margin-bottom: 13px">总体指标</div>
+              <tree-table :data="planning.data" :columns="planning.columns" :showLevel='planning.level' :type="'col'" :evalFunc="planning.func" :evalArgs="planning.args" :maxHeight="700" :stripe="true" border>
+              </tree-table>
             </el-main>
             <el-aside width="400px">
               <p>主要材料价格（不含税）</p>
               <template>
                 <el-table size="small" border :data="planIndicator.mainContract" style="width: 100%">
                   <el-table-column type="index" label="序号"></el-table-column>
-                  <el-table-column prop="projectPlan" label="项目"></el-table-column>
-                  <el-table-column prop="data" label="数据"></el-table-column>
-                  <el-table-column prop="units" label="单位"></el-table-column>
-                  <el-table-column prop="remakes" label="备注"></el-table-column>
+                  <el-table-column prop="matpricename" label="项目"></el-table-column>
+                  <el-table-column prop="materialsprice" label="数据"></el-table-column>
+                  <el-table-column prop="materialsunit" label="单位"></el-table-column>
+                  <el-table-column prop="remark" label="备注"></el-table-column>
                 </el-table>
               </template>
               <p>市政输入条件</p>
@@ -102,140 +110,52 @@
               </template>
             </el-aside>
           </el-container>
-        </div>
-        <!--<div>-->
-        <!--<el-container>-->
-        <!--<el-main>-->
-        <!--<el-row :gutter="20">-->
-        <!--<el-col :span="12">-->
-        <!--<p>景观指标</p>-->
-        <!--<el-table size="small" border :data="planIndicator.landscape" style="width: 100%">-->
-        <!--<el-table-column type="index" label="序号"></el-table-column>-->
-        <!--<el-table-column prop="scenery" label="景观指标"></el-table-column>-->
-        <!--<el-table-column prop="area" label="面积"></el-table-column>-->
-        <!--<el-table-column prop="units" label="单位"></el-table-column>-->
-        <!--<el-table-column prop="proportion" label="占比"></el-table-column>-->
-        <!--<el-table-column prop="remakes" label="备注"></el-table-column>-->
-        <!--</el-table>-->
-        <!--</el-col>-->
-        <!--<el-col :span="12">-->
-        <!--<p>土方平衡</p>-->
-        <!--<el-table size="small" border :data="planIndicator.earthworkBalance" style="width: 100%">-->
-        <!--<el-table-column type="index" label="序号"></el-table-column>-->
-        <!--<el-table-column prop="utilities" label="水电气条件"></el-table-column>-->
-        <!--<el-table-column prop="data" label="数据"></el-table-column>-->
-        <!--<el-table-column prop="units" label="单位"></el-table-column>-->
-        <!--<el-table-column prop="remakes" label="备注"></el-table-column>-->
-        <!--</el-table>-->
-        <!--</el-col>-->
-        <!--</el-row>-->
-
-        <!--</el-main>-->
-        <!--<el-aside width="400px">-->
-        <!--<p>市政输入条件</p>-->
-        <!--<el-table size="small" border :data="planIndicator.civicismCondition" style="width: 100%">-->
-        <!--<el-table-column type="index" label="序号"></el-table-column>-->
-        <!--<el-table-column prop="utilities" label="水电气条件"></el-table-column>-->
-        <!--<el-table-column prop="data" label="数据"></el-table-column>-->
-        <!--<el-table-column prop="units" label="单位"></el-table-column>-->
-        <!--<el-table-column prop="remakes" label="备注"></el-table-column>-->
-        <!--</el-table>-->
-        <!--</el-aside>-->
-        <!--</el-container>-->
-        <!--</div>-->
       </el-tab-pane>
       <!--业态面积-->
       <el-tab-pane label="业态面积" name="业态面积">
-        <el-table :data="planIndicator.table" size="small" border style="width: 100%; margin-top: 20px">
-          <el-table-column fixed prop="shareContent" label="产品类型"></el-table-column>
-          <el-table-column width="180" fixed prop="itemizedContent" label="标签"></el-table-column>
-          <el-table-column prop="" width="180" label="地上建筑面积"></el-table-column>
-          <el-table-column prop="superTall" width="180" label="地下建筑面积"></el-table-column>
-          <el-table-column prop="highRise" width="180" label="地上赠送面积"></el-table-column>
-          <el-table-column prop="" width="180" label="地下赠送面积"></el-table-column>
-          <el-table-column prop="highRise" width="180" label="总建筑面积"></el-table-column>
-          <el-table-column prop="" label="地上实际建筑面积">
-            <el-table-column prop="smallTop" width="180" label="地上建筑面积+地上赠送"></el-table-column>
-            <el-table-column prop="smallTop" width="180" label="地上实际建筑面积差"></el-table-column>
-            <el-table-column prop="smallTop" width="180" label="小计"></el-table-column>
-          </el-table-column>
-          <el-table-column prop="" label="地下实际建筑面积">
-            <el-table-column prop="smallTop" width="180" label="地下建筑面积+地下赠送"></el-table-column>
-            <el-table-column prop="smallTop" width="180" label="地下实际建筑面积差"></el-table-column>
-            <el-table-column prop="smallTop" width="180" label="小计"></el-table-column>
-          </el-table-column>
-          <el-table-column prop="" label="总实际建筑面积（m2）">
-            <el-table-column prop="smallTop" width="180" label="建筑面积+赠送面积"></el-table-column>
-            <el-table-column prop="smallTop" width="180" label="总实际建筑面积差"></el-table-column>
-            <el-table-column prop="smallTop" width="180" label="小计"></el-table-column>
-          </el-table-column>
-          <el-table-column prop="" label="可租售面积（m2）">
-            <el-table-column prop="smallTop" width="180" label="地上可售"></el-table-column>
-            <el-table-column prop="smallTop" width="180" label="地下可售"></el-table-column>
-            <el-table-column prop="smallTop" width="180" label="地上可租"></el-table-column>
-            <el-table-column prop="smallTop" width="180" label="地下可租"></el-table-column>
-          </el-table-column>
-          <el-table-column prop="" label="户内精装修（m2）">
-            <el-table-column prop="smallTop" width="180" label="精装修面积"></el-table-column>
-            <el-table-column prop="smallTop" width="180" label="精装修地上可租售面积"></el-table-column>
-            <el-table-column prop="smallTop" width="180" label="精装修地下可租售面积"></el-table-column>
-            <el-table-column prop="smallTop" width="180" label="精装修对应建筑面积"></el-table-column>
-            <el-table-column prop="smallTop" width="180" label="精装修对应实际建筑面积"></el-table-column>
-            <el-table-column prop="smallTop" width="180" label="精装修户数"></el-table-column>
-          </el-table-column>
-        </el-table>
+        <el-row >
+          <el-col :span="16" >
+            <div style="width: 60%;">
+              <div class="hierarchy" >层级选项：</div>
+              <div class="paging" >
+                <el-pagination
+                  background
+                  layout="pager"
+                  :current-page.sync="formatArea.level"
+                  @current-change="changeFormatAreaLevel(formatArea.level)"
+                  :total="30">
+                </el-pagination>
+              </div>
+            </div>
+          </el-col>
+          <tree-table :data="formatArea.data" :columns="formatArea.columns" :type="'col'"  :evalFunc="formatArea.func" :evalArgs="formatArea.args"
+                      :stripe="true" :showLevel='formatArea.level' border>
+          </tree-table>
+        </el-row>
       </el-tab-pane>
       <!--业态属性-->
       <el-tab-pane label="业态属性" name="业态属性">
-        <el-radio label="1">显示全部</el-radio>
-        <el-table :data="planIndicator.table" size="small" border style="width: 100%; margin-top: 20px">
-          <el-table-column fixed prop="shareContent" label="产品类型"></el-table-column>
-          <el-table-column width="180" fixed prop="itemizedContent" label="标签"></el-table-column>
-          <el-table-column width="180"  prop="itemizedContent" label="所属组团"></el-table-column>
-          <el-table-column width="180"  prop="itemizedContent" label="栋数"></el-table-column>
-          <el-table-column width="180"  prop="itemizedContent" label="层数"></el-table-column>
-          <el-table-column width="180"  prop="itemizedContent" label="总层数"></el-table-column>
-          <el-table-column width="180"  prop="itemizedContent" label="单元数"></el-table-column>
-          <el-table-column width="180"  prop="itemizedContent" label="电梯数"></el-table-column>
-          <el-table-column width="180"  prop="itemizedContent" label="户数"></el-table-column>
-          <el-table-column width="180"  prop="itemizedContent" label="车库门数量"></el-table-column>
-          <el-table-column width="180"  prop="itemizedContent" label="基地面积"></el-table-column>
-          <el-table-column width="180"  prop="itemizedContent" label="机械停车位数量"></el-table-column>
-          <el-table-column width="180"  prop="itemizedContent" label="层高"></el-table-column>
-          <el-table-column width="180"  prop="itemizedContent" label="高宽比"></el-table-column>
-          <el-table-column width="180"  prop="itemizedContent" label="体型系统"></el-table-column>
-          <el-table-column width="180"  prop="itemizedContent" label="建筑高度"></el-table-column>
-          <el-table-column width="180"  prop="itemizedContent" label="户型面积"></el-table-column>
-          <el-table-column width="180"  prop="itemizedContent" label="建安配置"></el-table-column>
-          <el-table-column width="180"  prop="itemizedContent" label="精装配置"></el-table-column>
-          <el-table-column width="180"  prop="itemizedContent" label="景观配置"></el-table-column>
-          <el-table-column width="180"  prop="itemizedContent" label="赠送率"></el-table-column>
-          <el-table-column width="180"  prop="itemizedContent" label="结构形式"></el-table-column>
-          <!--<el-table-column prop="" align="center" label="各业态指标">-->
-          <!--<el-table-column prop="superTall" width="180" label="超高层>100m"></el-table-column>-->
-          <!--<el-table-column prop="highRise" width="180" label="高层（18层以上，但<100M)"></el-table-column>-->
-          <!--<el-table-column prop="smallTop" width="180" label="小高层（10-18层)"></el-table-column>-->
-          <!--<el-table-column prop="gardenHouse" width="180" label="花园洋房（9层以下）"></el-table-column>-->
-          <!--<el-table-column prop="stackedTownhouses" label="叠拼别墅"></el-table-column>-->
-          <!--<el-table-column prop="townhouse" width="180" label="联排别墅"></el-table-column>-->
-          <!--<el-table-column prop="praetorium" label="独栋别墅"></el-table-column>-->
-          <!--<el-table-column prop="affordableHouses" width="180" label="廉（公）租房/经济适用房"></el-table-column>-->
-          <!--<el-table-column prop="condo" width="180" label="限价房/自住型商品房"></el-table-column>-->
-          <!--<el-table-column prop="commercial" width="180" label="持有商业"></el-table-column>-->
-          <!--<el-table-column prop="sohoLeveling" width="180" label="SOHO（平层100米以内）"></el-table-column>-->
-          <!--<el-table-column prop="sohoPycnocline" width="180" label="SOHO（跃层100米以内）"></el-table-column>-->
-          <!--<el-table-column prop="sohoLevelingHigh" width="180" label="SOHO（平层超高层）"></el-table-column>-->
-          <!--<el-table-column prop="sohoPycnoclineHigh" width="180" label="SOHO（跃层超高层）"></el-table-column>-->
-          <!--<el-table-column prop="salesBusiness" label="销售商业"></el-table-column>-->
-          <!--<el-table-column prop="budgetHotel" label="快捷酒店"></el-table-column>-->
-          <!--<el-table-column prop="starredHotel" width="180" label="星级酒店"></el-table-column>-->
-          <!--<el-table-column prop="officeBuilding" width="180" label="写字楼（100米以内）"></el-table-column>-->
-          <!--<el-table-column prop="officeBuildingHigh" width="180" label="写字楼（超高层）"></el-table-column>-->
-          <!--<el-table-column prop="total" width="180" label="合计(m2，万元)"></el-table-column>-->
-          <!--</el-table-column>-->
-        </el-table>
+        <el-row >
+          <el-col :span="16" >
+            <div style="width: 60%;">
+              <div class="hierarchy">层级选项：</div>
+              <div class="paging" >
+                <el-pagination
+                  background
+                  layout="pager"
+                  :current-page.sync="formatAttribute.level"
+                  @current-change="changeFormatAttributeLevel(formatAttribute.level)"
+                  :total="30">
+                </el-pagination>
+              </div>
+            </div>
+          </el-col>
+          <tree-table :data="formatAttribute.data" :columns="formatAttribute.columns" :type="'col'"  :evalFunc="formatAttribute.func" :evalArgs="formatAttribute.args"
+                      :stripe="true" :showLevel='formatAttribute.level' border>
+          </tree-table>
+        </el-row>
       </el-tab-pane>
-
+      <!--标签页上部开关按钮-->
       <el-tab-pane disabled  v-show="false" v-if="activeName!=='总体指标'" style="display:none">
         <span slot="label">
            <el-switch
@@ -246,8 +166,10 @@
           显示全部
         </span>
       </el-tab-pane>
-      <el-tab-pane disabled>
+      <!--标签页上部操作按钮-->
+      <el-tab-pane disabled >
         <span slot="label" class="label-slot">
+           <el-button @click="showCriterion = true">引入基准</el-button>
            <el-button @click="showFlag = true">导入面积</el-button>
            <el-button>导出</el-button>
            <el-button>保存</el-button>
@@ -258,9 +180,348 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
+  import treeTable from '@/components/TreeTable'
+  import treeToArray from '@/components/treeTable/customEval'
   export default {
+    components: { treeTable },
     data() {
       return {
+        // 总体指标treeTable
+        planning: {
+          level: 1,
+          data: [{}],
+          columns: [
+            {
+              title: '序号',
+              value: 'costcode',
+              type: 'text',
+              width: 100,
+              fixed: 'left'
+            },
+            {
+              title: '指标名称',
+              value: 'typename',
+              type: 'text',
+              width: 200
+            },
+            {
+              title: '数量',
+              value: 'propertytypevalue',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '单位',
+              value: 'propertytypeunit',
+              type: 'text',
+              width: 200
+            },
+            {
+              title: '备注',
+              value: 'remark',
+              type: 'text',
+              width: 200
+            }
+          ],
+          func: treeToArray,
+          args: [null, null, true, 'timeLine'],
+          newItem: ''
+        },
+        formatArea: {
+          level: 2,
+          data: [{}],
+          columns: [
+            {
+              title: '产品类型',
+              value: 'typename',
+              type: 'text',
+              width: 100,
+              fixed: 'left'
+            },
+            {
+              title: '标签',
+              value: 'tagname',
+              type: 'select',
+              options: [
+                {
+                  value: '1',
+                  label: '平层'
+                },
+                {
+                  value: '2',
+                  label: '跃层'
+                }
+              ],
+              width: 200,
+              sortable: false
+            },
+            {
+              title: '所属组团',
+              value: 'group',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '栋数',
+              value: 'lds',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '层数',
+              value: 'propertytypeunit',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '总层数',
+              value: 'zcs',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '电梯数',
+              value: 'dts',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '单元数',
+              value: 'dys',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '户数',
+              value: 'hs',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '车库门数量',
+              value: 'ckmsl',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '基地面积',
+              value: 'jdmj',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '机械停车位数量',
+              value: 'jxtcwsl',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '层高',
+              value: 'floorheight',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '高度比',
+              value: 'aspectratio',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '体型系统',
+              value: 'shapesys',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '建筑高度',
+              value: 'buildingheight',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '户型面积',
+              value: 'familyarea',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '建安配置名称',
+              value: 'constructconfigname',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '精装配置名称',
+              value: 'jzconfigname',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '景观面积',
+              value: 'jgconfig',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '赠送率',
+              value: 'givrate',
+              type: 'input',
+              width: 200
+            }
+          ],
+          func: treeToArray,
+          args: [null, null, true, 'timeLine'],
+          newItem: ''
+        },
+        formatAttribute: {
+          level: 2,
+          data: [{}],
+          columns: [
+            {
+              title: '产品类型',
+              value: 'typename',
+              type: 'text',
+              width: 100,
+              fixed: 'left'
+            },
+            {
+              title: '标签',
+              value: 'tagname',
+              type: 'select',
+              options: [
+                {
+                  value: '1',
+                  label: '平层'
+                },
+                {
+                  value: '2',
+                  label: '跃层'
+                }
+              ],
+              width: 200,
+              sortable: false
+            },
+            {
+              title: '所属组团',
+              value: 'group',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '栋数',
+              value: 'lds',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '层数',
+              value: 'propertytypeunit',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '总层数',
+              value: 'zcs',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '电梯数',
+              value: 'dts',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '单元数',
+              value: 'dys',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '户数',
+              value: 'hs',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '车库门数量',
+              value: 'ckmsl',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '基地面积',
+              value: 'jdmj',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '机械停车位数量',
+              value: 'jxtcwsl',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '层高',
+              value: 'floorheight',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '高度比',
+              value: 'aspectratio',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '体型系统',
+              value: 'shapesys',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '建筑高度',
+              value: 'buildingheight',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '户型面积',
+              value: 'familyarea',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '建安配置名称',
+              value: 'constructconfigname',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '精装配置名称',
+              value: 'jzconfigname',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '景观面积',
+              value: 'jgconfig',
+              type: 'input',
+              width: 200
+            },
+            {
+              title: '赠送率',
+              value: 'givrate',
+              type: 'input',
+              width: 200
+            }
+          ],
+          func: treeToArray,
+          args: [null, null, true, 'timeLine'],
+          newItem: ''
+        },
         activeName: '总体指标',
         value2: true,
         planIndicator: {
@@ -272,12 +533,6 @@
             }
           ],
           mainContract: [
-            {
-              projectPlan: '222',
-              data: 'sda',
-              units: 'sda',
-              remakes: 'sdasd'
-            }
           ],
           totalIndex: [
             {
@@ -503,6 +758,7 @@
           ]
         },
         showFlag: false,
+        showCriterion: false,
         radio: '',
         value4: '',
         options: [
@@ -513,19 +769,70 @@
       }
     },
     methods: {
+      ...mapActions([
+        'GetPlanningOverallTreeTable',
+        'getPlanningOverallIndexMainPriceNo',
+        'GetFormatAttributeTreeTable',
+        'GetFormatAreaTreeTable'
+      ]),
       radioEvent() {
         this.showFlag = false
         this.adapterSelected = this.radio
+      },
+      closeCriterion() {
+        this.showCriterion = false
+      },
+      // 层级选项控制
+      changeFormatAreaLevel(level) {
+        this.formatArea.level = level
+      },
+      changeFormatAttributeLevel(level) {
+        this.formatArea.level = level
       }
+    },
+    created: function() {
+      // 总体指标 treeTable 信息
+      this.GetPlanningOverallTreeTable().then((data) => {
+        // 表头 列信息
+        this.planning.data = data.data.items
+      })
+      // 业态面积
+      this.GetFormatAreaTreeTable().then((data) => {
+        // 表头 列信息
+        this.formatArea.data = data.data.items
+      })
+      // 业态属性
+      this.GetFormatAttributeTreeTable().then((data) => {
+        // 表头 列信息
+        this.formatAttribute.data = data.data.items
+      })
+      // 获取主要材料价格（不含税）
+      this.getPlanningOverallIndexMainPriceNo().then((data) => {
+        this.planIndicator.mainContract = data
+      })
+      //
     }
   }
 </script>
 
 <style scoped>
   .label-slot{
-    margin-left: 250px;
+    margin-left:500px;
   }
   .label-slot button{
     padding: 8px;
+  }
+  /**
+  层级样式
+   */
+  .hierarchy{
+    float: left;
+    margin-top: 20px;
+    margin-left: 10px;
+    font-size: 14px;
+  }
+  .paging{
+    float: left;
+    margin-top: 13px;
   }
 </style>

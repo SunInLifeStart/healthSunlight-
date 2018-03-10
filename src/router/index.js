@@ -43,12 +43,42 @@ export const asyncRouterMap = [
     path: '',
     component: Layout,
     firstFlag: 'true',
-    children: [{
-      path: '',
-      component: _import('dashboard/index'),
-      name: '首页',
-      icon: 'zonghe'
-    }]
+    children: [
+      {
+        path: '',
+        component: _import('dashboard/index'),
+        name: '首页',
+        icon: 'zonghe'
+      },
+      {
+        path: 'news',
+        name: '公告栏',
+        icon: 'zonghe',
+        hidden: true,
+        component: _import('dashboard/news')
+      },
+      {
+        path: 'addNews',
+        name: '新增新闻',
+        icon: 'zonghe',
+        hidden: true,
+        component: _import('dashboard/addNews')
+      },
+      {
+        path: 'pictureUpload',
+        name: '图片上传',
+        icon: 'zonghe',
+        hidden: true,
+        component: _import('dashboard/pictureUpload')
+      },
+      {
+        path: 'toDo',
+        name: '待办',
+        icon: 'zonghe',
+        hidden: true,
+        component: _import('dashboard/toDo')
+      }
+    ]
   },
   {
     path: '/contract',
@@ -70,6 +100,41 @@ export const asyncRouterMap = [
         icon: 'zonghe',
         hidden: true,
         component: _import('contract/detail')
+      },
+      {
+        path: 'buildAndCollectDetail/:id',
+        name: '造采项目合同信息',
+        icon: 'zonghe',
+        hidden: true,
+        component: _import('contract/buildAndCollectDetail')
+      },
+      {
+        path: 'conceptDesignDetail/:id',
+        name: '概念设计合同信息',
+        icon: 'zonghe',
+        hidden: true,
+        component: _import('contract/conceptDesignDetail')
+      },
+      {
+        path: 'engineeringCompensateDetail/:id',
+        name: '工程赔付合同信息',
+        icon: 'zonghe',
+        hidden: true,
+        component: _import('contract/engineeringCompensateDetail')
+      },
+      {
+        path: 'purchasingInnerDetail/:id',
+        name: '采购公司（内）合同信息',
+        icon: 'zonghe',
+        hidden: true,
+        component: _import('contract/purchasingInnerDetail')
+      },
+      {
+        path: 'purchasingOuterDetail/:id',
+        name: '采购公司（外）合同信息',
+        icon: 'zonghe',
+        hidden: true,
+        component: _import('contract/purchasingOuterDetail')
       },
       {
         path: 'detail/:id/payments',
@@ -98,6 +163,13 @@ export const asyncRouterMap = [
         icon: 'zonghe',
         hidden: true,
         component: _import('contract/changes')
+      },
+      {
+        path: 'changeShow/:id',
+        name: '变更签证展示',
+        icon: 'zonghe',
+        hidden: true,
+        component: _import('contract/changeShow')
       }
     ]
   },
@@ -111,6 +183,7 @@ export const asyncRouterMap = [
       {
         path: '',
         name: '付款申请',
+        hidden: true,
         icon: 'zonghe',
         component: _import('payment/index')
       },
@@ -165,6 +238,13 @@ export const asyncRouterMap = [
         name: 'BudgetTotal',
         hidden: true,
         component: _import('budget/summary')
+      },
+      {
+        path: 'budget/departmentSum',
+        name: '部门资金',
+        icon: 'zonghe',
+        hidden: true,
+        component: _import('budget/departmentSum')
       }
     ]
   },
@@ -180,17 +260,19 @@ export const asyncRouterMap = [
         name: '变更签证',
         icon: 'zonghe',
         component: _import('change/index')
-      }, {
+      },
+      {
         path: 'visaApproval',
         name: '签证发起审批',
+        hidden: true,
         icon: 'zonghe',
         component: _import('change/visaApproval/index')
       }, {
-        path: 'visaBillingSearch',
-        name: '签证下发单查看',
+        path: 'visaDetail',
+        name: '签证详情',
         hidden: true,
         icon: 'zonghe',
-        component: _import('change/visaBillingSearch/index')
+        component: _import('change/visaDetail/index')
       }, {
         path: 'confirm',
         name: '完工确认',
@@ -203,6 +285,12 @@ export const asyncRouterMap = [
         hidden: true,
         icon: 'zonghe',
         component: _import('change/initiateApproval/index')
+      }, {
+        path: 'newVisa',
+        name: '新增签证',
+        hidden: true,
+        icon: 'zonghe',
+        component: _import('change/newVisa/index')
       }
     ]
   },
@@ -218,7 +306,14 @@ export const asyncRouterMap = [
         path: 'investmentCost',
         name: '投模成本的测算与调整',
         icon: 'zonghe',
-        component: _import('cost/investmentCost/investmentCost/index')
+        component: _import('cost/investmentCost/index')
+      },
+      {
+        path: 'detail/:id',
+        name: '版本信息',
+        icon: 'zonghe',
+        hidden: true,
+        component: _import('cost/investmentCost/investmentVersion/index')
       },
       {
         path: 'areaIndicator',
@@ -273,10 +368,17 @@ export const asyncRouterMap = [
     icon: 'zujian',
     children: [
       {
-        path: '',
+        path: 'targetCost',
         name: '目标成本测算与调整',
         icon: 'zonghe',
         component: _import('cost/target/index')
+      },
+      {
+        path: 'version/:id/:isDisabled',
+        name: '版本信息',
+        icon: 'zonghe',
+        hidden: true,
+        component: _import('cost/target/version')
       },
       {
         path: 'indicator',
@@ -286,7 +388,7 @@ export const asyncRouterMap = [
       },
       {
         path: 'config',
-        name: '项目配置规划表',
+        name: '项目配置标准',
         icon: 'zonghe',
         component: _import('cost/target/config')
       },
@@ -332,15 +434,15 @@ export const asyncRouterMap = [
         icon: 'zonghe',
         component: _import('cost/target/aimBudgetAdj/index')
       }, {
-        path: 'caliberManage',
+        path: 'financeApportion',
         name: '财务口径分摊',
         icon: 'zonghe',
-        component: _import('cost/target/allocReport/caliberManage/index')
+        component: _import('cost/target/allocReport/caliberAlloc/index')
       }, {
-        path: 'caliberAlloc',
+        path: 'manageApportion',
         name: '管理口径分摊',
         icon: 'zonghe',
-        component: _import('cost/target/allocReport/caliberAlloc/index')
+        component: _import('cost/target/allocReport/caliberManage/index')
       }, {
         path: 'groupAlloc',
         name: '组团及楼栋分摊',
@@ -382,9 +484,10 @@ export const asyncRouterMap = [
         component: _import('cost/baseCostManage/index')
       },
       {
-        path: 'weaveExplain',
+        path: 'weaveExplain/:standardCostId/:isDisabled',
         name: '编制说明',
         icon: 'zonghe',
+        hidden: true,
         component: _import('cost/baseCostManage/weaveExplain/index')
       },
       {
@@ -467,7 +570,7 @@ export const asyncRouterMap = [
     redirect: 'noredirect',
     name: 'Example',
     hidden: true,
-    icon: 'zujian',
+    icon: 'wujiaoxing',
     children: [
       {
         path: 'index',
@@ -504,28 +607,6 @@ export const asyncRouterMap = [
   {
     path: '/',
     component: Layout,
-    redirect: 'noredirect',
-    name: '投模版本信息',
-    hidden: true,
-    children: [{
-      path: 'investmentVersion',
-      component: _import('cost/investmentCost/investmentVersion/index')
-    }]
-  },
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/version',
-    name: 'version',
-    hidden: true,
-    children: [{
-      path: 'version',
-      component: _import('cost/target/version')
-    }]
-  },
-  {
-    path: '/',
-    component: Layout,
     redirect: '/template',
     name: 'template',
     hidden: true,
@@ -544,11 +625,6 @@ export const asyncRouterMap = [
     meta: { role: ['contract'] },
     children: [{
       path: '',
-      component: _import('ui/index'),
-      name: '合同查看',
-      icon: 'zonghe'
-    }, {
-      path: 'commonElements',
       component: _import('ui/commonElements'),
       name: '常用元素',
       icon: 'zonghe'

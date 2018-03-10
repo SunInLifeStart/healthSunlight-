@@ -145,12 +145,11 @@ export function addCost(cost) {
 
 /**
  * 投模成本编制说明投模成本-成本汇总导出接口
- * @param investmentcostsummaryid
- * @param Investmentcostsummaryurl
+ * @param keywords
  * @returns {AxiosPromise}
  */
-export function exportCost(investmentcostsummaryid, Investmentcostsummaryurl) {
-  return fetch.post(url.exportCost, { investmentcostsummaryid, Investmentcostsummaryurl })
+export function exportCost(keywords) {
+  return fetch.post(url.exportCost, keywords)
 }
 
 /**
@@ -184,8 +183,17 @@ export function addCostMaterialAllocation(costMaterialAllocation) {
  * @param sharetype
  * @returns {AxiosPromise}
  */
-export function costFinancialApportionment(investmentcostid, sharetype) {
-  return fetch.post(url.costFinancialApportionment, { investmentcostid, sharetype })
+export function costFinancialApportionment(keywords) {
+  return fetch.post(url.costFinancialApportionment, keywords)
+}
+/**
+ * 投模成本管理口径分摊查询
+ * @param investmentcostid
+ * @param sharetype
+ * @returns {AxiosPromise}
+ */
+export function costManageApportionment(keywords) {
+  return fetch.post(url.costManageApportionment, keywords)
 }
 
 /**
@@ -248,4 +256,103 @@ export function exportCostLimitCoefficient(investmentlimitdataid, investmentlimi
  */
 export function importCostLimitCoefficient(keyWords) {
   return fetch.post(url.importCostLimitCoefficient, keyWords)
+}
+/**
+ * 投模成本详情页保存接口
+ * @param keyWords
+ * @returns {AxiosPromise}
+ */
+export function saveVersion(keyWords) {
+  return fetch.post(url.saveVersion, keyWords)
+}
+
+/**
+ * 查看投模版本信息详情
+ * @param keywords
+ * @returns {*}
+ */
+export function lookInvestmentVersion(keywords) {
+  return fetch({
+    url: url.lookInvestmentVersion,
+    method: 'post',
+    data: keywords
+  })
+}
+
+/**
+ * 基本信息查询
+ * @param keywords
+ * @returns {*}
+ */
+export function findBaseData(keywords) {
+  return fetch({
+    url: url.baseData,
+    method: 'post',
+    data: keywords
+  })
+}
+
+/**
+ * 面积指标列表查询
+ * @param keywords
+ * @returns {*}
+ */
+export function findAreaIndicator(keywords) {
+  return fetch({
+    url: url.investmentAreaIndicator,
+    method: 'post',
+    data: keywords
+  })
+}
+
+/**
+ * 投模基本信息保存
+ * @param keywords
+ * @returns {*}
+ */
+export function saveBaseData(keywords) {
+  return fetch({
+    url: url.saveBaseData,
+    method: 'post',
+    data: keywords
+  })
+}
+
+/**
+ * 投模面积指标导出
+ * @param keywords
+ * @returns {*}
+ */
+export function exportInveAreaIndicator(keywords) {
+  return fetch({
+    url: url.exportInveAreaIndicator,
+    method: 'post',
+    data: keywords
+  })
+}
+
+/**
+ * 投模面积指标保存
+ * @param keywords
+ * @returns {*}
+ */
+export function saveInveAreaIndicator(keywords) {
+  return fetch({
+    url: url.saveInveAreaIndicator,
+    method: 'post',
+    data: keywords
+  })
+}
+
+/**
+ * 投模成本汇总计算并保存
+ * @param keywords
+ * @returns {*}
+ */
+export function calculateAndSave(keywords) {
+  return fetch({
+    url: url.calculateAndSave,
+    method: 'post',
+    data: keywords
+  })
 }

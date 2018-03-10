@@ -1,73 +1,114 @@
 <template>
-  <div>
-    <div style="margin: 15px;">
-      <el-col :span="16"> &nbsp</el-col>
-      <el-col :span="8">
-        <el-col :span="12">&nbsp</el-col>
-        <el-col :span="12">
-          <!--<el-col :span="8"> <el-button size="mini" type="primary">导出</el-button></el-col>-->
-          <el-col :span="8"> <el-button size="mini" type="primary">保存</el-button></el-col>
-          <!--<el-col :span="8"> <el-button size="mini" type="primary">发起审批</el-button></el-col>-->
-        </el-col>
+  <div class="dataBase">
+    <el-row class="row-bg">
+      <el-col :span="2" :offset="22">
+          <el-button size="mini" type="primary" class="pull-right" @click="SaveBaseData($cost.investmentCost.baseData)">保存</el-button>
       </el-col>
-    </div>
-      <div>
+    </el-row>
+    <div>
       <el-row>
-        <el-col :span="24"><h5>一&nbsp&nbsp 项目基本信息</h5></el-col>
+        <el-col :span="12">
+          <el-row>
+            <el-col><h5>一&nbsp&nbsp 项目基本信息</h5></el-col>
+          </el-row>
+          <el-table
+            :data="$cost.investmentCost.baseData.basicInformation"
+            size="small"
+            border
+            :cell-class-name="setEditableStyle"
+            :header-cell-class-name="'table-header-bg'"
+            style="width: 99%">
+            <el-table-column
+              width="180"
+              type="index"
+              label="序号"
+            >
+            </el-table-column>
+            <el-table-column
+              prop="content"
+              label="内容"
+              width="180">
+            </el-table-column>
+            <el-table-column
+              prop="address"
+              label="值">
+              <template slot-scope="scope">
+                <el-tooltip content="基准限额以城市为单位" placement="top">
+                  <el-select v-model="scope.row.configureScenery" clearable placeholder="请选择">
+                    <el-option
+                      v-for="item in scope.row.configure"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+                    </el-option>
+                  </el-select>
+                </el-tooltip>
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="remarks"
+              label="备注">
+              <template slot-scope="scope">
+                <el-input v-model="scope.row.remarks"></el-input>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-col>
+        <el-col :span="12">
+          <el-row>
+            <el-col><h5>三&nbsp&nbsp 主要材料价格</h5></el-col>
+          </el-row>
+          <el-table
+            :data="$cost.investmentCost.baseData.materials"
+            size="small"
+            :cell-class-name="setEditableStyle"
+            :header-cell-class-name="'table-header-bg'"
+            border
+            style="width: 99%">
+            <el-table-column
+              width="180"
+              type="index"
+              label="序号"
+            >
+            </el-table-column>
+            <el-table-column
+              prop="projectDeploy"
+              label="项目配置"
+              width="180">
+            </el-table-column>
+            <el-table-column
+              prop="datum"
+              label="数据">
+              <template slot-scope="scope">
+                <el-input v-model="scope.row.datum"></el-input>
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="unit"
+              label="单位">
+            </el-table-column>
+            <el-table-column
+              prop="remarks"
+              label="备注">
+              <template slot-scope="scope">
+                <el-input v-model="scope.row.remarks"></el-input>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-col>
       </el-row>
-      <el-table
-        :data="dataBase.basicInformation"
-        size="small"
-        border
-        style="width: 99%">
-        <el-table-column
-          width="180"
-          type="index"
-          label="序号"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="content"
-          label="内容"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="address"
-          label="值">
-          <template slot-scope="scope">
-            <el-select v-model="scope.row.configure" clearable placeholder="请选择">
-              <el-option
-                v-for="item in dataBase.configure"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-          </template>
-          <template slot-scope="scope">
-            <el-select v-model="scope.row.configureScenery" clearable placeholder="请选择">
-              <el-option
-                v-for="item in dataBase.configureScenery"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="remarks"
-          label="备注">
-        </el-table-column>
-      </el-table>
+
     </div>
     <div>
       <el-row>
         <el-col :span="24"><h5>二&nbsp&nbsp 项目配置</h5></el-col>
       </el-row>
       <el-table
-        :data="dataBase.projectConfiguration "
+        :data="$cost.investmentCost.baseData.projectConfiguration"
+        :span-method="objectSpanMethod"
         size="small"
+        :cell-class-name="setEditableStyle"
+        :header-cell-class-name="'table-header-bg'"
         border
         style="width: 99%">
         <el-table-column
@@ -86,7 +127,7 @@
           <template slot-scope="scope">
             <el-select v-model="scope.row.constructionDeploy" clearable placeholder="请选择">
               <el-option
-                v-for="item in dataBase.configure"
+                v-for="item in $cost.investmentCost.baseData.configure"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value">
@@ -95,8 +136,11 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="givingPercentage"
-          label="赠送率">
+          label="赠送率"
+          prop="givingPercentage">
+          <template slot-scope="scope">
+            <el-input v-model="scope.row.givingPercentage"></el-input>
+          </template>
         </el-table-column>
         <el-table-column
           prop="clothBoundDeploy"
@@ -104,7 +148,7 @@
           <template slot-scope="scope">
             <el-select v-model="scope.row.clothBoundDeploy" clearable placeholder="请选择">
               <el-option
-                v-for="item in dataBase.configureFine"
+                v-for="item in scope.row.clothBoundDeploy"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value">
@@ -115,6 +159,9 @@
         <el-table-column
           prop="clothBound"
           label="精装单方">
+          <template slot-scope="scope">
+            <el-input v-model="scope.row.clothBound"></el-input>
+          </template>
         </el-table-column>
         <el-table-column
           prop="sceneryDeploy"
@@ -122,7 +169,7 @@
           <template slot-scope="scope">
             <el-select v-model="scope.row.sceneryDeploy" clearable placeholder="请选择">
               <el-option
-                v-for="item in dataBase.configureScenery"
+                v-for="item in $cost.investmentCost.baseData.configureScenery"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value">
@@ -132,176 +179,58 @@
         </el-table-column>
       </el-table>
     </div>
-    <div>
-      <el-row>
-        <el-col :span="24"><h5>主要材料价格</h5></el-col>
-      </el-row>
-      <el-table
-        :data="dataBase.materials"
-        size="small"
-        border
-        style="width: 99%">
-        <el-table-column
-          width="180"
-          type="index"
-          label="序号"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="projectDeploy"
-          label="项目配置"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="datum"
-          label="数据">
-        </el-table-column>
-        <el-table-column
-          prop="unit"
-          label="单位">
-        </el-table-column>
-        <el-table-column
-          prop="remarks"
-          label="备注">
-        </el-table-column>
-      </el-table>
-    </div>
   </div>
 </template>
 
 <script>
+  import { mapGetters, mapActions } from 'vuex'
   export default {
     data() {
       return {
-        dataBase: {
-          configure: [
-            {
-              value: 'P1',
-              label: 'P1'
-            },
-            {
-              value: 'P2',
-              label: 'P2'
-            },
-            {
-              value: 'P3',
-              label: 'P3'
-            },
-            {
-              value: 'P4',
-              label: 'P4'
-            },
-            {
-              value: 'P3+',
-              label: 'P3+'
-            },
-            {
-              value: 'P2+',
-              label: 'P2+'
+      }
+    },
+    computed: {
+      ...mapGetters(['$cost'])
+    },
+    methods: {
+      ...mapActions(['SaveBaseData']),
+      objectSpanMethod({ row, column, rowIndex, columnIndex }) {
+        if (columnIndex === 0) {
+          if (rowIndex % 2 === 0) {
+            return {
+              rowspan: 2,
+              colspan: 1
             }
-          ],
-          configureFine: [
-            {
-              value: 'D1',
-              label: 'D1'
-            },
-            {
-              value: 'D2',
-              label: 'D2'
-            },
-            {
-              value: 'D3',
-              label: 'D3'
-            },
-            {
-              value: 'D4',
-              label: 'D4'
-            },
-            {
-              value: 'D2+',
-              label: 'D2+'
-            },
-            {
-              value: 'D3+',
-              label: 'D3+'
+          } else {
+            return {
+              rowspan: 0,
+              colspan: 0
             }
-          ],
-          configureScenery: [
-            {
-              value: 'S1',
-              label: 'S1'
-            },
-            {
-              value: 'S2',
-              label: 'S2'
-            },
-            {
-              value: 'S3',
-              label: 'S3'
-            },
-            {
-              value: 'S4',
-              label: 'S4'
-            },
-            {
-              value: 'S2+',
-              label: 'S2+'
-            },
-            {
-              value: 'S3+',
-              label: 'S3+'
-            }
-          ],
-          basicInformation: [
-            {
-              content: '城市',
-              value: '北京',
-              remarks: '基准限额以城市为单位'
-            }, {
-              content: '区域',
-              value: '海淀',
-              remarks: '基准限额以城市为单位'
-            }
-          ],
-          projectConfiguration: [
-            {
-              classify: 'w',
-              format: 'ww',
-              constructionDeploy: 'ddd',
-              clothBoundDeploy: 'fds',
-              givingPercentage: '123',
-              sceneryDeploy: 'sda',
-              clothBound: '222'
-            }, {
-              classify: 'w',
-              format: 'ww',
-              constructionDeploy: 'ddd',
-              clothBoundDeploy: 'fds',
-              givingPercentage: '123',
-              sceneryDeploy: 'sda',
-              clothBound: '222'
-            }
-          ],
-          materials: [
-            {
-              projectDeploy: '钢筋基准价格',
-              datum: '4000',
-              unit: 'CNBJLONG',
-              remarks: '无'
-            }, {
-              projectDeploy: '砼基准价格',
-              datum: '2000',
-              unit: 'CNBJLONG',
-              remarks: '无'
-            }
-          ]
+          }
+        }
+      },
+      setEditableStyle({ column }) {
+        // 根据字段设置可编辑的td 的背景
+        if (column.property === 'givingPercentage' || column.property === 'clothBound' || column.property === 'remarks' || column.property === 'datum') {
+          return 'editable-bg'
         }
       }
     },
-    methods: {}
+    created: function() {
+      this.$store.dispatch('FindBaseData', {})
+    }
   }
 </script>
 
 <style scoped>
-
+  .dataBase >>> .el-input__inner{
+    background: transparent;
+    border:none;
+  }
+  .row-bg{
+    padding: 10px 5px;
+  }
+  .pull-right{
+    float: right;
+  }
 </style>

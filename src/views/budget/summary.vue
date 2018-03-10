@@ -1,6 +1,32 @@
 <template>
   <div>
     <div style="margin: 8px">
+      <el-form ref="form" :model="form" label-width="120px">
+        <el-row :gutter="5">
+          <el-col :span="6">
+            <el-form-item label="组织机构">
+              <el-select v-model="form.organization">
+                <el-option label="类别1" value="001"></el-option>
+                <el-option label="类别2" value="002"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="项目/分期">
+              <el-select v-model="form.project">
+                <el-option label="类别1" value="001"></el-option>
+                <el-option label="类别2" value="002"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-button-group>
+              <el-button icon="el-icon-search"></el-button>
+              <el-button @click="showAdvancedSearch = !showAdvancedSearch">高级</el-button>
+            </el-button-group>
+          </el-col>
+        </el-row>
+      </el-form>
       <el-row :gutter="20">
         <el-col :span="6">
         </el-col>
@@ -147,6 +173,11 @@
   export default {
     data() {
       return {
+        showAdvancedSearch: false,
+        form: {
+          organization: '',
+          project: ''
+        },
         budgetTotal: {
           capitalPlan: '22',
           budgetPlan: '33',
@@ -182,6 +213,34 @@
             },
             {
               name: '工程相关',
+              capitalPlan: '11',
+              budgetPlan: '20',
+              budgetConfirmPlanPlan: '200',
+              list: [{
+                manipulate: '',
+                project: '北京龙湖',
+                department: '北京',
+                functionCost: '龙湖',
+                contractNo: 'NS250010200',
+                contracts: '顺北sss',
+                paymentCoding: 'pay123ws22',
+                opposite: 'MJZKR',
+                responsible: 'asdaw',
+                monthlyPayment: '10000',
+                monthlyPaidPayment: '120000',
+                paidPayment: '2000000',
+                paymentLastDueDate: '152020',
+                paymentDueDate: '300000',
+                contractBudget: '10000',
+                paymentRatio: '5',
+                paymentProperties: 'dddd',
+                separateProjectsData: '20180106',
+                contractPaymentCriteria: 'sss',
+                remarks: '备注'
+              }]
+            },
+            {
+              name: '报建支出',
               capitalPlan: '11',
               budgetPlan: '20',
               budgetConfirmPlanPlan: '200',

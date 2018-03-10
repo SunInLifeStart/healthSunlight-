@@ -1,7 +1,12 @@
 <template>
-  <el-table :data="formatData" size="mini" :cell-class-name="setCellClass" :row-class-name="_setRowClass" :span-method="objectSpanMethod1" :highlight-current-row="!!rowCallback" @current-change="handleCurrentChange" :row-style="showRow" v-bind="$attrs" :max-height="maxHeight">
+  <el-table class="el_table_td" :data="formatData" size="mini" :cell-class-name="setCellClass" :row-class-name="setRowClass" :span-method="objectSpanMethod" :highlight-current-row="!!rowCallback" @cell-dblclick="cellDbCall" @current-change="handleCurrentChange" :row-style="showRow" v-bind="$attrs" :max-height="maxHeight">
     <!-- <slot></slot> -->
+
     <el-table-column v-if="type=='col'" v-for="(column, index) in columns" :show-overflow-tooltip="true" :fit="true" :key="column.value" :sortable="column.sortable" :label="column.title" :fixed="column.fixed" :width="column.width">
+      <!-- <el-table-column v-if="column.children" v-for="(columnChild, i) in column.children" :key="columnChild.value" :label="columnChild.title" :width="columnChild.width">
+        <el-table-column v-if="columnChild.children" v-for="(columnSon, n) in column.children" :key="columnSon.value" :label="columnSon.title" :width="columnSon.width">
+        </el-table-column>
+      </el-table-column> -->
       <template slot-scope="scope">
 
         <!-- 缩进和图标 -->
@@ -13,27 +18,49 @@
           <i v-else class="el-icon-minus"></i>
         </span>
 
-        <!-- type=='text' 同时支持字符串和对象 -->
-        <span v-if="column.type=='text'&&scope.row[column.value].value">
-          {{scope.row[column.value].value}}
-        </span>
-        <span v-else-if="column.type=='text'&&!scope.row[column.value].value">
-          {{scope.row[column.value]}}
-        </span>
+        <el-tooltip placement="right" :disabled="!scope.row['tipIsOver'+index]">
 
-        <!-- type=='input' -->
-        <div v-else-if="column.type=='input'">
-          <el-input class="table_input" v-model="scope.row[column.value]" clearable>
-          </el-input>
-        </div>
+          <!-- tooltip 同时支持字符串和数组 -->
+          <div slot="content">
+            <!-- <span v-if="scope.row[column.tooltip]&&typeof scope.row[column.tooltip]==='string'">{{scope.row[column.tooltip]}}</span> -->
+            <!-- <span v-if="scope.row[column.tooltip]&&typeof scope.row[column.tooltip]==='object'" v-for="(tip,t) in scope.row[column.tooltip]" :key="t">{{tip}}<br/></span> -->
+            <span v-for="(tip,x) in scope.row.cellStyles" :key="tip.col" v-if="scope.row.cellStyles[x].col===index">
+              <span :onload="scope.row['tipIsOver'+index]=true" v-if="scope.row.cellStyles[x].tooltip" v-for="(tip,t) in scope.row.cellStyles[x].tooltip" :key="t">{{tip}}<br/></span>
+            </span>
+          </div>
 
-        <!-- type=='select' -->
-        <el-select v-else-if="column.type=='select'" v-model="scope.row[column.value]" placeholder="请选择">
-          <el-option v-for="item in column.options" :key="item.value" :label="item.label" :value="item.value">
-            <span style="float: left">{{ item.label }}</span>
-            <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
-          </el-option>
-        </el-select>
+          <!-- type=='text' 同时支持字符串和对象 -->
+          <span v-if="column.type=='text'&&scope.row[column.value]&&typeof scope.row[column.value] === 'Object'">
+            {{scope.row[column.value].value}}
+          </span>
+          <span v-else-if="column.type=='text'">
+            <!-- type=='text' 优先设置单元格 新增item情况下为input -->
+            <div v-if="scope.row.cellStyles&&index!==0" @keyup="cellChange(scope.row,column,index)">
+              <span v-for="(item,x) in scope.row.cellStyles" :key="item.col" v-if="scope.row.cellStyles[x].col===index">
+                <span :onload="scope.row['isOver'+index]=true">
+                  <el-input v-if="scope.row.cellStyles[x].type==='input'" v-model="scope.row[column.value]" class="table_input" clearable></el-input>
+                  <span v-if="!scope.row.cellStyles[x].type">{{scope.row[column.value]}}</span>
+                </span>
+              </span>
+              <span v-if="!scope.row['isOver'+index]">{{scope.row[column.value]}}</span>
+            </div>
+            <span v-else>{{scope.row[column.value]}}</span>
+          </span>
+
+          <!-- type=='input' -->
+          <div v-else-if="column.type=='input'" @keyup="cellChange(scope.row,column,index)">
+            <el-input class="table_input" v-model="scope.row[column.value]" clearable>
+            </el-input>
+          </div>
+
+          <!-- type=='select' -->
+          <el-select class="table_select" v-else-if="column.type=='select'" v-model="scope.row[column.value]" placeholder="请选择" clearable>
+            <el-option v-for="item in column.options" :key="item.value" :label="item.label" :value="item.value">
+              <span style="float: left">{{ item.label }}</span>
+              <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
+            </el-option>
+          </el-select>
+        </el-tooltip>
 
       </template>
     </el-table-column>
@@ -72,9 +99,13 @@
 
 <script>
 import treeToArray from './eval'
+import _ from 'lodash'
 export default {
   name: 'treeTable',
   props: {
+    newObj: {
+      type: Object
+    },
     // 最大高度（超过之后固定头部）
     maxHeight: {
       type: [Number, String],
@@ -103,21 +134,17 @@ export default {
     },
     type: {
       type: String,
-      required: true
+      default: 'col',
+      required: false
     },
     rowCallback: Function,
+    cellCallback: Function,
+    cellDbCallback: Function,
+    doLayout: Function,
     // 显示等级
     showLevel: {
       type: [String, Number]
     }
-  },
-  data() {
-    return {
-      yellow: 'yellow'
-    }
-  },
-  created() {
-    console.log(this.showLevel)
   },
   computed: {
     // 格式化数据源
@@ -132,19 +159,25 @@ export default {
       const args = this.evalArgs
         ? Array.concat([tmp], this.evalArgs)
         : [tmp, this.expandAll]
-      console.log(func.apply(null, args))
       return func.apply(null, args)
     }
   },
   watch: {
-    showLevel: function(newLevel, oldLevel) {
-      console.log(newLevel, oldLevel, '````````')
+    showLevel: _.debounce(function(newLevel, oldLevel) {
       if (this.showLevel) {
         this.changeExpanded(this.formatData, this.showLevel)
       }
-    }
+    }, 300)
   },
+  // created() {
+  //   this.$refs.singleTable.doLayout()
+  // },
   methods: {
+    cellDbCall(row, col, cell, event) {
+      if (this.cellDbCallback) {
+        this.cellDbCallback(row, col, cell, event)
+      }
+    },
     /**
      * 获取子集个数
      */
@@ -160,7 +193,10 @@ export default {
       }
       return count
     },
-    objectSpanMethod1({ row, column, rowIndex, columnIndex }) {
+    /**
+     * 合并单元格（纵向展开合并第一列）
+     */
+    objectSpanMethod({ row, column, rowIndex, columnIndex }) {
       // 如果是第一列
       if (columnIndex === 0) {
         // 如果有合并标识且状态展开 合并行列不变
@@ -184,6 +220,9 @@ export default {
         }
       }
     },
+    /**
+     * 合并单元格（横向展开随机合并列，暂时不开发）
+     */
     objectSpanMethod2({ row, column, rowIndex, columnIndex }) {
       // 如果是第一列
       if (columnIndex === 0) {
@@ -208,6 +247,9 @@ export default {
         }
       }
     },
+    /**
+     * 显示或隐藏row
+     */
     showRow: function(row) {
       const show = row.row.parent
         ? row.row.parent._expanded && row.row.parent._show
@@ -234,14 +276,19 @@ export default {
         }
       }
     },
-    // 设置隔行换色
-    _setRowClass({ row, rowIndex }) {
+    /**
+     * 设置隔行换色class
+     */
+    setRowClass({ row, rowIndex }) {
       if (rowIndex % 2 === 0) {
         return 'even_row'
       } else {
         return 'odd_row'
       }
     },
+    /**
+     * 设置单元格style（暂未启用此功能）
+     */
     cellStyle: function({ row, column, rowIndex, columnIndex }) {
       if (row.cellStyles) {
         for (let i = 0; i < row.cellStyles.length; i++) {
@@ -260,13 +307,16 @@ export default {
         }
       }
     },
-    // 切换下级是否展开
+    /**
+     * 切换下级是否展开
+     */
     toggleExpanded: function(trIndex) {
-      console.log('toggleExpanded')
       const record = this.formatData[trIndex]
       record._expanded = !record._expanded
     },
-    // 展开等级
+    /**
+     * 展开等级
+     */
     changeExpanded(items, level) {
       for (let i = 0; i < items.length; i++) {
         if (items[i]._level >= level) {
@@ -286,29 +336,84 @@ export default {
         }
       }
     },
-    // 图标显示
+    /**
+     * 图标显示
+     */
     iconShow(index, record) {
       return index === 0 && record.children && record.children.length > 0
     },
-    // 行回调方法
+    // 深复制对象方法
+    cloneObj(obj) {
+      console.log('2222')
+      var newObj = {}
+      if (obj instanceof Array) {
+        newObj = []
+      }
+      for (var key in obj) {
+        var val = obj[key]
+        if (typeof val === 'object') {
+          newObj[key] = {}
+        } else if (typeof val === 'string' || typeof val === 'boolean') {
+          newObj[key] = ''
+        }
+        // newObj[key] = typeof val === 'object' ? this.cloneObj(val) : val
+        // newObj[key] = typeof val === 'object' ? this.cloneObj(val) : val
+      }
+      return newObj
+    },
+    /**
+     * 添加同级item
+     */
+    addItem(items, item, id) {
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].id === id) {
+          console.log(items[i].id, i, id, items[i])
+          items[i].children.push(item)
+          return false
+        }
+      }
+    },
+    delItem(items, item, id) {
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].id === id) {
+          console.log(items[i].id, i, id, items[i])
+          items[i].children.push(item)
+          return false
+        }
+      }
+    },
+    /**
+     * 行回调方法
+     */
     handleCurrentChange(row) {
+      // console.log('111', this.newObj)
+      // const obj = {
+      //   id: '', // 唯一标识
+      //   checked: false,
+      //   value1: '选项2',
+      //   value2: 70101010110177,
+      //   event: '事件8',
+      //   comment: '无'
+      // }
+      // obj.id = row.parent.children[row.parent.children.length - 1].id + 1
+      // delete obj.children
+      // this.addItem(this.formatData, obj, row.parent.id)
+      // console.log('调用了addItem')
+      // this.formatData[0].aaa = true
       if (this.rowCallback) {
         this.rowCallback(row)
       }
     },
-    setCellStyle({ row, column, rowIndex, columnIndex }) {
-      if ((rowIndex === 0, columnIndex === 0)) {
-        column.label = '哈哈哈哈哈哈'
+    cellChange(row, col, index) {
+      if (typeof this.cellCallback === 'function') {
+        this.cellCallback(row, col, index)
       }
-      return row.idStyle || row.value2Style || {}
     }
   }
 }
 </script>
 <style lang="scss" rel="stylesheet/scss">
-.yellow {
-  background: yellow;
-}
+// 预设样式
 .font_color_white {
   color: white;
 }
@@ -325,7 +430,7 @@ export default {
   background: grey;
 }
 .bg_lightBlue {
-  background: lightblue;
+  background: #eff8ff;
 }
 .el-table .even_row {
   background: #fafafa;
@@ -334,9 +439,29 @@ export default {
   background: white;
 }
 .table_input input {
+  height: 28px;
   border: none;
   outline: none;
   background: none;
+}
+.table_select input {
+  height: 28px;
+  border: none;
+  background: none;
+}
+.el_table_td td {
+  padding: 0;
+  margin: 0;
+}
+.el_table_td th {
+  padding: 0;
+  margin: 0;
+  height: 40px;
+  background: #efefe0;
+  text-align: center;
+  color: #a08e6e;
+  font-size: 13px;
+  font-weight: 500;
 }
 </style>
 
@@ -361,10 +486,6 @@ $space-width: 18px;
 .processContainer {
   width: 100%;
   height: 100%;
-}
-
-table td {
-  line-height: 26px;
 }
 
 .tree-ctrl {

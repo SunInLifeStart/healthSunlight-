@@ -69,3 +69,96 @@ a:hover {
   fill: currentColor;
   overflow: hidden;
 }
+.table-header-bg{
+  background: #efefe0 !important;
+  color:#a08e6e;
+  font-weight: 200;
+}
+.editable-bg{
+  background: #EFF8FF;
+}
+// 列表的公共样式
+.el-form-item{
+  margin-bottom: 0;
+}
+/**
+  高级查询,input样式调整
+ */
+.investmentClass >>> .el-collapse-item__content{
+  padding-bottom: 0;
+  font-size: 12px;
+  color: #333;
+}
+.investmentClass >>> .el-col-6, .el-col-5{
+  height: 40px;
+}
+.investmentClass >>> .el-collapse-item__arrow{
+  position: absolute;
+  right: 65px;
+}
+/**
+  高级查询样式
+ */
+.investmentClass{
+  padding-top: 10px;
+  font-size: 13px;
+  border: 1px solid #D5D5D5;
+  border-left-style: none;
+  border-top-style: none;
+  border-right-style: none;
+  box-shadow: 0 2px 3px rgba(0,0,0,0.2);
+}
+/**
+  提示信息样式
+ */
+.reminder{
+  margin-left: 70px;
+  font-size: 13px;
+}
+.reminderNum{
+  color: #333;
+  font-size: 16px;
+  margin-left: 5px;
+}
+.reminderBorder{
+  background-color: #F8F8FE;
+  border: 1px solid #D1D2D2;
+  color: #999;
+  padding: 5px;
+  position: fixed;
+  bottom: 2px;
+  width: 100%;
+}
+.btnRight{
+  float: right;
+  margin-right: 1%;
+}
+ .el-table .interleave_row {
+  background: #F5F7FA;
+}
+
+.el-table .success-row {
+  background: #FAECD7;
+}
+.reminder{
+  margin-left: 70px;
+  font-size: 13px;
+}
+.reminderNum{
+  color: #333;
+  font-size: 16px;
+  margin-left: 5px;
+}
+.reminderBorder{
+  background-color: #F8F8FE;
+  border: 1px solid #D1D2D2;
+  color: #999;
+  padding: 5px;
+  position: fixed;
+  bottom: 2px;
+  width: 100%;
+}
+// 字体大小
+.fontSize18{
+  font-size: 18px
+}

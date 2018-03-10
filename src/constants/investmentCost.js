@@ -15,10 +15,17 @@ export const COST_SPECIAL_MATTER = 'COST_SPECIAL_MATTER'
 export const COSTS = 'COSTS'
 // 用于投模成本材料配置查询
 export const COST_MATERIAL_ALLOCATION = 'COST_MATERIAL_ALLOCATION'
-// 用于查看投模成本模块管理-投模科目信息
-// 用于导出投模成本模块管理-项目配置设置信息
+// 用于查看投模成本模块 财务口径分担
 export const COST_FINANCIAL_APPORTIONMENT = 'COST_FINANCIAL_APPORTIONMENT'
 // 用于查看投模成本模块管理-基础配置表-项目配置设置信息
 export const COST_PROJECT_CONFIGURATION = 'COST_PROJECT_CONFIGURATION'
 // 用于查看投模成本模块管理-基础配置表-标准业态信息
 export const COST_LIMIT_COEFFICIENT = 'COST_LIMIT_COEFFICIENT'
+// 保存版本信息
+export const SAVE_VERSION = 'SAVE_VERSION'
+// 设置版本信息
+export const SET_VERSION = 'SET_VERSION'
+// 设置基本信息
+export const SET_BASEDATA = 'SET_BASEDATA'
+// 投模面积指标查询
+export const SET_AREAINDICATOR = 'SET_AREAINDICATOR'

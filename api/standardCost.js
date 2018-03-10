@@ -35,9 +35,9 @@ export function deleteStandardCost(keywords) {
  * @param keywords 入参
  * @returns promise
  */
-export function findStandardCostBaseInfo(keywords) {
+export function findStandardCostBase(keywords) {
   return fetch({
-    url: url.findStandardCostBaseInfo,
+    url: url.findStandardCostBase,
     method: 'post',
     data: keywords
   })
@@ -48,9 +48,9 @@ export function findStandardCostBaseInfo(keywords) {
  * @param keywords 入参
  * @returns promise
  */
-export function saveStandardCostBaseInfo(keywords) {
+export function saveStandardCostBase(keywords) {
   return fetch({
-    url: url.saveStandardCostBaseInfo,
+    url: url.saveStandardCostBase,
     method: 'post',
     data: keywords
   })
@@ -61,9 +61,9 @@ export function saveStandardCostBaseInfo(keywords) {
  * @param keywords 入参
  * @returns promise
  */
-export function lookStandardCostProPlanTotalIndexBaseInfo(keywords) {
+export function lookStandardCostProPlanTotalIndexBase(keywords) {
   return fetch({
-    url: url.lookStandardCostProPlanTotalIndexBaseInfo,
+    url: url.lookStandardCostProPlanTotalIndexBase,
     method: 'post',
     data: keywords
   })
@@ -74,9 +74,9 @@ export function lookStandardCostProPlanTotalIndexBaseInfo(keywords) {
  * @param keywords 入参
  * @returns promise
  */
-export function lookStandardCostProPlanTotalIndexInfo(keywords) {
+export function lookStandardCostProPlanTotalIndex(keywords) {
   return fetch({
-    url: url.lookStandardCostProPlanTotalIndexInfo,
+    url: url.lookStandardCostProPlanTotalIndex,
     method: 'post',
     data: keywords
   })
@@ -165,9 +165,9 @@ export function exportCmprotypeAreaForDto(keywords) {
  * @param keywords 入参
  * @returns promise
  */
-export function lookProtypeAttributeDtoList(keywords) {
+export function lookProtypeAttributeDto(keywords) {
   return fetch({
-    url: url.lookProtypeAttributeDtoList,
+    url: url.lookProtypeAttributeDto,
     method: 'post',
     data: keywords
   })
@@ -178,9 +178,9 @@ export function lookProtypeAttributeDtoList(keywords) {
  * @param keywords 入参
  * @returns promise
  */
-export function exportProtypeAttributeDtoList(keywords) {
+export function exportProtypeAttributeDto(keywords) {
   return fetch({
-    url: url.exportProtypeAttributeDtoList,
+    url: url.exportProtypeAttributeDto,
     method: 'post',
     data: keywords
   })
@@ -191,9 +191,9 @@ export function exportProtypeAttributeDtoList(keywords) {
  * @param keywords 入参
  * @returns promise
  */
-export function exportProtypeConfigHierarchyDtoList(keywords) {
+export function exportProtypeConfigHierarchyDto(keywords) {
   return fetch({
-    url: url.exportProtypeConfigHierarchyDtoList,
+    url: url.exportProtypeConfigHierarchyDto,
     method: 'post',
     data: keywords
   })
@@ -204,9 +204,9 @@ export function exportProtypeConfigHierarchyDtoList(keywords) {
  * @param keywords 入参
  * @returns promise
  */
-export function lookProductTypeDtoList(keywords) {
+export function lookProductTypeDto(keywords) {
   return fetch({
-    url: url.lookProductTypeDtoList,
+    url: url.lookProductTypeDto,
     method: 'post',
     data: keywords
   })
@@ -217,9 +217,9 @@ export function lookProductTypeDtoList(keywords) {
  * @param keywords 入参
  * @returns promise
  */
-export function lookStandardProtypeBuildList(keywords) {
+export function lookStandardProtypeBuild(keywords) {
   return fetch({
-    url: url.lookStandardProtypeBuildList,
+    url: url.lookStandardProtypeBuild,
     method: 'post',
     data: keywords
   })
@@ -243,9 +243,9 @@ export function exportStandardCollectHierarchy(keywords) {
  * @param keywords 入参
  * @returns promise
  */
-export function lookStandardCollectPlanInfo(keywords) {
+export function lookStandardCollectPlan(keywords) {
   return fetch({
-    url: url.lookStandardCollectPlanInfo,
+    url: url.lookStandardCollectPlan,
     method: 'post',
     data: keywords
   })
@@ -256,9 +256,9 @@ export function lookStandardCollectPlanInfo(keywords) {
  * @param keywords 入参
  * @returns promise
  */
-export function lookStandardCollectInfo(keywords) {
+export function lookStandardCollect(keywords) {
   return fetch({
-    url: url.lookStandardCollectInfo,
+    url: url.lookStandardCollect,
     method: 'post',
     data: keywords
   })
@@ -269,9 +269,9 @@ export function lookStandardCollectInfo(keywords) {
  * @param keywords 入参
  * @returns promise
  */
-export function lookStandardNotBuildInfo(keywords) {
+export function lookStandardNotBuild(keywords) {
   return fetch({
-    url: url.lookStandardNotBuildInfo,
+    url: url.lookStandardNotBuild,
     method: 'post',
     data: keywords
   })
@@ -282,9 +282,9 @@ export function lookStandardNotBuildInfo(keywords) {
  * @param keywords 入参
  * @returns promise
  */
-export function lookStandardCostBuildBaseEngineerInfo(keywords) {
+export function lookStandardCostBuildBaseEngineer(keywords) {
   return fetch({
-    url: url.lookStandardCostBuildBaseEngineerInfo,
+    url: url.lookStandardCostBuildBaseEngineer,
     method: 'post',
     data: keywords
   })
@@ -295,9 +295,9 @@ export function lookStandardCostBuildBaseEngineerInfo(keywords) {
  * @param keywords 入参
  * @returns promise
  */
-export function exportStandardCostBuildBaseEngineerInfo(keywords) {
+export function exportStandardCostBuildBaseEngineer(keywords) {
   return fetch({
-    url: url.exportStandardCostBuildBaseEngineerInfo,
+    url: url.exportStandardCostBuildBaseEngineer,
     method: 'post',
     data: keywords
   })
@@ -321,9 +321,9 @@ export function exportStandardCostBuildHeightHierarchy(keywords) {
  * @param keywords 入参
  * @returns promise
  */
-export function lookStandardCostBuildHeightInfo(keywords) {
+export function lookStandardCostBuildHeight(keywords) {
   return fetch({
-    url: url.lookStandardCostBuildHeightInfo,
+    url: url.lookStandardCostBuildHeight,
     method: 'post',
     data: keywords
   })
@@ -347,9 +347,9 @@ export function getStandardCostBuildBungalowsHierarchy(keywords) {
  * @param keywords 入参
  * @returns promise
  */
-export function lookStandardCostBuildBungalowsInfo(keywords) {
+export function lookStandardCostBuildBungalows(keywords) {
   return fetch({
-    url: url.lookStandardCostBuildBungalowsInfo,
+    url: url.lookStandardCostBuildBungalows,
     method: 'post',
     data: keywords
   })
@@ -373,9 +373,9 @@ export function getStandardCostBuildNoneGarageHierarchy(keywords) {
  * @param keywords 入参
  * @returns promise
  */
-export function lookStandardCostBuildNoneGarageInfo(keywords) {
+export function lookStandardCostBuildNoneGarage(keywords) {
   return fetch({
-    url: url.lookStandardCostBuildNoneGarageInfo,
+    url: url.lookStandardCostBuildNoneGarage,
     method: 'post',
     data: keywords
   })
@@ -386,9 +386,9 @@ export function lookStandardCostBuildNoneGarageInfo(keywords) {
  * @param keywords 入参
  * @returns promise
  */
-export function lookStandardCostBuildGarageInfoHierarchy(keywords) {
+export function lookStandardCostBuildGarageHierarchy(keywords) {
   return fetch({
-    url: url.lookStandardCostBuildGarageInfoHierarchy,
+    url: url.lookStandardCostBuildGarageHierarchy,
     method: 'post',
     data: keywords
   })
@@ -399,9 +399,9 @@ export function lookStandardCostBuildGarageInfoHierarchy(keywords) {
  * @param keywords 入参
  * @returns promise
  */
-export function lookStandardCostBuildGarageInfo(keywords) {
+export function lookStandardCostBuildGarage(keywords) {
   return fetch({
-    url: url.lookStandardCostBuildGarageInfo,
+    url: url.lookStandardCostBuildGarage,
     method: 'post',
     data: keywords
   })
@@ -581,9 +581,9 @@ export function exportStandardCostDataBaseEngineeringCost(keywords) {
  * @param keywords 入参
  * @returns promise
  */
-export function lookStandardCostDataBaseEngineeringCost(keywords) {
+export function lookStandardCostDataEngineeringCost(keywords) {
   return fetch({
-    url: url.lookStandardCostDataBaseEngineeringCost,
+    url: url.lookStandardCostDataEngineeringCost,
     method: 'post',
     data: keywords
   })
@@ -633,9 +633,22 @@ export function exportStandardCostDataBaseSpecialHierarchy(keywords) {
  * @param keywords 入参
  * @returns promise
  */
-export function lookStandardCostDataBaseSpecialHierarchy(keywords) {
+export function lookStandardCostDataBaseSpecialList(keywords) {
   return fetch({
-    url: url.lookStandardCostDataBaseSpecialHierarchy,
+    url: url.lookStandardCostDataBaseSpecialList,
+    method: 'post',
+    data: keywords
+  })
+}
+
+/**
+ * 基准成本编制说明数据库-特殊事项清单保存接口
+ * @param keywords 入参
+ * @returns promise
+ */
+export function saveStandardCostDataBaseSpecialList(keywords) {
+  return fetch({
+    url: url.saveStandardCostDataBaseSpecialList,
     method: 'post',
     data: keywords
   })

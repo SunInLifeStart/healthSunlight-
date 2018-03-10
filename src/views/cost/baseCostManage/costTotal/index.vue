@@ -1,22 +1,45 @@
 <template>
   <div>
-    <span style="float: left; margin-top: 10px;">层级选项:</span>
-    <div class="block" style="width: 500px;float: left; margin-left: 100px;">
-      <el-slider v-model="value8" show-input :max="6" :min="1" show-stops></el-slider>
-    </div>
-    <el-table :data="tableData" border show-summary :summary-method="getSummaries" style="width: 100%">
-      <el-table-column prop="costItem" label="费项" width="50"></el-table-column>
-      <el-table-column prop="projectName" label="成本项目" width="100"></el-table-column>
-      <el-table-column prop="originalDescription" label="原始指标说明"></el-table-column>
-      <el-table-column prop="workAmount" label="工程量"></el-table-column>
-      <el-table-column prop="unit" label="单位"></el-table-column>
-      <el-table-column prop="gardenHouse" label="单价(元)"></el-table-column>
-      <el-table-column prop="combinedPrice" label="合价(万元)"></el-table-column>
-      <el-table-column prop="coveredArea" label="建筑面积平米造价(元/平米)"></el-table-column>
-      <el-table-column prop="practicalCoveredArea" label="实际建筑面积平米造价(元/平米)"></el-table-column>
-      <el-table-column prop="canRental" label="可租售平米造价（元/平米）"></el-table-column>
-      <el-table-column prop="costExplain" label="成本费用说明"></el-table-column>
+    <el-row>
+      <el-col :span="16" class="card_section">
+        <el-col :span="4" style="line-height: 2;font-size: 14px">层级选项：</el-col>
+        <el-col :span="18" style="margin-left: -9%">
+          <el-pagination background layout="pager" :current-page.sync="level" @current-change="changeLevel(level)" :total="30"></el-pagination>
+        </el-col>
+      </el-col>
+    </el-row>
+    <el-table highlight-current-row :data="tableData" border
+              size="small" style="width: 98%;margin-left: 1%" show-summary :summary-method="getSummaries"
+              :cell-style="({row, column, rowIndex, columnIndex}) => (columnIndex === 3||columnIndex === 0)?{'text-align': 'center',padding: '3px'}:{padding: '3px'}"
+              :header-cell-style="{background:'#E8F4F9', 'text-align': 'center', color: '#7986a9',fontSize:'13px',padding:'6px 0',fontWeight:'500'}">
+      <el-table-column prop="costItem" width="100px" label="费项" align="center"></el-table-column>
+      <el-table-column prop="projectName" label="成本项目" align="center"></el-table-column>
+      <el-table-column prop="originalDescription" label="原始指标说明" align="center"></el-table-column>
+      <el-table-column prop="workAmount" label="工程量" align="center"></el-table-column>
+      <el-table-column prop="unit" label="单位" align="center"></el-table-column>
+      <el-table-column prop="gardenHouse" label="单价(元)" align="center"></el-table-column>
+      <el-table-column prop="combinedPrice" label="合价(万元)" align="center"></el-table-column>
+      <el-table-column prop="combinedPrice" label="建筑面积平米造价(元/平米)"></el-table-column>
+      <el-table-column prop="combinedPrice" label="实际建筑面积平米造价(元/平米"></el-table-column>
+      <el-table-column prop="combinedPrice" label="可租售平米造价（元/平米）"></el-table-column>
+      <el-table-column prop="combinedPrice" label="成本费用说明"></el-table-column>
     </el-table>
+    <el-table highlight-current-row :data="tableData" border style="width: 98%;margin-left: 1%"
+              :cell-style="({row, column, rowIndex, columnIndex}) => (columnIndex === 3||columnIndex === 0)?{'text-align': 'center',padding: '3px'}:{padding: '3px'}"
+              :header-cell-style="{ display : 'none'}">
+      <el-table-column prop="costItem" width="100px" label="" align="center"></el-table-column>
+      <el-table-column prop="projectName" label="" align="center"></el-table-column>
+      <el-table-column prop="originalDescription" label="" align="center"></el-table-column>
+      <el-table-column prop="workAmount" label="" align="center"></el-table-column>
+      <el-table-column prop="unit" label="" align="center"></el-table-column>
+      <el-table-column prop="gardenHouse" label="" align="center"></el-table-column>
+      <el-table-column prop="combinedPrice" label="" align="center"></el-table-column>
+      <el-table-column prop="combinedPrice" label=""></el-table-column>
+      <el-table-column prop="combinedPrice" label=""></el-table-column>
+      <el-table-column prop="combinedPrice" label=""></el-table-column>
+      <el-table-column prop="combinedPrice" label=""></el-table-column>
+    </el-table>
+
   </div>
 </template>
 
@@ -26,6 +49,7 @@ export default {
   data() {
     return {
       value8: 0,
+      level: 1,
       tableData: [
         {
           costItem: '01',
@@ -39,6 +63,11 @@ export default {
     }
   },
   methods: {
+    // 层级选项控制
+    changeLevel(level) {
+      console.log(level)
+      this.level = level
+    },
     getSummaries(param) {
       const { columns, data } = param
       const sums = []

@@ -35,7 +35,7 @@
               </el-col>
             </el-col>
             <el-col :span="8">
-              <el-col :span="6">累计为付款比例</el-col>
+              <el-col :span="6">累计付款比例</el-col>
               <el-col :span="14">
                 <el-input v-model="$payment.contract.payments" placeholder="请输入内容"></el-input>
               </el-col>
@@ -55,7 +55,7 @@
               </el-col>
             </el-col>
             <el-col :span="8">
-              <el-col :span="6">付款编号</el-col>
+              <el-col :span="6">付款编码</el-col>
               <el-col :span="14">
                 <el-input v-model="$payment.paymentInformation.paymentNumber" placeholder="请输入内容"></el-input>
               </el-col>
@@ -111,7 +111,7 @@
               </el-col>
             </el-col>
             <el-col :span="8">
-              <el-col :span="6">付款约定比例</el-col>
+              <el-col :span="6">付款比例</el-col>
               <el-col :span="14">
                 <el-input v-model="$payment.paymentInformation.payerRatio" placeholder="请输入内容"></el-input>
               </el-col>
@@ -157,7 +157,7 @@
           <el-row>
             <el-col :span="24">
               <el-col :span="8">
-                <el-col :span="6">申请金额（不含可抵扣税）（A）</el-col>
+                <el-col :span="6">申请金额（含税）（A）</el-col>
                 <el-col :span="14">
                   <el-input v-model="$payment.payment.appliedAmount" placeholder="请输入内容"></el-input>
                 </el-col>
@@ -169,7 +169,7 @@
                 </el-col>
               </el-col>
               <el-col :span="8">
-                <el-col :span="6">税率（C=B/A）</el-col>
+                <el-col :span="6">申请金额（不含可抵扣税）（C=A-B）</el-col>
                 <el-col :span="14">
                   <el-input v-model="$payment.payment.rate" placeholder="请输入内容"></el-input>
                 </el-col>
@@ -177,7 +177,7 @@
             </el-col>
             <el-col :span="24">
               <el-col :span="8">
-                <el-col :span="6">申请金额（含税）（D=A+B）</el-col>
+                <el-col :span="6">可抵扣税率（D=B/C）</el-col>
                 <el-col :span="14">
                   <el-input v-model="$payment.payment.appliedAmountTax" placeholder="请输入内容"></el-input>
                 </el-col>
@@ -222,18 +222,18 @@
                   <el-input v-model="$payment.payment.amountPayable" placeholder="请输入内容"></el-input>
                 </el-col>
               </el-col>
-              <el-col :span="8">
-                <el-col :span="6">资金计划确认金额（K）</el-col>
-                <el-col :span="14">
-                  <el-input v-model="$payment.payment.amountConfirm" placeholder="请输入内容"></el-input>
-                </el-col>
-              </el-col>
-              <el-col :span="8">
-                <el-col :span="6">资金计划可付款金额（L=K-H</el-col>
-                <el-col :span="14">
-                  <el-input v-model="$payment.payment.amountConfirmPayable" placeholder="请输入内容"></el-input>
-                </el-col>
-              </el-col>
+              <!--<el-col :span="8">-->
+                <!--<el-col :span="6">资金计划确认金额（K）</el-col>-->
+                <!--<el-col :span="14">-->
+                  <!--<el-input v-model="$payment.payment.amountConfirm" placeholder="请输入内容"></el-input>-->
+                <!--</el-col>-->
+              <!--</el-col>-->
+              <!--<el-col :span="8">-->
+                <!--<el-col :span="6">资金计划可付款金额（L=K-H</el-col>-->
+                <!--<el-col :span="14">-->
+                  <!--<el-input v-model="$payment.payment.amountConfirmPayable" placeholder="请输入内容"></el-input>-->
+                <!--</el-col>-->
+              <!--</el-col>-->
             </el-col>
           </el-row>
         </div>
@@ -261,11 +261,15 @@
             </el-table-column>
             <el-table-column
               prop="address"
-              label="付款比例">
+              label="累计应付金额">
             </el-table-column>
             <el-table-column
               prop="productionPayment"
-              label="产值申请付款金额">
+              label="累计已付金额">
+            </el-table-column>
+            <el-table-column
+              prop="productionPayment"
+              label="本期可申请金额">
             </el-table-column>
           </el-table>
         </div>
@@ -274,9 +278,10 @@
     <el-collapse accordion>
       <el-collapse-item title="" name="1">
         <div>
-          <el-button>关联发票</el-button>
-          <el-button @click="dialogFormVisible = true">开票通知</el-button>
+          <!--<el-button>关联发票</el-button>-->
+          <!--<el-button @click="dialogFormVisible = true">开票通知</el-button>-->
           <el-dialog title="开票通知" :visible.sync="dialogFormVisible">
+            <div><span style="float:right;">发送通知</span></div>
             <el-form :model="form">
               <el-form-item label="购买方" :label-width="formLabelWidth">
                 <el-input v-model="form.name" auto-complete="off"></el-input>
@@ -311,6 +316,7 @@
 
           <el-tabs type="border-card">
             <el-tab-pane label="资金计划">
+              <div style="display:inline-block;float: right"><span>引入</span><span>删除</span></div>
               <el-table border :data="$payment.capitalPlan" style="width: 100%">
                 <el-table-column prop="planTheme" label="资金计划主题"></el-table-column>
                 <el-table-column prop="planMonth" label="资金计划月份"></el-table-column>
@@ -319,8 +325,14 @@
               </el-table>
             </el-tab-pane>
             <el-tab-pane label="付款方式">
+              <div style="display:inline-block;float: right"><span>增加</span><span>删除</span></div>
               <el-table border :data="$payment.capitalPlan1" style="width: 100%">
-                <el-table-column prop="planTheme" label="付款方式名称"></el-table-column>
+                <el-table-column prop="planTheme" label="付款方式名称">
+                    <el-select >
+                        <el-option label="类别1" value="001"></el-option>
+                        <el-option label="类别2" value="002"></el-option>
+                    </el-select>
+                </el-table-column>
                 <el-table-column prop="planMonth" label="付款金额"></el-table-column>
                 <el-table-column prop="department" label="付款比率(%)"></el-table-column>
               </el-table>
@@ -334,6 +346,7 @@
               </el-table>
             </el-tab-pane>
             <el-tab-pane label="罚扣明细">
+              <div style="display:inline-block;float: right"><span>增加</span><span>删除</span></div>
               <el-table border :data="$payment.capitalPlan3" style="width: 100%">
                 <el-table-column prop="planTheme" label="扣款内容"></el-table-column>
                 <el-table-column prop="planMonth" label="扣款金额"></el-table-column>
@@ -341,6 +354,7 @@
               </el-table>
             </el-tab-pane>
             <el-tab-pane label="冲账明细">
+              <div style="display:inline-block;float: right"><span>增加</span><span>删除</span></div>
               <el-table border :data="$payment.capitalPlan4" style="width: 100%">
                 <el-table-column prop="planTheme" label="状态"></el-table-column>
                 <el-table-column prop="planMonth" label="主题"></el-table-column>
@@ -358,12 +372,16 @@
                 <el-table-column prop="planTheme" label="代付费项"></el-table-column>
                 <el-table-column prop="planMonth" label="代付金额"></el-table-column>
                 <el-table-column prop="planMonth" label="已扣回金额"></el-table-column>
-                <el-table-column prop="planMonth" label="已冲账金额"></el-table-column>
                 <el-table-column prop="planMonth" label="未扣回金额"></el-table-column>
-                <el-table-column prop="planMonth" label="本次扣回金额"></el-table-column>
+                <el-table-column prop="planMonth" label="本次扣回金额">
+                   <template slot-scope="scope">
+                     <el-input v-model="scope.row.contractName" placeholder="请输入内容">{{scope.row.contractName}}</el-input>
+                   </template>\
+                </el-table-column>
               </el-table>
             </el-tab-pane>
             <el-tab-pane label="工抵房明细">
+              <div style="display:inline-block;float: right"><span>增加</span><span>删除</span></div>
               <el-table border :data="$payment.capitalPlan5" style="width: 100%">
                 <el-table-column prop="planTheme" label="工抵房费项"></el-table-column>
                 <el-table-column prop="planMonth" label="工抵房金额"></el-table-column>
@@ -373,40 +391,58 @@
               </el-table>
             </el-tab-pane>
             <el-tab-pane label="发票信息">
+              <div style="display:inline-block;float: right"><span @click="dialogFormVisible = true">开票通知</span>
+                <span @click="contactInvoice"><a :href="'#/contract/detail/' + '1' + '/payments/invoices'">关联发票</a></span>
+                <span>删除</span></div>
               <el-table border :data="$payment.capitalPlan6" style="width: 100%">
-                <el-table-column prop="planTheme" label="发票号"></el-table-column>
                 <el-table-column prop="planMonth" label="发票类型"></el-table-column>
+                <el-table-column prop="planTheme" label="发票号"></el-table-column>
+                <el-table-column prop="planTheme" label="发票代码"></el-table-column>
+                <el-table-column prop="planTheme" label="开票日期"></el-table-column>
+                <el-table-column prop="planTheme" label="发票码（后6位）"></el-table-column>
                 <el-table-column prop="department" label="票据金额(不含税)"></el-table-column>
                 <el-table-column prop="planConfirmation" label="税率"></el-table-column>
                 <el-table-column prop="planConfirmation" label="票据税额"></el-table-column>
-                <el-table-column prop="planConfirmation" label="票据金额(含税)"></el-table-column>
+                <el-table-column prop="planConfirmation" label="含税金额"></el-table-column>
+                <el-table-column prop="planConfirmation" label="未付款金额(含税)"></el-table-column>
+                <el-table-column prop="planConfirmation" label="本次使用金额(不含税)"></el-table-column>
+                <el-table-column prop="planConfirmation" label="本次使用税额"></el-table-column>
+                <el-table-column prop="planConfirmation" label="本次使用金额（含税）"></el-table-column>
               </el-table>
             </el-tab-pane>
             <el-tab-pane label="自持可售分摊">
               <el-table border :data="$payment.capitalPlan7" style="width: 100%">
                 <el-table-column prop="planTheme" label="分摊类型"></el-table-column>
-                <el-table-column prop="department" label="分摊金额（必填）"></el-table-column>
-                <el-table-column prop="planConfirmation" label="分摊比例（%）"></el-table-column>
+                <el-table-column prop="department" label="分摊金额（必填）">
+                  <template slot-scope="department">
+                    <el-input></el-input>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="planConfirmation" label="分摊比例（%）">
+                  <template slot-scope="planConfirmation">
+                    <el-input></el-input>
+                  </template>
+                </el-table-column>
               </el-table>
             </el-tab-pane>
           </el-tabs>
         </div>
       </el-collapse-item>
     </el-collapse>
-    <el-collapse accordion>
-      <el-collapse-item title="附件" name="1">
-        <div>
-          <el-table border :data="$payment.accessoryTable" style="width: 100%">
-            <el-table-column prop="type" label="附件类型"></el-table-column>
-            <el-table-column prop="accessory" label="附件"></el-table-column>
-            <el-table-column prop="remakes" label="备注"></el-table-column>
-            <el-table-column prop="admin" label="上传人"></el-table-column>
-            <el-table-column prop="uploadTime" label="上传时间"></el-table-column>
-            <el-table-column prop="operation" label="操作"></el-table-column>
-          </el-table>
-        </div>
-      </el-collapse-item>
-    </el-collapse>
+    <!--<el-collapse accordion>-->
+      <!--<el-collapse-item title="附件" name="1">-->
+        <!--<div>-->
+          <!--<el-table border :data="$payment.accessoryTable" style="width: 100%">-->
+            <!--<el-table-column prop="type" label="附件类型"></el-table-column>-->
+            <!--<el-table-column prop="accessory" label="附件"></el-table-column>-->
+            <!--<el-table-column prop="remakes" label="备注"></el-table-column>-->
+            <!--<el-table-column prop="admin" label="上传人"></el-table-column>-->
+            <!--<el-table-column prop="uploadTime" label="上传时间"></el-table-column>-->
+            <!--<el-table-column prop="operation" label="操作"></el-table-column>-->
+          <!--</el-table>-->
+        <!--</div>-->
+      <!--</el-collapse-item>-->
+    <!--</el-collapse>-->
   </div>
 </template>
 
@@ -423,7 +459,10 @@ export default {
   methods: {
     ...mapActions([
       'FindPayment'
-    ])
+    ]),
+    contactInvoice() {
+      console.log(123)
+    }
   },
   data() {
     return {

@@ -9,7 +9,7 @@
       <el-col :span="8">
         <div class="grid-content bg-purple">
           <el-carousel :interval="4000" height="200px">
-            <el-carousel-item v-for="item in dashboard.headlines" :key="item.title">
+            <el-carousel-item v-for="item in $dashboard.headlines" :key="item.title">
               <h3>{{ item.title }}</h3>
             </el-carousel-item>
           </el-carousel>
@@ -23,24 +23,26 @@
           <el-col :span="12">
             <el-card class="box-card">
               <div slot="header" class="clearfix">
-                <span>待办事项</span>
+                <span @click="goToDo">待办事项</span>
               </div>
               <el-table
                 :data="tableData"
                 style="width: 100%">
                 <el-table-column
-                  prop="date"
-                  label="类型"
-                  width="180">
-                </el-table-column>
-                <el-table-column
-                  prop="name"
-                  label="主题"
-                  width="180">
+                  prop="type"
+                  label="类型">
                 </el-table-column>
                 <el-table-column
                   prop="address"
+                  label="主题">
+                </el-table-column>
+                <el-table-column
+                  prop="name"
                   label="经办人">
+                </el-table-column>
+                <el-table-column
+                  prop="name"
+                  label="">
                 </el-table-column>
               </el-table>
             </el-card>
@@ -48,23 +50,36 @@
           <el-col :span="12">
             <el-card class="box-card">
               <div slot="header" class="clearfix">
-                <span>公告栏</span>
+                <span @click="goNews">公告栏</span>
               </div>
-              <div v-for="(article,index) in dashboard.news" :key="index" class="text item">
-                {{article.newstitle}} {{article.createDate}}
-              </div>
+              <el-table
+                :data="$dashboard.news"
+                style="width: 100%">
+                <el-table-column
+                  prop="belongscategory"
+                  label="">
+                </el-table-column>
+                <el-table-column
+                  prop="newstitle"
+                  label="">
+                </el-table-column>
+                <el-table-column
+                  prop="createdate"
+                  label="">
+                </el-table-column>
+              </el-table>
             </el-card>
           </el-col>
         </el-row>
 
         <el-row :gutter="20">
           <el-col :span="24">
-            <vue-event-calendar title="我的日历" :events="dashboard.events">
+            <vue-event-calendar title="我的日历" :events="$dashboard.events">
             </vue-event-calendar>
           </el-col>
         </el-row>
       </el-tab-pane>
-      <el-tab-pane label="驾驶舱">驾驶舱</el-tab-pane>
+      <el-tab-pane label="驾驶舱" disabled>驾驶舱</el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -86,26 +101,22 @@ export default {
   data() {
     return {
       tableData: [{
-        date: '2016-05-02',
+        type: '合同',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1518 弄'
       }, {
-        date: '2016-05-04',
+        type: '预算',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1517 弄'
       }, {
-        date: '2016-05-01',
+        type: '成本',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1519 弄'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1516 弄'
       }]
     }
   },
   computed: {
-    ...mapGetters(['dashboard'])
+    ...mapGetters(['$dashboard'])
   },
   created() {
     this.GetHeadlines()
@@ -117,7 +128,13 @@ export default {
       'GetHeadlines',
       'GetNews',
       'GetEvents'
-    ])
+    ]),
+    goNews() {
+      this.$router.push({ path: '/news' })
+    },
+    goToDo() {
+      this.$router.push({ path: '/toDo' })
+    }
   }
 }
 </script>

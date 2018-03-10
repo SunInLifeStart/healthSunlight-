@@ -7,7 +7,8 @@
           <el-pagination
             background
             layout="pager"
-            :current-change="GetSpecialItem()"
+            :current-page.sync="level"
+            @current-change="changeLevel(level)"
             :total="30">
           </el-pagination>
         </div>
@@ -19,147 +20,70 @@
         <el-col :span="12">&nbsp</el-col>
         <el-col :span="12">
           <el-col :span="8">
-            <el-button size="mini" type="primary">导出</el-button>
+            <el-button size="mini" type="primary" @click="exportCost()">导出</el-button>
           </el-col>
           <el-col :span="8">
-            <el-button size="mini" type="primary">计算并保存</el-button>
+            <el-button size="mini" type="primary" @click="calculateAndSave()">计算并保存</el-button>
           </el-col>
         </el-col>
       </el-col>
     </div>
-    <el-table
-      :data="tableData3"
-      border
-      style="width: 100%">
-      <el-table-column
-        type="index"
-        label="序号">
-      </el-table-column>
-      <el-table-column
-        label="项目"
-        prop="product">
-      </el-table-column>
-      <el-table-column
-        prop="estimateBased"
-        label="估算基础">
-      </el-table-column>
-      <el-table-column
-        prop="estimate"
-        label="估算量">
-      </el-table-column>
-      <el-table-column
-        prop="unit"
-        label="单位">
-      </el-table-column>
-      <el-table-column
-        prop="unitPrice"
-        label="单价(元)">
-      </el-table-column>
-      <el-table-column
-        prop="cost"
-        label="合价(万元)">
-      </el-table-column>
-      <el-table-column
-        prop="rentalAreaPrice"
-        label="可租售产权面积单价（元）">
-      </el-table-column>
-      <el-table-column
-        prop="coveredAreaPrice"
-        label="建面单价（元）">
-      </el-table-column>
-      <el-table-column
-        prop="ticketsPercent"
-        label="取票率">
-      </el-table-column>
-      <el-table-column
-        prop="synthesizePercent"
-        label="综合进项税率">
-      </el-table-column>
-      <el-table-column
-        prop="inputVAT"
-        label="进项税额">
-      </el-table-column>
-      <el-table-column
-        prop="remarks"
-        label="备注">
-      </el-table-column>
-    </el-table>
+    <tree-table :data="investmentCost.costs.items" :columns="investmentCost.costs.columns" :type="'col'" :evalFunc="func" :evalArgs="args"
+                :stripe="true" :showLevel='level' border>
+    </tree-table>
   </div>
 
 </template>
 
 <script>
-  import { mapActions } from 'vuex'
+  import { mapGetters } from 'vuex'
   import treeTable from '@/components/TreeTable'
   import treeToArray from '@/components/treeTable/customEval'
+  import { exportCost, calculateAndSave } from 'api/investmentCost'
 
   export default {
     components: { treeTable },
     name: 'costSummary',
     data() {
       return {
+        level: 1,
         func: treeToArray,
-        cfg: {
-          fixed: true,
-          maxHeight: 400
-        },
-        args: [null, null, true, 'timeLine'],
-        myStyle: { height: 250 },
-        specialInformation: [
-          {
-            product: '1',
-            estimateBased: '开发成本',
-            estimate: '19,050',
-            unit: '项',
-            unitPrice: '1、高压线迁移费用差不多1000元/m',
-            cost: '32E文',
-            rentalAreaPrice: '223',
-            coveredAreaPrice: '322223',
-            ticketsPercent: '',
-            synthesizePercent: '',
-            inputVAT: '',
-            remarks: '做差值',
-            children: [
-              {
-                product: '1',
-                estimateBased: '开发成本',
-                estimate: '19,050',
-                unit: '项',
-                unitPrice: '1、高压线迁移费用差不多1000元/m',
-                cost: '32E文',
-                rentalAreaPrice: '223',
-                coveredAreaPrice: '322223',
-                ticketsPercent: '',
-                synthesizePercent: '',
-                inputVAT: '',
-                remarks: '做差值'
-              },
-              {
-                product: '1',
-                estimateBased: '开发成本',
-                estimate: '19,050',
-                unit: '项',
-                unitPrice: '1、高压线迁移费用差不多1000元/m',
-                cost: '32E文',
-                rentalAreaPrice: '223',
-                coveredAreaPrice: '322223',
-                ticketsPercent: '2',
-                synthesizePercent: '233',
-                inputVAT: '43',
-                remarks: '做差值'
-              }
-            ]
-          }
-        ],
-        value8: 0,
-        tableData3: []
+        args: [null, null, true, 'timeLine']
       }
     },
+    computed: {
+      ...mapGetters(['investmentCost'])
+    },
     methods: {
-      ...mapActions(['GetSpecialItem', 'CalculateCost', 'SaveSpecialItem']),
-      message(row) {
-        this.$message.info(row.event)
-      }
+      // 行选中回调，判断是否可以增加
+      handleCurrentChange(val) {
+        this.selectValue = val
+        this.addBtnFlag = true
+        this.delBtnFlag = true
+        if (this.selectValue && this.selectValue.addFlag) {
+          this.delBtnFlag = false
+          this.addBtnFlag = false
+        } else {
+          if (val && val.level === 1) {
+            console.log('第一层不可添加')
+          } else {
+            this.findIndex(this.data, val)
+          }
+        }
+      },
+      // 改变层级
+      changeLevel(_level) {
+        this.level = _level
+      },
+      // 成本汇总导出
+      exportCost,
+      // 成本汇总计算并保存
+      calculateAndSave
+    },
+    created: function() {
+      // 初始化成本汇总
+      console.log('成本汇总')
+      this.$store.dispatch('Costs', this.$route.params.id)
     }
   }
 </script>

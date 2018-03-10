@@ -61,7 +61,7 @@ export default {
     logout() {
       this.LogOut().then(() => {
         this.logoutConfirmIsVisible = false
-        location.reload()  // 为了重新实例化vue-router对象 避免bug
+        location.reload() // 为了重新实例化vue-router对象 避免bug
       })
     }
   }
@@ -100,9 +100,9 @@ export default {
       margin-top: 5px;
       position: relative;
       .user-avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 10px;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
       }
       .el-icon-caret-bottom {
         position: absolute;

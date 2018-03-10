@@ -1,17 +1,19 @@
 <template>
   <div class="app-container">
     <div>
-      <h4>data-Array-数据</h4>
-      <h4>columns-Array-表头和列配置</h4>
-      <h4>type-String-table类型-col</h4>
-      <h4>rowCallback-Function-行选中回调</h4>
-      <h4>maxHeight-Number-超过最大高度后自动固定头部</h4>
-      <h4>stripe-Boolean-是否隔行换色 默认false</h4>
-      <h4>支持列样式、单元格自定义样式 数据源格式参考：mock/routes/treeTable.js</h4>
+      <h4>data-Array-数据-必填</h4>
+      <h4>columns-Array-表头和列配置-必填</h4>
+      <h4>type-String-table类型-默认col-可选</h4>
+      <h4>rowCallback-Function-行选中回调-可选</h4>
+      <h4>maxHeight-Number-超过最大高度后自动固定头部-可选</h4>
+      <h4>stripe-Boolean-是否隔行换色 默认false-可选</h4>
+      <h4>支持列样式、单元格自定义样式、单元格自定义输入类型、鼠标划过显示自定义显示提示信息。数据源格式参考：mock/routes/treeTable.js</h4>
+      <h4>showLevel-[String, Number]-展开等级-可选</h4>
+      <h4>cellCallback-Function-单元格change回调（row,col,index）-可选</h4>
     </div>
     <input type="text" v-model="level" @change="changeLevel(level)">
     <!-- 纵向展开demo -->
-    <tree-table :data="data" :columns="columns" :showLevel='level' :type="'col'" :rowCallback="handleCurrentChange" :evalFunc="func" :evalArgs="args" :maxHeight="500" :stripe="true" border>
+    <tree-table :cellDbCallback="demo" :data="data" :columns="columns" :showLevel='level' :cellCallback="cellCallbackFn" :rowCallback="handleCurrentChange" :evalFunc="func" :maxHeight="500" :stripe="true" border>
     </tree-table>
 
     <!-- 横向展开demo -->
@@ -31,7 +33,7 @@ export default {
   components: { treeTable },
   data() {
     return {
-      level: '1',
+      level: '2',
       data: [{}],
       columns: [{}],
       columns2: [
@@ -282,7 +284,15 @@ export default {
           value: '选项5',
           label: '北京烤鸭'
         }
-      ]
+      ],
+      newItem: {
+        id: '', // 唯一标识
+        checked: false,
+        value1: '选项2',
+        value2: 70101010110177,
+        event: '事件8',
+        comment: '无'
+      }
     }
   },
   computed: {
@@ -296,6 +306,13 @@ export default {
   },
   methods: {
     ...mapActions(['GetTreeTable']),
+    // 单元格回调
+    cellCallbackFn(row) {
+      console.log(row, '2222')
+    },
+    demo(row) {
+      console.log(row, '1111')
+    },
     message(row) {
       console.log(row)
       this.$message.info(row.event)
@@ -303,9 +320,9 @@ export default {
     // 行选中回调
     handleCurrentChange(val) {
       console.log(val.id)
+      console.log(this.$demo.treeTable)
     },
     changeLevel(level) {
-      console.log(level)
       this.level = level
     }
   }

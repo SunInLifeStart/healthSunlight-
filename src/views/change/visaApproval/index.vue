@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-tabs type="border-card">
-      <el-tab-pane label="签证信息">
+      <el-tab-pane label="业务信息">
         <el-form ref="form" :model="form" label-width="120px">
           <el-row :gutter="20">
             <el-col :span="6">
@@ -127,15 +127,16 @@
           <!--</el-row>-->
           <el-row :gutter="20">
             <el-col :span="6">
-              <el-form-item label="结转金额">
-                <el-input v-model="form.transactionDepartment"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="6">
               <el-form-item label="预估金额(A=B+C)">
                 <el-input v-model="form.claimsDepartment"></el-input>
               </el-form-item>
             </el-col>
+            <el-col :span="6">
+              <el-form-item label="结转金额">
+                <el-input v-model="form.transactionDepartment"></el-input>
+              </el-form-item>
+            </el-col>
+            
           </el-row>
         </el-form>
         <i class="el-icon-document"></i>
@@ -145,7 +146,7 @@
         <el-table highlight-current-row :data="tableData" style="width: 100%">
           <el-table-column type="index" label="序号" width="150"></el-table-column>
           <el-table-column prop="changeContent" label="变更内容" width="400"></el-table-column>
-          <el-table-column prop="changeWhy" label="变更原因" width="400"></el-table-column>
+          <!-- <el-table-column prop="changeWhy" label="变更原因" width="400"></el-table-column> -->
           <!--<el-table-column prop="changeAnswer" label="变更原因" width="400"></el-table-column>-->
         </el-table>
         <i class="el-icon-document"></i>
@@ -156,22 +157,22 @@
           <el-table-column prop="orderNum" label="下发单编号" width="130"></el-table-column>
           <el-table-column prop="contractName" label="合同名称" width="200"></el-table-column>
           <el-table-column prop="changeUnit" label="施工单位" width="200"></el-table-column>
-          <el-table-column prop="changeUnit" label="费用承担单位" width="200"></el-table-column>
-          <el-table-column prop="changeUnit" label="合同金额" width="200"></el-table-column>
-          <el-table-column prop="changeMoney" label="变更对应金额"
+           <el-table-column prop="changeUnit" label="合同金额" width="200"></el-table-column>
+ ·        <el-table-column prop="changeMoney" label="变更对应金额"
                            width="200">
             <template slot-scope="scope">
               <div @click="dialogTableVisible = true">{{scope.row.changeMoney}}</div>
             </template>
           </el-table-column>
-          <el-table-column prop="scheduledTime" label="预计实施时间" width="200"></el-table-column>
+           <el-table-column prop="scheduledTime" label="预计实施时间" width="200"></el-table-column>
           <el-table-column prop="successTime" label="预计完成日期" width="200"></el-table-column>
-          <el-table-column prop="changesAs" label="变更事项" width="200"></el-table-column>
+          <!-- <el-table-column prop="changeUnit" label="费用承担单位" width="200"></el-table-column> -->
+           <el-table-column prop="changesAs" label="变更事项" width="200"></el-table-column>
           <el-table-column prop="completionConfirmation" label="完工确认工程师" width="200"></el-table-column>
           <!--<el-table-column prop="bearFeesUnit" label="费用承担单位" width="200"></el-table-column>-->
           <!--<el-table-column prop="bearMoney" label="费用合同对应金额" width="200"></el-table-column>-->
         </el-table>
-        <el-dialog title="" :visible.sync="dialogTableVisible">
+        <!-- <el-dialog title="" :visible.sync="dialogTableVisible">
           <el-table :data="contracts">
             <el-table-column property="date" label="所属项目"></el-table-column>
             <el-table-column property="name" label="所属费项"></el-table-column>
@@ -181,7 +182,7 @@
             <el-table-column property="address" label="总预留金额"></el-table-column>
             <el-table-column property="address" label="变更对应金额"></el-table-column>
           </el-table>
-        </el-dialog>
+        </el-dialog> -->
         <i class="el-icon-document"></i>
         附件
         <el-table highlight-current-row :data="contracts" style="width: 100%">
@@ -193,7 +194,7 @@
           <el-table-column prop="orderNum" label="操作"></el-table-column>
         </el-table>
       </el-tab-pane>
-      <el-tab-pane label="清单信息">
+      <el-tab-pane label="审批流程">
         <el-table highlight-current-row :data="tableData" style="width: 100%">
           <el-table-column type="index" label="编码" width="150"></el-table-column>
           <el-table-column prop="changeContent" label="变更性质" width="100"></el-table-column>

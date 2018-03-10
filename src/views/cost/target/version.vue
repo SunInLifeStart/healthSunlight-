@@ -3,92 +3,92 @@
     <el-row>
       <el-col :span="7" :offset="17" style="margin-bottom: 5px">
         <el-button>发起审批</el-button>
-        <el-button>保存</el-button>
+        <el-button @click="addTargetCostVersion(version)">保存</el-button>
         <el-button>审批流程</el-button>
       </el-col>
     </el-row>
-    <el-collapse accordion >
+    <el-collapse v-model="activeNames" >
       <el-collapse-item title="基本信息" name="1">
         <div class="divCollapse" >
           <el-row :gutter="20" >
             <el-col :span="8">
               <el-col :span="8"><p>项目分期</p></el-col>
               <el-col :span="14">
-                <el-input v-model="version.edition" placeholder="请输入内容"></el-input>
+                <el-input v-model="version.basic.projectfullname" placeholder="请输入内容" :disabled="isDisabled"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8">
               <el-col :span="8"><p>目标版本</p></el-col>
               <el-col :span="14">
-                <el-input v-model="version.shaft" placeholder="请输入内容"></el-input>
+                <el-input v-model="version.basic.versionname" placeholder="请输入内容" :disabled="isDisabled"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8">
               <el-col :span="8"><p>城市名称</p></el-col>
               <el-col :span="14">
-                <el-input v-model="version.calculateDate" placeholder="请输入内容"></el-input>
+                <el-input v-model="version.basic.cityname" placeholder="请输入内容" :disabled="isDisabled"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8">
               <el-col :span="8"><p>行政区域</p></el-col>
               <el-col :span="14">
-                <el-input v-model="version.calculateMen" placeholder="请输入内容"></el-input>
+                <el-input v-model="version.basic.themaname" placeholder="请输入内容" :disabled="isDisabled"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8">
               <el-col :span="8"><p>项目总体配置定位</p></el-col>
               <el-col :span="14">
-                <el-input v-model="version.calculateMen" placeholder="请输入内容"></el-input>
+                <el-input v-model="version.basic.overallconfiglocname" placeholder="请输入内容" :disabled="isDisabled"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8">
               <el-col :span="8"><p>项目景观配置定位</p></el-col>
               <el-col :span="14">
-                <el-input v-model="version.calculateMen" placeholder="请输入内容"></el-input>
+                <el-input v-model="version.basic.landscapeconfiglocname" placeholder="请输入内容" :disabled="isDisabled"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8">
               <el-col :span="8"><p>场地类型</p></el-col>
               <el-col :span="14">
-                <el-input v-model="version.calculateMen" placeholder="请输入内容"></el-input>
+                <el-input v-model="version.basic.sitetypename" placeholder="请输入内容" :disabled="isDisabled"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8">
               <el-col :span="8"><p>抗震等级</p></el-col>
               <el-col :span="14">
-                <el-input v-model="version.calculateMen" placeholder="请输入内容"></el-input>
+                <el-input v-model="version.basic.antiseismiclevelname" placeholder="请输入内容" :disabled="isDisabled"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8">
               <el-col :span="8"><p>基本风压</p></el-col>
               <el-col :span="14">
-                <el-input v-model="version.calculateMen" placeholder="请输入内容"></el-input>
+                <el-input v-model="version.basic.basicwindpressure" placeholder="请输入内容" :disabled="isDisabled"></el-input>
               </el-col>
             </el-col>
           </el-row>
         </div>
       </el-collapse-item>
     </el-collapse>
-    <el-collapse >
-      <el-collapse-item title="成本信息" name="1">
+    <el-collapse v-model="activeNames" >
+      <el-collapse-item title="成本信息" name="2">
         <div class="divCollapse">
           <el-row :gutter="20">
             <el-col :span="8">
               <el-col :span="10"><p>目标金额（含土地费）:</p></el-col>
               <el-col :span="14">
-                <el-input v-model="version.edition" placeholder="请输入内容"></el-input>
+                <el-input v-model="version.basic.costvallandsum" placeholder="请输入内容" :disabled="isDisabled"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8">
               <el-col :span="10"><p>目标金额（不含土地费）:</p></el-col>
               <el-col :span="14">
-                <el-input v-model="version.shaft" placeholder="请输入内容"></el-input>
+                <el-input v-model="version.basic.costvalsum" placeholder="请输入内容" :disabled="isDisabled"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8">
               <el-col :span="8"><p>其中商业费用:</p></el-col>
               <el-col :span="14">
-                <el-input v-model="version.calculateDate" placeholder="请输入内容"></el-input>
+                <el-input v-model="version.basic.costvalbusinesssum" placeholder="请输入内容" :disabled="isDisabled"></el-input>
               </el-col>
             </el-col>
           </el-row>
@@ -96,19 +96,19 @@
             <el-col :span="8">
               <el-col :span="10"><p>预算金额（含土地费）:</p></el-col>
               <el-col :span="14">
-                <el-input v-model="version.calculateMen" placeholder="请输入内容"></el-input>
+                <el-input v-model="version.basic.calculateMen" placeholder="请输入内容" :disabled="isDisabled"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8">
               <el-col :span="10"><p>预算金额（不含土地费）:</p></el-col>
               <el-col :span="14">
-                <el-input v-model="version.calculateMen" placeholder="请输入内容"></el-input>
+                <el-input v-model="version.basic.budvallandsum" placeholder="请输入内容" :disabled="isDisabled"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8">
               <el-col :span="8"><p>其中商业费用:</p></el-col>
               <el-col :span="14">
-                <el-input v-model="version.calculateMen" placeholder="请输入内容"></el-input>
+                <el-input v-model="version.basic.budvalbusinesssum" placeholder="请输入内容" :disabled="isDisabled"></el-input>
               </el-col>
             </el-col>
           </el-row >
@@ -116,13 +116,13 @@
             <el-col :span="8">
               <el-col :span="10"><p>测算人:</p></el-col>
               <el-col :span="14">
-                <el-input v-model="version.calculateMen" placeholder="请输入内容"></el-input>
+                <el-input v-model="version.basic.budgetdate" placeholder="请输入内容" :disabled="isDisabled"></el-input>
               </el-col>
             </el-col>
             <el-col :span="8">
               <el-col :span="10"><p>测算日期:</p></el-col>
               <el-col :span="14">
-                <el-input v-model="version.calculateMen" placeholder="请输入内容"></el-input>
+                <el-input v-model="version.basic.budgetdate" placeholder="请输入内容" :disabled="isDisabled"></el-input>
               </el-col>
             </el-col>
           </el-row>
@@ -133,88 +133,106 @@
                 type="textarea"
                 :rows="6"
                 placeholder="请输入内容"
-                v-model="version.direction">
+                :disabled="isDisabled"
+                v-model="version.basic.budgetremark">
               </el-input>
             </el-col>
           </el-row>
         </div>
       </el-collapse-item>
-    </el-collapse>
-    <el-collapse >
-      <el-collapse-item title="项目信息" name="1">
-        <div class="divCollapse" >
-          <div style="height: 200px;width: 90.8%;margin-left: 6%">
-            <el-row :gutter="20">
-              <el-col :span="12">
-                <el-card :body-style="{padding: '0px' }">
-                  <img src="static/images/loufang.png" class="image" style="height: 364px">
-                </el-card>
-              </el-col>
-              <el-col :span="12">
-                <el-card :body-style="{ padding: '0px' }">
-                  <img src="static/images/shejitu.png" class="image" style="height: 364px">
-                </el-card>
-              </el-col>
-            </el-row>
-          </div>
+    </el-collapse  >
+    <el-collapse v-model="activeNames"  >
+      <el-collapse-item title="项目信息" name="3">
+        <div class="divCollapse">
+          <el-row :gutter="2" type="flex" justify="space-around">
+            <el-col :span="11" class="investmentUpload":pull="5">
+              <el-upload
+                class="avatar-uploader"
+                action="https://jsonplaceholder.typicode.com/posts/"
+                :show-file-list="false"
+                list-type="picture-card"
+                :on-remove="handleRemove"
+                :on-preview="handlePictureCardPreview"
+                :on-success="handleAvatarSuccess"
+                :disabled="isDisabled"
+                :before-upload="beforeAvatarUpload">
+                <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              </el-upload>
+            </el-col>
+          </el-row>
         </div>
       </el-collapse-item>
     </el-collapse>
-    <el-collapse >
-      <el-collapse-item title="附件" name="1">
-        <div class="divCollapse">
-          <div style="width: 90.8%;margin-left: 6%;text-align: center">
-            <el-row>
-              <el-col :span="5" :offset="19" style="margin-bottom: 5px">
-                <i class="el-icon-upload2">上传附件</i>
-                <i class="el-icon-download" style="padding-left: 20px">一键下载</i>
-              </el-col>
-            </el-row>
-            <el-table
-              :data="version.informations"
-              border>
-              <el-table-column
-                width="180"
-                type="index"
-                label="序号"
-                align="center"
-              >
-              </el-table-column>
-              <el-table-column
-                prop="upTime"
-                label="上传时间"
-                align="center"
-                width="180">
-              </el-table-column>
-              <el-table-column
-                prop="fileType"
-                align="center"
-                label="附件类型">
-              </el-table-column>
-              <el-table-column
-                prop="enclosure"
-                align="center"
-                label="附件">
-              </el-table-column>
-              <el-table-column
-                prop="remakes"
-                align="center"
-                label="备注">
-              </el-table-column>
-              <el-table-column
-                prop="operation"
-                align="center"
-                label="操作">
-                <template slot-scope="scope">
-                  <el-button type="text" size="small">替换</el-button>
-                  <el-button type="text" size="small">删除</el-button>
-                  <el-button type="text" size="small">下载</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
-          </div>
-        </div>
-
+    <el-collapse v-model="activeNames">
+      <el-collapse-item name="4">
+      <template slot="title">
+        <el-row :gutter="2" type="flex" justify="space-around">
+          <el-col :span="1" style="margin: 0px;">
+           <span>附件</span>
+          </el-col>
+          <el-col :span="19">
+          </el-col>
+          <el-col :span="2" style="margin: 3px;">
+            <el-upload
+              class="upload-demo"
+              :show-file-list="false"
+              action="https://jsonplaceholder.typicode.com/posts/"
+              :on-change="handleChange"
+              :file-list="fileList3">
+              <el-button type="text" style="color: #99a9bf"><i class="el-icon-upload2"></i>上传附件</el-button>
+              <!--<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
+            </el-upload>
+          </el-col>
+          <el-col :span="2" style="margin: 3px;">
+            <el-button type="text" style="color: #99a9bf"><i class="el-icon-download"></i>一键下载</el-button>
+          </el-col>
+        </el-row>
+      </template>
+      <div class="divCollapse" >
+        <el-table style="margin-top: 8px"
+            :data="version.enclosureTable"
+            border>
+            <el-table-column
+              width="180"
+              type="index"
+              label="序号"
+              align="center"
+            >
+            </el-table-column>
+            <el-table-column
+              prop="upTime"
+              label="上传时间"
+              align="center"
+              width="180">
+            </el-table-column>
+            <el-table-column
+              prop="fileType"
+              align="center"
+              label="附件类型">
+            </el-table-column>
+            <el-table-column
+              prop="enclosure"
+              align="center"
+              label="附件">
+            </el-table-column>
+            <el-table-column
+              prop="remakes"
+              align="center"
+              label="备注">
+            </el-table-column>
+            <el-table-column
+              prop="operation"
+              align="center"
+              label="操作">
+              <template slot-scope="scope">
+                <el-button type="text" size="small">替换</el-button>
+                <el-button type="text" size="small" @click="deleteEnclosure(scope.row)">删除</el-button>
+                <el-button type="text" size="small">下载</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+      </div>
       </el-collapse-item>
     </el-collapse>
   </div>
@@ -222,44 +240,72 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
   export default {
     data() {
       return {
+        isDisabled: true,
         version: {
-          edition: '调整版',
-          shaft: 'V1',
-          calculateDate: '2017-10-11',
-          calculateMen: 'sadas',
-          direction: '精装修工程各部品部类合约规划拆分，已签合同含量及单价按实调整。',
-          informations: [
+          basic: '',
+          enclosureTable: [
             {
               upTime: '2018-01-01',
-              fileType: '网址',
-              enclosure: 'www.baidu.com',
-              remakes: '',
+              fileType: 'txt',
+              remakes: 'uww ',
+              enclosure: 'dasd',
               operation: ''
             },
             {
               upTime: '2018-01-01',
-              fileType: '网址',
-              enclosure: 'www.baidu.com',
-              remakes: '',
+              fileType: 'pdf',
+              remakes: 'uww ',
+              enclosure: 'sdasd',
               operation: ''
             }
-          ],
-          building: {
-            table: [
-              {
-                groupOn: '2',
-                buildingNo: '11',
-                format: '',
-                coveredArea: '8000'
-              }
-            ]
-
-          }
-        }
+          ]
+        },
+        activeNames: ['1', '2', '3', '4'],
+        fileList3: [],
+        imageUrl: ''
       }
+    },
+    methods: {
+      ...mapActions(['getCostBasicVersion', 'addTargetCostVersion']),
+      handleChange(file, fileList) {
+        this.fileList3 = fileList.slice(-3)
+      },
+      deleteEnclosure(row) {
+        this.enclosureTable.splice(this.enclosureTable.indexOf(row), 1)
+      },
+      handleRemove(file, fileList) {
+        console.log(file, fileList)
+      },
+      handlePictureCardPreview(file) {
+        this.dialogImageUrl = file.url
+        this.dialogVisible = true
+      },
+      handleAvatarSuccess(res, file) {
+        this.imageUrl = URL.createObjectURL(file.raw)
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg'
+        const isLt2M = file.size / 1024 / 1024 < 2
+
+        if (!isJPG) {
+          this.$message.error('上传图片只能是 JPG 格式!')
+        }
+        if (!isLt2M) {
+          this.$message.error('上传图片大小不能超过 2MB!')
+        }
+        return isJPG && isLt2M
+      }
+    },
+    created() {
+      this.isDisabled = this.$route.params.isDisabled === 'true'
+      // 调取 基础数据信息接口
+      this.getCostBasicVersion({ 'basicInformation': this.form }).then((data) => {
+        // console.log(data)
+      })
     }
   }
 </script>
@@ -319,5 +365,10 @@
   }
   .el-col-3{
     width: 14%;
+  }
+  .investmentUpload >>> .el-upload{
+    width: 100%;
+    height: 330px;
+    line-height: 330px;
   }
 </style>

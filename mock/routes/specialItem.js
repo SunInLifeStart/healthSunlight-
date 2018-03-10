@@ -59,26 +59,8 @@ module.exports = {
       ],
       items: [
         {
-          costcode: '(A)', // 唯一标识
-          idStyle: {
-            background: 'red'
-          },
-          checked: false,
-          costcodename: '开发成本',
-          budgetvariable: '',
-          specialunit: '',
-          calculationRule: '',
-          budgetCost: '',
-          budgetUnitPrice: '111',
-          remark: '',
-          actualCost: '',
-          referenceunitprice: '',
-          event: '事件1',
-          comment: '无',
-          backgroud: 'red',
-          children: []
-        },
-        {
+          id: 2,
+          level: 1,
           costcode: '(A.01)', // 唯一标识
           idStyle: {
             background: 'red'
@@ -98,6 +80,7 @@ module.exports = {
           backgroud: 'red',
           children: [
             {
+              id: 5,
               costcode: '(A.01.01)', // 唯一标识
               checked: false,
               costcodename: '有房屋、建筑物、构筑物影响（拆除、保护、改善、补偿）',
@@ -113,6 +96,7 @@ module.exports = {
               comment: '无'
             },
             {
+              id: 6,
               costcode: '(A.01.02)', // 唯一标识
               checked: false,
               costcodename: '高压线影响（拆除、迁移、埋地、防护）',
@@ -127,6 +111,7 @@ module.exports = {
               event: '事件4',
               comment: '无'
             }, {
+              id: 7,
               costcode: '(A.01.03)', // 唯一标识
               checked: false,
               costcodename: '场地内坟墓（迁移、赔偿）',
@@ -141,6 +126,7 @@ module.exports = {
               event: '事件5',
               comment: '无'
             }, {
+              id: 8,
               costcode: '(A.01.04)', // 唯一标识
               checked: false,
               costcodename: '农田、林地、苗木影响',
@@ -155,6 +141,7 @@ module.exports = {
               event: '事件5',
               comment: '无'
             }, {
+              id: 9,
               costcode: '(A.01.05)', // 唯一标识
               checked: false,
               costcodename: '大型河道、沟渠影响',
@@ -169,6 +156,7 @@ module.exports = {
               event: '事件5',
               comment: '无'
             }, {
+              id: 10,
               costcode: '(A.01.06)', // 唯一标识
               checked: false,
               costcodename: '矿坑影响',
@@ -183,6 +171,7 @@ module.exports = {
               event: '事件5',
               comment: '无'
             }, {
+              id: 11,
               costcode: '(A.01.07)', // 唯一标识
               checked: false,
               costcodename: '有古迹、地下文物影响（拆除、保护、改善）',
@@ -197,6 +186,7 @@ module.exports = {
               event: '事件5',
               comment: '无'
             }, {
+              id: 12,
               costcode: '(A.01.08)', // 唯一标识
               checked: false,
               costcodename: '有光缆（普通、军用）影响',
@@ -211,6 +201,7 @@ module.exports = {
               event: '事件5',
               comment: '无'
             }, {
+              id: 13,
               costcode: '(A.01.09)', // 唯一标识
               checked: false,
               costcodename: '有市政管线影响',
@@ -225,6 +216,7 @@ module.exports = {
               event: '事件5',
               comment: '无'
             }, {
+              id: 14,
               costcode: '(A.01.10)', // 唯一标识
               checked: false,
               costcodename: '土地自然灾害：有地裂缝、山体滑坡治理、山地泄洪等地质灾害影响',
@@ -239,6 +231,7 @@ module.exports = {
               event: '事件5',
               comment: '无'
             }, {
+              id: 15,
               costcode: '(A.01.11)', // 唯一标识
               checked: false,
               costcodename: '红线外附近有高压站、泵站等不利因素等迁移、改造、回避情况',
@@ -253,6 +246,7 @@ module.exports = {
               event: '事件5',
               comment: '无'
             }, {
+              id: 16,
               costcode: '(A.01.13)', // 唯一标识
               checked: false,
               costcodename: '其他特殊事项。。。',
@@ -268,6 +262,7 @@ module.exports = {
               comment: '无',
               children: [
                 {
+                  id: 17,
                   costcode: '(A.01.13.01)', // 唯一标识
                   costcodename: '其他特殊事项。。。',
                   budgetvariable: '',
@@ -281,6 +276,7 @@ module.exports = {
                   event: '事件6',
                   comment: '无'
                 }, {
+                  id: 18,
                   costcode: '(A.01.13.02)', // 唯一标识
                   costcodename: '其他特殊事项。。。',
                   budgetvariable: '',
@@ -296,6 +292,7 @@ module.exports = {
                 }
               ]
             }, {
+              id: 19,
               costcode: '(A.01.14)', // 唯一标识
               checked: false,
               costcodename: '',
@@ -313,6 +310,8 @@ module.exports = {
           ]
         },
         {
+          id: 3,
+          level: 1,
           costcode: '(A.02)', // 唯一标识
           idStyle: {
             background: 'red'
@@ -333,6 +332,8 @@ module.exports = {
           backgroud: 'red'
         },
         {
+          id: 4,
+          level: 1,
           costcode: '(A.03)', // 唯一标识
           idStyle: {
             background: 'red'
