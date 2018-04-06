@@ -19,9 +19,12 @@ const standardCost = require('./standardCost')
 const targetCost = require('./targetCost')
 const indicator = require('./indicator')
 
-router.post(url.login, function * () {
+router.post(url.user, function * () {
+    this.body = user.getUserInfo
+  })
+  .post(url.login, function * () {
   this.body = user.login
-})
+  })
   // 目标成本总体指标treeTable数据
   .post(url.getPlanningTreeTable,function *() {
     this.body = indicator.planingData
@@ -34,9 +37,6 @@ router.post(url.login, function * () {
   })
   .post(url.getTreeTable, function * () {
     this.body = treeTable.data
-  })
-  .post(url.user, function * () {
-    this.body = user.getUserInfo
   })
   // -------------dashboard------------
   .post(url.headlines, function * () {

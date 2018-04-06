@@ -1,11 +1,6 @@
 <template>
   <div>
     <el-row :gutter="20">
-      <el-col :span="16">
-        <div class="grid-content bg-purple">
-          todos
-        </div>
-      </el-col>
       <el-col :span="8">
         <div class="grid-content bg-purple">
           <el-carousel :interval="4000" height="200px">
@@ -16,10 +11,7 @@
         </div>
       </el-col>
     </el-row>
-
-    <el-tabs>
-      <el-tab-pane label="操作台">
-        <el-row :gutter="20">
+    <el-row :gutter="20">
           <el-col :span="12">
             <el-card class="box-card">
               <div slot="header" class="clearfix">
@@ -71,16 +63,6 @@
             </el-card>
           </el-col>
         </el-row>
-
-        <el-row :gutter="20">
-          <el-col :span="24">
-            <vue-event-calendar title="我的日历" :events="$dashboard.events">
-            </vue-event-calendar>
-          </el-col>
-        </el-row>
-      </el-tab-pane>
-      <el-tab-pane label="驾驶舱" disabled>驾驶舱</el-tab-pane>
-    </el-tabs>
   </div>
 </template>
 

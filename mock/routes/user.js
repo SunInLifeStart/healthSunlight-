@@ -8,9 +8,9 @@ module.exports = {
   getUserInfo: {
     code: 200,
     data: {
-      name: 'jack',
+      name: 'TimeGap',
       avatar: 'user02.png',
-      organizations: ['北京龙湖', '上海龙湖'],
+      organizations: ['石家庄', '背景'],
       roles: ['admin']
     }
   }

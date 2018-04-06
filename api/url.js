@@ -11,9 +11,6 @@ module.exports = {
   events: '/api/events',
   // ----------contract-----------------
   findContracts: '/api/findContracts',
-  // findContracts: 'http://10.5.101.163:51001/admin/api/contract/selectCmContract',
-  // findContracts: 'http://10.5.101.163:51001/admin/api/contract/selectVoList', // 预估变更列表查询
-  // findContracts: 'http://10.5.108.91:51001/admin/api/contract/selectCmContractInfo', // 合同详情
   jumpContract: '/api/jumpContract',
   // ----------change-----------------
   findChanges: '/api/findChanges',

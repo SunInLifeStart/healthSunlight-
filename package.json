@@ -1,14 +1,14 @@
 {
-  "name": "longisland",
+  "name": "finshSchool",
   "version": "0.0.4",
   "license": "MIT",
-  "description": "龙湖造采成本系统内网",
+  "description": "完成毕业设计",
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.org/MagusCreation/longisland.git"
+    "url": "https://github.com/SunInLifeStart/finishSchool.git"
   },
   "private": true,
-  "author": "Jack <jackzhu@maguscreation.com> ;Martin <martin@maguscreation.com>",
+  "author": "Gentry",
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "build": "node build/build.js",

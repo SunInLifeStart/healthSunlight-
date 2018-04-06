@@ -1,7 +1,4 @@
-import {
-  login,
-  getUser
-} from 'api/user'
+import { login, getUser } from 'api/user'
 
 const localToken = localStorage.getItem('longisland.token') || ''
 

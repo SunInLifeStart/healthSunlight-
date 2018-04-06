@@ -219,14 +219,12 @@ export default {
   name: 'visaChange',
   data() {
     return {
-        //  查询条件
       keywords: {
         pageSize: '10', // 每页记录条数
         pageNum: '1', // 页数
         organization: '', // 组织机构
         project: '', // 项目分期
         word: '', // 关键词
-
         agent: '1', // 经办人
         state: '', // 状态--审批状态
         department: '', // 部门
@@ -239,18 +237,9 @@ export default {
           }
         ]
       },
-         // -------模拟数据------
-        // 条件
       condtions: [
-          { code: '>', value: '大于' },
-          { code: '<', value: '小于' },
-          { code: '=', value: '等于' },
-          { code: '>=', value: '大于等于' },
-          { code: '<=', value: '小于等于' },
-          { code: 'like%', value: '模糊' }
+        { code: '>', value: '大于' }
       ],
-
-        // 列名
       columnNames: [
         { code: 'CONTRACTAMT', value: '有效签约金额', disabled: false },
         { code: 'CONTRACTVOAMT', value: '累计变更金额', disabled: false },
@@ -267,36 +256,27 @@ export default {
         { code: 'SIGNOFFDATE', value: '结算日期', disabled: false },
         { code: 'SUPPLIERNAME', value: '供方单位', disabled: false }
       ],
-        // 合同类别
       contractItems: [
         { code: '01', value: '合同类别1' },
         { code: '02', value: '合同类别2' },
         { code: '03', value: '合同类别3' }
       ],
-      // 状态
       states: [
         { code: '01', value: '草稿' },
         { code: '02', value: '已驳回' },
         { code: '03', value: '审批中' },
         { code: '04', value: '已审批' }
       ],
-         // 部门
       departments: [
         { code: '01', value: '部门1' },
         { code: '02', value: '部门2' },
         { code: '03', value: '部门3' }
       ],
-      // 项目分期
       projects: [
         { code: '01', value: '项目分期1' },
         { code: '02', value: '项目分期2' }
       ],
-      // 组织机构
-      organizations: [
-       { code: '01', value: '组织机构1' },
-       { code: '02', value: '组织机构2' }
-      ],
-
+      organizations: [{ code: '01', value: '组织机构1' }],
       showAdvancedSearch: false,
       value: '',
       options: [{
@@ -364,21 +344,16 @@ export default {
       }
       return ''
     },
-      // 查询变更签证列表
     findChanges() {
       this.FindChanges(this.keywords).then((data) => {
         this.changes = data.data
         console.log(this.changes)
       })
     },
-       // 禁止已经选择的列名
     changeColumnName() {
-      // 先将下拉数据全部设置为展示
       this.columnNames.forEach(obj => {
         obj.disabled = false
-      }
-         )
-      // 判断哪些已展示，然后禁用
+      })
       this.keywords.accurates.forEach(obj => {
         this.columnNames.forEach(obj1 => {
           if (obj.columnName === obj1.code) {

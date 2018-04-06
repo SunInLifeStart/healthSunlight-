@@ -379,8 +379,6 @@
               // 查询调接口
               this.getCostInformation({ 'searchTarget': this.ruleForm })
             } else {
-//              点击新增跳转
-//              this.$router.push({ name: 'version' })
               window.open(window.origin + '/#/targetCost/version/0/false', '_blank')
             }
           } else {
