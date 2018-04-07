@@ -19,8 +19,6 @@
           登录
         </el-button>
       </el-form-item>
-      <div class='tips'>账号:admin 密码随便填</div>
-      <div class='tips'>账号:editor 密码随便填</div>
     </el-form>
   </div>
 </template>
@@ -87,7 +85,7 @@ $light_gray: #eee;
 .login-container {
   @include relative;
   height: 100vh;
-  background-color: $bg;
+  background: url("../../assets/loginBack.jpg");
   input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px #293444 inset !important;
     -webkit-text-fill-color: #fff !important;
@@ -135,7 +133,7 @@ $light_gray: #eee;
     right: 0;
     width: 400px;
     padding: 35px 35px 15px 35px;
-    margin: 120px auto;
+    margin: 120px 0 120px 1000px;
   }
   .el-form-item {
     border: 1px solid rgba(255, 255, 255, 0.1);

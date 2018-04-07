@@ -3,13 +3,24 @@ module.exports = {
     code: 200,
     list: [
       {
-        title: '龙湖造采系统试运行'
+        id: 1,
+        img: '../../assets/carouselOne.jpg'
       },
       {
-        title: '龙湖2018年最新项目'
+        id: 2,
+        img: '../../assets/carouselTwo.jpg'
       },
       {
-        title: '龙湖重大项目推荐'
+        id: 3,
+        img: '../../assets/carouselThree.jpg'
+      },
+      {
+        id: 4,
+        img: '../../assets/carouselFour.jpg'
+      },
+      {
+        id: 5,
+        img: '../../assets/carouselFive.jpg'
       }
     ]
   },

@@ -4,8 +4,8 @@
       <el-col :span="8">
         <div class="grid-content bg-purple">
           <el-carousel :interval="4000" height="200px">
-            <el-carousel-item v-for="item in $dashboard.headlines" :key="item.title">
-              <h3>{{ item.title }}</h3>
+            <el-carousel-item v-for="item in $dashboard.headlines" :key="item.id">
+              <img :src="item.img" />
             </el-carousel-item>
           </el-carousel>
         </div>
