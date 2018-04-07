@@ -5,139 +5,30 @@
           <el-form  label-width="120px">
             <el-row :gutter="0">
               <el-col :span="5">
-                <el-form-item label="组织机构:">
-                  <el-select v-model="keywords.organization"  size="small" placeholder="请选择">
-                    <el-option
-                      v-for="organization in organizations"
-                      :key="organization.code"
-                      :label="organization.value"
-                      :value="organization.code">
-                    </el-option>
-                  </el-select>
+                <el-form-item label="车牌号:">
+                  <el-input v-model="keywords.organization"  size="small" placeholder="请输入" />
                 </el-form-item>
               </el-col>
               <el-col :span="5">
-                <el-form-item label="项目分期:">
-                  <el-select v-model="keywords.project"  size="small" placeholder="请选择">
-                    <el-option
-                      v-for="project in projects"
-                      :key="project.code"
-                      :label="project.value"
-                      :value="project.code">
-                    </el-option>
-                  </el-select>
+                <el-form-item label="时间:">
+                  <el-input v-model="keywords.project"  size="small" placeholder="请输入" />
                 </el-form-item>
               </el-col>
               <el-col :span="5">
                 <el-form-item label="关键词:">
-                  <el-tooltip content="支持：状态、付款主题、付款编号、合同名称、付款单位、收款单位、申请部门、申请人" placement="bottom" >
+                  <el-tooltip content="支持：状态、付款主题" placement="bottom" >
                       <el-input v-model="keywords.word"  size="small" placeholder="清输入"></el-input>
                   </el-tooltip>
                 </el-form-item>
               </el-col>
                 <el-col :span="5">
-                <el-form-item label="" label-width="8px">
-                  <el-radio v-model="keywords.agent" label="1">我经办的</el-radio>
-                  <el-radio v-model="keywords.agent" label="2">全部</el-radio>
-                </el-form-item>
               </el-col>
               <el-col :span="4"  class="div-font">
-                <!--<el-button-group style="margin-top: 4px;">-->
-                  <!--<el-button size="small" icon="el-icon-search" @click="findContracts"></el-button>-->
                   <el-button size="mini" icon="el-icon-search" @click="findContracts" type="primary">搜索</el-button>
-                  <!--<el-button size="small" @click="showAdvancedSearch = !showAdvancedSearch">高级</el-button>-->
-                  <el-button size="small" type="text" style="color: black" @click="showAdvancedSearch = !showAdvancedSearch"><span v-if="!showAdvancedSearch">更多搜索条件<i class="el-icon-arrow-down"></i></span>
-                    <span v-if="showAdvancedSearch">关闭更多搜索条件<i class="el-icon-arrow-up"></i></span></el-button>
-                <!--</el-button-group>-->
               </el-col>
             </el-row>
-            <!-- 高级查询条件 -->
-            <div v-if="showAdvancedSearch">
-                 <el-row>
-                    <el-col :span="5">
-                      <el-form-item label="状态:">
-                        <el-select v-model="keywords.state" size="small" collapse-tags multiple placeholder="请选择">
-                          <el-option
-                            v-for="state in states"
-                            :key="state.code"
-                            :label="state.value"
-                            :value="state.code">
-                          </el-option>
-                        </el-select>
-                      </el-form-item>
-                    </el-col>
-                    <el-col :span="5">
-                        <el-form-item label="结算状态:">
-                        <el-select v-model="keywords.settlementState" size="small" placeholder="请选择">
-                          <el-option
-                            v-for="settlementState in settlementStates"
-                            :key="settlementState.code"
-                            :label="settlementState.value"
-                            :value="settlementState.code">
-                          </el-option>
-                        </el-select>
-                      </el-form-item>
-                    </el-col>
-                      <el-col :span="5">
-                        <el-form-item label="合同类别:">
-                        <el-select v-model="keywords.contractItem" size="small" placeholder="请选择">
-                          <el-option
-                            v-for="contractItem in contractItems"
-                            :key="contractItem.code"
-                            :label="contractItem.value"
-                            :value="contractItem.code">
-                          </el-option>
-                        </el-select>
-                      </el-form-item>
-                    </el-col>
-                 </el-row>
-            <!-- 多条件精确查询 -->
-              <el-row>
-                 <el-col :span="15">
-                    <template v-for="accurate in keywords.accurates">
-                        <el-row>
-                          <el-col :span="8">
-                            <el-form-item label="列名:">
-                              <el-select v-model="accurate.columnName"  @change="changeColumnName"  size="small" filterable placeholder="请选择">
-                                <el-option
-                                  v-for="columnName in columnNames"
-                                  :key="columnName.code"
-                                  :label="columnName.value"
-                                  :value="columnName.code"
-                                  :disabled="columnName.disabled">
-                                </el-option>
-                              </el-select>
-                            </el-form-item>
-                          </el-col>
-                          <el-col :span="8">
-                            <el-form-item label="条件:">
-                              <el-select v-model="accurate.condtion" size="small" filterable placeholder="请选择">
-                                <el-option
-                                  v-for="condtion in condtions"
-                                  :key="condtion.code"
-                                  :label="condtion.value"
-                                  :value="condtion.code">
-                                </el-option>
-                              </el-select>
-                            </el-form-item>
-                          </el-col>
-                          <el-col :span="8">
-                            <el-form-item label="内容:">
-                              <el-input v-model="accurate.content" size="small" placeholder="请出入内容"></el-input>
-                            </el-form-item>
-                          </el-col>
-                        </el-row>
-                    </template>
-                 </el-col>
-                  <el-col :span="5"  style="margin-top: 4px;margin-left: 10px;">
-                    <el-button style="background-color: #46A0FC;" type="primary" size="small" icon="el-icon-circle-plus-outline" @click="addAccurate"></el-button>
-                    <el-button v-show="keywords.accurates.length!=1" type="danger" size="small" icon="el-icon-remove-outline" @click="delAccurate"></el-button>
-                  </el-col>
-              </el-row>
-            </div>
           </el-form>
       </div>
-      <!-- 底部汇总信息展示 -->
        <div class="el-alert--success reminderBorder">
           <span class="reminder">合同数 </span><span class="reminderNum"> {{$contract.pagination.total | currency(2,',')}}</span>
           <span class="reminder">有效签约金额 </span><span class="reminderNum">3,036,464,000</span>
@@ -148,7 +39,7 @@
       <!-- 台账列表 -->
        <el-row :gutter="20" style="margin-top: 20px;">
           <el-col :span="24">
-              <el-button size="mini" class="btnRight" icon="el-icon-document" type="text" >导出</el-button>
+              <el-button size="mini" class="btnRight" icon="el-icon-document" type="text" >新增</el-button>
           </el-col>
        </el-row>
        <div>
@@ -162,32 +53,19 @@
             :cell-style="({row, column, rowIndex, columnIndex}) => (columnIndex === 3||columnIndex === 0)?{'text-align': 'center',padding: '3px'}:{padding: '3px'}"
             :header-cell-style="{background:'#efefe0', 'text-align': 'center', color: '#a08e6e',fontSize:'13px',padding:'3px 0',fontWeight:'500'}"
               >
-              <el-table-column prop="contractId" label="序号" fixed width="50"></el-table-column>
-              <el-table-column sortable prop="entiId" fixed label="审批状态" width="102"></el-table-column>
-              <el-table-column sortable prop="pointState" fixed label="结算状态" width="102"></el-table-column>
-              <el-table-column sortable prop="projectName" fixed label="项目名称" width="140"></el-table-column>
+              <el-table-column prop="contractId" label="序号" fixed width="100"></el-table-column>
+              <el-table-column sortable prop="entiId" fixed label="审批状态" width="110"></el-table-column>
+              <el-table-column sortable prop="pointState" fixed label="结算状态" width="115"></el-table-column>
+              <el-table-column sortable prop="projectName" fixed label="项目名称" width="200"></el-table-column>
               <el-table-column sortable prop="contractName" fixed label="合同名称" width="200">
                 <template slot-scope="scope">
                   <el-button type="text" @click="showContract(scope.row)">{{scope.row.contractName}}</el-button>
                 </template>
               </el-table-column>
               <el-table-column sortable prop="contractAmt" fixed label="有效签约金额" width="130"></el-table-column>
-              <el-table-column sortable prop="ContentPlaceHolderxGridExpensePlan_1" label="累计变更金额" width="130"></el-table-column>
-              <el-table-column sortable prop="ContentPlaceHolderxGridExpensePlan_2" label="预估变更金额" width="130"></el-table-column>
-              <el-table-column sortable prop="ContentPlaceHolderxGridExpensePlan_3" label="已申请金额" width="110"></el-table-column>
-              <el-table-column sortable prop="ContentPlaceHolderxGridExpensePlan_4" label="已付款金额" width="110"></el-table-column>
+              <el-table-column sortable prop="ContentPlaceHolderxGridExpensePlan_1" label="累计变更金额" width="200"></el-table-column>
+              <el-table-column sortable prop="ContentPlaceHolderxGridExpensePlan_2" label="预估变更金额" width="200"></el-table-column>
               <el-table-column sortable prop="ContentPlaceHolderxGridExpensePlan_5" label="付款比例" width="100"></el-table-column>
-              <el-table-column sortable prop="contractSumamt" label="合同总额" width="100"></el-table-column>
-              <el-table-column sortable prop="reserveAmt" label="预留金余额" width="110"></el-table-column>
-              <el-table-column sortable prop="inchargesbyId" label="经办人" width="90"></el-table-column>
-              <el-table-column sortable prop="contractTypeId" label="合同类别" width="100"></el-table-column>
-              <el-table-column sortable prop="tenderType" label="形成方式" width="100"></el-table-column>
-              <el-table-column sortable prop="contractNo" label="合同编号" width="100"></el-table-column>
-              <el-table-column sortable prop="valuationmode" label="计价模式" width="100"></el-table-column>
-              <el-table-column sortable prop="signingate" label="签约日期" width="110"></el-table-column>
-              <el-table-column sortable prop="singoffdate" label="结算日期" width="100"></el-table-column>
-              <el-table-column sortable prop="signoffamt" label="结算金额" width="220"></el-table-column>
-              <el-table-column sortable prop="supplycompany" label="供方单位" width="190"></el-table-column>
           </el-table>
        </div>
       <!-- 分页 -->

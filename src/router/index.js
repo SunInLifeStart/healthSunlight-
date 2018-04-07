@@ -49,34 +49,19 @@ export const asyncRouterMap = [
         component: _import('dashboard/index'),
         name: '首页',
         icon: 'zonghe'
-      },
+      }
+    ]
+  },
+  {
+    path: '/payment',
+    component: Layout,
+    firstFlag: 'true',
+    children: [
       {
-        path: 'news',
-        name: '公告栏',
+        path: 'budget/plan',
+        name: '大数据展示',
         icon: 'zonghe',
-        hidden: true,
-        component: _import('dashboard/news')
-      },
-      {
-        path: 'addNews',
-        name: '新增新闻',
-        icon: 'zonghe',
-        hidden: true,
-        component: _import('dashboard/addNews')
-      },
-      {
-        path: 'pictureUpload',
-        name: '图片上传',
-        icon: 'zonghe',
-        hidden: true,
-        component: _import('dashboard/pictureUpload')
-      },
-      {
-        path: 'toDo',
-        name: '待办',
-        icon: 'zonghe',
-        hidden: true,
-        component: _import('dashboard/toDo')
+        component: _import('budget/plan')
       }
     ]
   },
