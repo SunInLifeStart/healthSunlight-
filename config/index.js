@@ -5,7 +5,7 @@ module.exports = {
   build: {
     env: require('./env.prod'),
     index: path.resolve(__dirname, '../dist/index.html'),
-    title: '龙湖造采.成本',
+    title: '停车场管理系统',
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
     assetsPublicPath: './',

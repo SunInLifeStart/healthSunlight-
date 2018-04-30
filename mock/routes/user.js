@@ -1,9 +1,22 @@
 module.exports = {
   login: {
     code: 200,
-    data: {
-      token: '578345345'
-    }
+    data: [
+      {
+        loginName: 'lichuan',
+        name: '李川',
+        token: '578345345',
+        roles: ['admin'],
+        avatar: 'user02.png',
+      },
+      {
+        loginName: 'yangsirui',
+        name: '杨思瑞',
+        token: '578345348',
+        roles: ['admin'],
+        avatar: 'user02.png',
+      }
+    ]
   },
   getUserInfo: {
     code: 200,

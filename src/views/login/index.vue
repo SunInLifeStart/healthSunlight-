@@ -24,13 +24,14 @@
 </template>
 
 <script>
-import { isvalidUsername } from 'utils/validate'
-
+import { isvalidUsername, validatAlphabets } from 'utils/validate'
+import router from './../../router'
+import store from '../../store/index'
 export default {
   name: 'login',
   data() {
     const validateUsername = (rule, value, callback) => {
-      if (!isvalidUsername(value)) {
+      if (!validatAlphabets(value)) {
         callback(new Error('请输入正确的用户名'))
       } else {
         callback()
@@ -45,11 +46,11 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
+        username: 'lichuan',
         password: '111111'
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        username: [{ required: true, trigger: 'blur', validator: validateUsername}],
         password: [{ required: true, trigger: 'blur', validator: validatePass }]
       },
       loading: false
@@ -57,12 +58,21 @@ export default {
   },
   methods: {
     handleLogin() {
+      let that = this
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('Login', this.loginForm).then(() => {
+          this.$store.dispatch('Login', this.loginForm).then((res) => {
+            if(res === 'success'){
+              this.$store.dispatch('GenerateRoutes', 'login').then(() => {
+                router.addRoutes(store.getters.addRouters)
+                this.$message({message: '登录成功', type: 'success'})
+                that.$router.push({ name: '首页' })
+              })
+            } else {
+              this.$message({message: '没有此用户，请重新登录', type: 'error'})
+            }
             this.loading = false
-            this.$router.push({ name: '首页' })
           }).catch(() => {
             this.loading = false
           })

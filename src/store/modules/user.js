@@ -39,7 +39,16 @@ export default {
       password
     }) {
       return login(username, password).then(res => {
-        commit('SET_TOKEN', res.data.token)
+        let user = res.data.filter((item)=>item.loginName===username)
+        if(user.length > 0){
+          commit('SET_TOKEN', user[0].token)
+          commit('SET_NAME', user[0].loginName)
+          commit('SET_ROLES', user[0].roles)
+          commit('SET_AVATAR',  user[0].avatar)
+          return 'success'
+        } else {
+          return 'error'
+        }
       })
     },
 
