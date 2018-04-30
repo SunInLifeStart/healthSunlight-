@@ -398,7 +398,7 @@ export default {
   }
 
   .el-tabs__item {
-    padding: 0 20px;
+    padding: 45px 20px;
     height: 40px;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
