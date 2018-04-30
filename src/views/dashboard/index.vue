@@ -1,9 +1,9 @@
 <template>
   <div>
-    <el-row :gutter="20">
-      <el-col :span="8">
+    <el-row :gutter="20" style="margin: 0;">
+      <el-col :span="24" style="padding: 0;">
         <div class="grid-content bg-purple">
-          <el-carousel :interval="4000" height="200px">
+          <el-carousel :interval="4000" height="300px">
             <el-carousel-item v-for="item in $dashboard.headlines" :key="item.id">
               <img :src="item.img" />
             </el-carousel-item>
@@ -11,58 +11,58 @@
         </div>
       </el-col>
     </el-row>
-    <el-row :gutter="20">
-          <el-col :span="12">
-            <el-card class="box-card">
-              <div slot="header" class="clearfix">
-                <span @click="goToDo">待办事项</span>
-              </div>
-              <el-table
-                :data="tableData"
-                style="width: 100%">
-                <el-table-column
-                  prop="type"
-                  label="类型">
-                </el-table-column>
-                <el-table-column
-                  prop="address"
-                  label="主题">
-                </el-table-column>
-                <el-table-column
-                  prop="name"
-                  label="经办人">
-                </el-table-column>
-                <el-table-column
-                  prop="name"
-                  label="">
-                </el-table-column>
-              </el-table>
-            </el-card>
-          </el-col>
-          <el-col :span="12">
-            <el-card class="box-card">
-              <div slot="header" class="clearfix">
-                <span @click="goNews">公告栏</span>
-              </div>
-              <el-table
-                :data="$dashboard.news"
-                style="width: 100%">
-                <el-table-column
-                  prop="belongscategory"
-                  label="">
-                </el-table-column>
-                <el-table-column
-                  prop="newstitle"
-                  label="">
-                </el-table-column>
-                <el-table-column
-                  prop="createdate"
-                  label="">
-                </el-table-column>
-              </el-table>
-            </el-card>
-          </el-col>
-        </el-row>
+    <el-row :gutter="20" style="margin:10px 0;">
+      <el-col :span="12">
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span @click="goToDo">待办事项</span>
+          </div>
+          <el-table
+            :data="tableData"
+            style="width: 100%">
+            <el-table-column
+              prop="type"
+              label="类型">
+            </el-table-column>
+            <el-table-column
+              prop="address"
+              label="主题">
+            </el-table-column>
+            <el-table-column
+              prop="name"
+              label="经办人">
+            </el-table-column>
+            <el-table-column
+              prop="name"
+              label="">
+            </el-table-column>
+          </el-table>
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span @click="goNews">公告栏</span>
+          </div>
+          <el-table
+            :data="$dashboard.news"
+            style="width: 100%">
+            <el-table-column
+              prop="belongscategory"
+              label="">
+            </el-table-column>
+            <el-table-column
+              prop="newstitle"
+              label="">
+            </el-table-column>
+            <el-table-column
+              prop="createdate"
+              label="">
+            </el-table-column>
+          </el-table>
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 

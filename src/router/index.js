@@ -59,7 +59,7 @@ export const asyncRouterMap = [
     children: [
       {
         path: 'budget/plan',
-        name: '大数据展示',
+        name: '饮食健康',
         icon: 'zonghe',
         component: _import('budget/plan')
       }
@@ -69,13 +69,11 @@ export const asyncRouterMap = [
     path: '/contract',
     component: Layout,
     name: '停车场管理',
-    redirect: '/contract/',
-    icon: 'zujian',
-    meta: { role: ['contract'] },
+    firstFlag: 'true',
     children: [
       {
         path: '',
-        name: '记录查询',
+        name: '季节养生',
         icon: 'zonghe',
         component: _import('contract/index')
       }
